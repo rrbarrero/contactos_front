@@ -5,6 +5,9 @@ import MailIcon from '@material-ui/icons/Mail';
 import PeopleIcon from '@material-ui/icons/People';
 import ListIcon from '@material-ui/icons/List';
 import ShareIcon from '@material-ui/icons/Share';
+import FolderIcon from '@material-ui/icons/Folder';
+import FolderSharedIcon from '@material-ui/icons/FolderShared';
+
 
 
 const drawerWidth = 240;
@@ -54,6 +57,19 @@ const Sidebar = () => {
                 <ListItem button key={1} >
                     <ListItemIcon><ListIcon /></ListItemIcon>
                     <ListItemText primary="Listas" />
+                </ListItem>
+            </List>
+            <Divider />
+            <List>
+                <ListItem button key={1} >
+                    <ListItemIcon><FolderIcon /></ListItemIcon>
+                    <ListItemText primary="Colectivos" />
+                </ListItem>
+            </List>
+            <List>
+                <ListItem button key={1} >
+                    <ListItemIcon><FolderSharedIcon /></ListItemIcon>
+                    <ListItemText primary="SubColectivos" />
                 </ListItem>
             </List>
             <Divider />
