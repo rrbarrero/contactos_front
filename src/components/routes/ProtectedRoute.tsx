@@ -1,6 +1,6 @@
 import { Redirect, Route, RouteProps } from 'react-router-dom';
 
-import { isAuthenticated } from './Auth';
+import { isAuthenticated } from '../../services/Auth';
 
 const ProtectedRoute = ({ component: Component, path }: RouteProps) => {
   if (!isAuthenticated()) {
