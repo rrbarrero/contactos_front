@@ -2,20 +2,27 @@ import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { useHistory } from 'react-router-dom';
 import { logOut } from '../../services/Auth';
-import { AppBar, Toolbar, Typography } from '@material-ui/core';
+import { AppBar, Button, Toolbar, Typography } from '@material-ui/core';
 import Sidebar from '../sidebar/Sidebar';
+import ExitIcon from '@material-ui/icons/ExitToApp';
+import ShareIcon from '@material-ui/icons/Share';
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            display: 'flex',
+            flexGrow: 1,
+            textAlign: "left",
         },
         appBar: {
             width: `calc(100% - ${drawerWidth}px)`,
             marginLeft: drawerWidth,
         },
+        title: {
+            flexGrow: 1,
+            paddingLeft: drawerWidth
+        }
     }),
 );
 
@@ -33,17 +40,16 @@ const Dashboard = () => {
 
     return (
         <div className={classes.root}>
-            <CssBaseline />
-            <AppBar position="fixed" className={classes.appBar}>
+            <AppBar position="static">
                 <Toolbar>
-                    <Typography variant="h6" noWrap>
+                    <Typography variant="h3" noWrap className={classes.title}>
                         Contactos
                     </Typography>
+                    <Button color="inherit" onClick={handleLogout}><ExitIcon /> Salir</Button>
                 </Toolbar>
             </AppBar>
             <Sidebar />
             <p>Secret Page</p>
-            <button onClick={handleLogout}>Log Out</button>
         </div>
     )
 };

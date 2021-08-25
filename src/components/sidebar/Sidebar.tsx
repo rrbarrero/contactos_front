@@ -2,6 +2,10 @@ import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 import { Drawer, Divider, List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import PeopleIcon from '@material-ui/icons/People';
+import ListIcon from '@material-ui/icons/List';
+import ShareIcon from '@material-ui/icons/Share';
+
 
 const drawerWidth = 240;
 
@@ -44,25 +48,29 @@ const Sidebar = () => {
             <Divider />
             <List>
                 <ListItem button key={1} >
-                    <ListItemIcon><InboxIcon /></ListItemIcon>
+                    <ListItemIcon><PeopleIcon /></ListItemIcon>
                     <ListItemText primary="Contactos" />
                 </ListItem>
-                {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                        <ListItemText primary={text} />
-                    </ListItem>
-                ))}
+                <ListItem button key={1} >
+                    <ListItemIcon><ListIcon /></ListItemIcon>
+                    <ListItemText primary="Listas" />
+                </ListItem>
             </List>
             <Divider />
             <List>
-                {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                        <ListItemText primary={text} />
-                    </ListItem>
-                ))}
+                <ListItem button key={1} >
+                    <ListItemIcon><MailIcon /></ListItemIcon>
+                    <ListItemText primary="Plantillas" />
+                </ListItem>
             </List>
+            <Divider />
+            <List>
+                <ListItem button key={1} >
+                    <ListItemIcon><ShareIcon /></ListItemIcon>
+                    <ListItemText primary="Acciones" />
+                </ListItem>
+            </List>
+            <Divider />
         </Drawer>
 
     );
