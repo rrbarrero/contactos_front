@@ -1,9 +1,8 @@
 import { Redirect, Route, RouteProps } from 'react-router-dom';
-
-import { isAuthenticated } from '../../services/Auth';
+import { userService } from "../../services"
 
 const UnProtectedRoute = ({ component: Component, path }: RouteProps) => {
-  if (isAuthenticated()) {
+  if (userService.isAuthenticated()) {
     return <Redirect to="/dashboard" />;
   }
 

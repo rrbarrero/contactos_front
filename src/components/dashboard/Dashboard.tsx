@@ -1,12 +1,12 @@
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import { useHistory } from 'react-router-dom';
-import { logOut } from '../../services/Auth';
 import { AppBar, Button, Toolbar, Typography } from '@material-ui/core';
 import Sidebar from '../sidebar/Sidebar';
 import ExitIcon from '@material-ui/icons/ExitToApp';
-import ShareIcon from '@material-ui/icons/Share';
 import ColectivoDropdown from './ColectivoDropdown';
+import { history } from "../../helpers/";
+import { userActions } from '../../store/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../store/reducers';
 
 const drawerWidth = 240;
 
@@ -31,11 +31,11 @@ const useStyles = makeStyles((theme: Theme) =>
 const Dashboard = () => {
 
     const classes = useStyles();
-
-    let history = useHistory();
+    const dispatch = useDispatch();
+    const user = useSelector((state: RootState) => state.authentication.user);
 
     const handleLogout = () => {
-        logOut();
+        dispatch(userActions.logout());
         history.push('/login');
     }
 
@@ -47,6 +47,9 @@ const Dashboard = () => {
                         Contactos
                     </Typography>
                     <ColectivoDropdown />
+                    <Typography variant="h4" noWrap>
+                        {/* {user?.username} */}
+                    </Typography>
                     <Button color="inherit" onClick={handleLogout}><ExitIcon /> Salir</Button>
                 </Toolbar>
             </AppBar>

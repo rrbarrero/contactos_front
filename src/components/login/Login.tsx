@@ -8,8 +8,8 @@ import { Visibility, VisibilityOff } from '@material-ui/icons';
 import clsx from 'clsx';
 import Grid from '@material-ui/core/Grid';
 import "@fontsource/ubuntu-condensed"
-import { Login } from '../../services/Login';
-import { useHistory } from "react-router-dom";
+import { userActions } from '../../store/actions';
+import { useDispatch } from 'react-redux';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -51,13 +51,13 @@ interface Credentials {
 
 const Landing = () => {
 
-    let history = useHistory();
-
     const [datos, setDatos] = React.useState<Credentials>({
         email: '',
         password: '',
         showPassword: false,
     });
+    const [submitted, setSubmitted] = React.useState(false);
+    const dispatch = useDispatch();
 
     const classes = useStyles();
 
@@ -69,11 +69,13 @@ const Landing = () => {
     }
 
     const handleLogin = (event: React.FormEvent) => {
-        event.preventDefault()
-        const username = datos.email.split('@')[0]
-        Login(username, datos.password).then(() => {
-            history.push("/dashboard");
-        });
+        event.preventDefault();
+        const username = datos.email.split('@')[0];
+        setSubmitted(true);
+        dispatch(userActions.login(username, datos.password));
+        // Login(username, datos.password).then(() => {
+        //     history.push("/dashboard");
+        // });
     }
 
     const handleChange = (prop: keyof Credentials) => (event: React.ChangeEvent<HTMLInputElement>) => {
