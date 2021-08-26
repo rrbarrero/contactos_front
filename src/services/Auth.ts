@@ -1,4 +1,3 @@
-import { User } from "../models/User";
 
 export const isAuthenticated = (): boolean => {
     const userData: string|null = localStorage.getItem('user')
