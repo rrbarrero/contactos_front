@@ -12,12 +12,17 @@ type UserAction = {
 
 type AuthenticationState = {
     loggingIn: boolean;
-    user : User|null;
+    user: User | null;
 }
 
 type Colectivo = {
     id?: number;
     nombre: string,
+}
+
+type ColectivoAction = {
+    type: string,
+    colectivo: Colectivo;
 }
 
 type AlertAction = {

@@ -4,9 +4,10 @@ import Sidebar from '../sidebar/Sidebar';
 import ExitIcon from '@material-ui/icons/ExitToApp';
 import ColectivoDropdown from './ColectivoDropdown';
 import { history } from "../../helpers/";
-import { userActions } from '../../store/actions';
+import { colectivoActions, userActions } from '../../store/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/reducers';
+import { useEffect } from 'react';
 
 const drawerWidth = 240;
 
@@ -33,6 +34,13 @@ const Dashboard = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const user = useSelector((state: RootState) => state.authentication.user);
+    const colectivo = useSelector((state: RootState) => state.colectivo);
+
+    useEffect(() => {
+        if (user?.token) {
+            dispatch(colectivoActions.get_one(86));
+        }
+    }, []);
 
     const handleLogout = () => {
         dispatch(userActions.logout());
