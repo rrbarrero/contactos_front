@@ -6,6 +6,7 @@ import { AppBar, Button, Toolbar, Typography } from '@material-ui/core';
 import Sidebar from '../sidebar/Sidebar';
 import ExitIcon from '@material-ui/icons/ExitToApp';
 import ShareIcon from '@material-ui/icons/Share';
+import ColectivoDropdown from './ColectivoDropdown';
 
 const drawerWidth = 240;
 
@@ -42,9 +43,10 @@ const Dashboard = () => {
         <div className={classes.root}>
             <AppBar position="static">
                 <Toolbar>
-                    <Typography variant="h3" noWrap className={classes.title}>
+                    <Typography variant="h4" noWrap className={classes.title}>
                         Contactos
                     </Typography>
+                    <ColectivoDropdown />
                     <Button color="inherit" onClick={handleLogout}><ExitIcon /> Salir</Button>
                 </Toolbar>
             </AppBar>

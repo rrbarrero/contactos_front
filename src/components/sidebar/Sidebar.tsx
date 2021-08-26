@@ -54,34 +54,34 @@ const Sidebar = () => {
                     <ListItemIcon><PeopleIcon /></ListItemIcon>
                     <ListItemText primary="Contactos" />
                 </ListItem>
-                <ListItem button key={1} >
+                <ListItem button key={2} >
                     <ListItemIcon><ListIcon /></ListItemIcon>
                     <ListItemText primary="Listas" />
                 </ListItem>
             </List>
             <Divider />
             <List>
-                <ListItem button key={1} >
+                <ListItem button key={3} >
                     <ListItemIcon><FolderIcon /></ListItemIcon>
                     <ListItemText primary="Colectivos" />
                 </ListItem>
             </List>
             <List>
-                <ListItem button key={1} >
+                <ListItem button key={4} >
                     <ListItemIcon><FolderSharedIcon /></ListItemIcon>
                     <ListItemText primary="SubColectivos" />
                 </ListItem>
             </List>
             <Divider />
             <List>
-                <ListItem button key={1} >
+                <ListItem button key={5} >
                     <ListItemIcon><MailIcon /></ListItemIcon>
                     <ListItemText primary="Plantillas" />
                 </ListItem>
             </List>
             <Divider />
             <List>
-                <ListItem button key={1} >
+                <ListItem button key={6} >
                     <ListItemIcon><ShareIcon /></ListItemIcon>
                     <ListItemText primary="Acciones" />
                 </ListItem>
