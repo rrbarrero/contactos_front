@@ -79,10 +79,10 @@ const ColectivoDropdown = () => {
     return (
         <div>
             <FormControl className={classes.formControl}>
-                <InputLabel id="demo-mutiple-checkbox-label" className={classes.inputLabel}>Colectivo</InputLabel>
+                <InputLabel id="colectivos-checkbox-label" className={classes.inputLabel}>Colectivo</InputLabel>
                 <Select
-                    labelId="demo-mutiple-checkbox-label"
-                    id="demo-mutiple-checkbox"
+                    labelId="colectivos-checkbox-label"
+                    id="colectivos-checkbox"
                     onChange={handleChange}
                     name="colectivo"
                     input={<Input />}
