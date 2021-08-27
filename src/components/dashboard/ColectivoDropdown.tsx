@@ -54,14 +54,26 @@ const ColectivoDropdown = () => {
     const dispatch = useDispatch();
     const user = useSelector((state: RootState) => state.authentication.user);
     const colectivos = useSelector((state: RootState) => state.colectivos);
-    const [colectivosSeleccionados, setColectivosSeleccionados] = React.useState<string[]>([]);
+
+    // TODO: PASAR A REDUX!!
+    const [colectivosSeleccionados, setColectivosSeleccionados] = React.useState<number[]>([]);
 
     if (user?.token && colectivos.length === 0) {
         dispatch(colectivoActions.get_all());
     }
 
     const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-        setColectivosSeleccionados(event.target.value as string[]);
+        setColectivosSeleccionados(event.target.value as number[]);
+    }
+
+    const renderSelected = (selected: number[]) => {
+        const seleccionados: (string | undefined)[] = selected.map(colectivoId => {
+            return colectivos.find(colectivo => colectivo.id === colectivoId)?.nombre;
+        });
+        if (seleccionados.length > 1) {
+            return seleccionados.join(', ').slice(0, 16) + `... (${seleccionados.length.toString()})`;
+        }
+        return seleccionados.join(', ');
     }
 
     return (
@@ -75,14 +87,14 @@ const ColectivoDropdown = () => {
                     name="colectivo"
                     input={<Input />}
                     value={colectivosSeleccionados}
-                    renderValue={(selected) => (selected as string[]).join(', ').slice(0, 12) + `... (${colectivosSeleccionados.length.toString()})`}
+                    renderValue={(selected) => renderSelected(selected as number[])}
                     className={classes.multiSelect}
                     MenuProps={MenuProps}
                     multiple
                 >
                     {colectivos.map((colectivo) =>
-                        <MenuItem key={colectivo.id} value={colectivo.nombre}>
-                            <Checkbox checked={colectivosSeleccionados.indexOf(colectivo.nombre) > -1} />
+                        <MenuItem key={colectivo.id} value={colectivo.id}>
+                            <Checkbox checked={colectivosSeleccionados.indexOf(colectivo.id || 0) > -1} />
                             <ListItemText primary={colectivo.nombre} />
                         </MenuItem>
                     )}
