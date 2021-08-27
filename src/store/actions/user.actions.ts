@@ -31,16 +31,16 @@ export function login(username: string, password: string) {
         );
 
     };
-    function request(user: string) { return { type: userConstants.LOGIN_REQUEST, user } }
-    function success(user: string) { return { type: userConstants.LOGIN_SUCCESS, user } }
-    function failure(error: string) { return { type: userConstants.LOGIN_FAILURE, error } }
+    function request(user: string) { return { type: userConstants.LOGIN_REQUEST, payload: user } }
+    function success(user: string) { return { type: userConstants.LOGIN_SUCCESS, payload: user } }
+    function failure(error: string) { return { type: userConstants.LOGIN_FAILURE, payload: error } }
 }
 
 export function token_refresh(user: User) {
     return (dispatch: (arg0: DispatchType) => void) => {
         if (user.token) {
             dispatch(request(user.username));
-            userService.token_refresh(user.token).then(
+            userService.token_refresh().then(
                 token => {
                     dispatch(success(user.username));
                     history.push('/');
@@ -52,9 +52,9 @@ export function token_refresh(user: User) {
             );
         }
     };
-    function request(username: string) { return { type: userConstants.TOKEN_REFRESH_REQUEST, username } }
-    function success(username: string) { return { type: userConstants.TOKEN_REFRESH_SUCCESS, username } }
-    function failure(error: string) { return { type: userConstants.TOKEN_REFRESH_FAILURE, error } }
+    function request(username: string) { return { type: userConstants.TOKEN_REFRESH_REQUEST, payload: username } }
+    function success(username: string) { return { type: userConstants.TOKEN_REFRESH_SUCCESS, payload: username } }
+    function failure(error: string) { return { type: userConstants.TOKEN_REFRESH_FAILURE, payload: error } }
 }
 
 function logout() {

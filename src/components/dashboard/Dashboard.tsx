@@ -33,14 +33,7 @@ const Dashboard = () => {
 
     const classes = useStyles();
     const dispatch = useDispatch();
-    const user = useSelector((state: RootState) => state.authentication.user);
-    const colectivo = useSelector((state: RootState) => state.colectivo);
-
-    useEffect(() => {
-        if (user?.token) {
-            dispatch(colectivoActions.get_one(86));
-        }
-    }, []);
+    // const user = useSelector((state: RootState) => state.authentication.user);
 
     const handleLogout = () => {
         dispatch(userActions.logout());

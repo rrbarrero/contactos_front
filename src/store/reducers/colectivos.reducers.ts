@@ -1,16 +1,17 @@
 import { colectivoConstants } from "../constants";
-import { colectivoActions } from "../actions/colectivo.actions";
 
 
-let initialState: Colectivo | null = null;
+let initialState: Colectivos = [];
 
-export function colectivo(state = initialState, action: ColectivoAction): (Colectivo | Colectivo[] | null) {
+export function colectivos(state = initialState, action: ColectivoAction): Colectivos {
     switch (action.type) {
         case colectivoConstants.COLECTIVO_GET_ONE:
-            return {
-                id: action.colectivo?.id,
-                nombre: action.colectivo?.nombre,
-            }
+            return [{
+                id: action.payload[0].id,
+                nombre: action.payload[0].nombre,
+            }]
+        case colectivoConstants.COLECTIVO_GET_ALL:
+            return action.payload;
         default:
             return state
     }

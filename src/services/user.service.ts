@@ -1,4 +1,5 @@
 import axios from "axios";
+import { userConstants } from "../store/constants";
 import { store } from "../store/store";
 
 interface LoginData {
@@ -25,12 +26,19 @@ const login = async (username: string, password: string): Promise<string> => {
     return username;
 }
 
-const token_refresh = async (token: string): Promise<string> => {
+const token_refresh = async (): Promise<string> => {
     const url = process.env.REACT_APP_BASE_URL || "not env defined";
+
+    const state = store.getState();
+    if(!state.authentication.user){
+        throw new Error("Not token for refresh");
+    }
+
+    const user: User = state.authentication.user;
 
     let requestConfig = {
         headers: {
-            Authorization: "Bearer " + token
+            Authorization: "Bearer " + user.token
         }
     }
     const response = await axios.post(
@@ -38,7 +46,11 @@ const token_refresh = async (token: string): Promise<string> => {
         requestConfig,
     );
 
-    return response.data.token;
+    const newToken = response.data.token;
+    user.token = newToken;
+    localStorage.setItem('user', JSON.stringify(user));
+
+    return newToken;
 
 }
 

@@ -5,6 +5,7 @@ import { alertActions } from './';
 
 export const colectivoActions = {
     get_one,
+    get_all,
 }
 
 type DispatchType = {
@@ -19,8 +20,8 @@ export function get_one(id: number) {
     return (dispatch: (arg0: DispatchType) => void) => {
         dispatch(request(id));
         colectivoService.get_one(id).then(
-            colectivo => {
-                dispatch(success(colectivo));
+            colectivos => {
+                dispatch(success(id.toString()));
                 history.push('/');
             },
             error => {
@@ -29,7 +30,28 @@ export function get_one(id: number) {
             }
         );
     };
-    function request(id: number) { return { type: colectivoConstants.COLECTIVO_GET_ONE, id } }
-    function success(user: string) { return { type: colectivoConstants.COLECTIVO_SUCCESS, id } }
-    function failure(error: string) { return { type: colectivoConstants.COLECTIVO_ERROR, error } }
+    function request(id: number) { return { type: colectivoConstants.COLECTIVO_GET_ONE, payload: id } }
+    function success(id: string) { return { type: colectivoConstants.COLECTIVO_SUCCESS, payload: id } }
+    function failure(error: string) { return { type: colectivoConstants.COLECTIVO_ERROR, payload: error } }
+}
+
+export function get_all() {
+
+    return (dispatch: (arg0: DispatchType) => void) => {
+        //dispatch(request([]));
+        colectivoService.get_all().then(
+            colectivos => {
+                dispatch(request(colectivos))
+                dispatch(success(colectivos));
+                history.push('/');
+            },
+            error => {
+                dispatch(failure(error.toString()));
+                dispatch(alertActions.error(error.toString()));
+            }
+        );
+    };
+    function request(payload: Colectivos) { return { type: colectivoConstants.COLECTIVO_GET_ALL, payload } }
+    function success(payload: Colectivos) { return { type: colectivoConstants.COLECTIVO_SUCCESS, payload} }
+    function failure(payload: string) { return { type: colectivoConstants.COLECTIVO_ERROR, payload} }
 }

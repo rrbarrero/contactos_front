@@ -7,7 +7,7 @@ type User = {
 
 type UserAction = {
     type: string,
-    user: User,
+    payload: User,
 }
 
 type AuthenticationState = {
@@ -20,12 +20,14 @@ type Colectivo = {
     nombre: string,
 }
 
+type Colectivos = Colectivo[];
+
 type ColectivoAction = {
     type: string,
-    colectivo: Colectivo;
+    payload: Colectivos;
 }
 
 type AlertAction = {
     type: string,
-    message: string,
+    payload: string,
 }
