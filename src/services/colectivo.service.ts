@@ -19,9 +19,9 @@ const do_get = async (endpoint: string) => {
 }
 
 const get_one = async (id: number): Promise<Colectivos> => {
-    
-    const endpoint =`colectivos/${id}`;
-    const  response = await do_get(endpoint);
+
+    const endpoint = `colectivos/${id}`;
+    const response = await do_get(endpoint);
 
     const colectivo: Colectivo = {
         id: response.data.id,
@@ -35,6 +35,7 @@ const get_all = async (): Promise<Colectivos> => {
     const endpoint = 'colectivos/';
     const response = await do_get(endpoint);
     const colectivos: Colectivos = response.data.results;
+    console.log("COLECTIVOS SERVICE", colectivos)
     return colectivos;
 }
 

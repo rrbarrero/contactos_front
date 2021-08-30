@@ -31,8 +31,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Dashboard = () => {
 
-    const classes = useStyles();
     const dispatch = useDispatch();
+    const classes = useStyles();
     // const user = useSelector((state: RootState) => state.authentication.user);
 
     const handleLogout = () => {

@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { alpha, createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { useDispatch, useSelector } from 'react-redux';
-import { colectivoActions, userActions } from '../../store/actions';
+import { colectivoActions, selectedColectivoActions } from '../../store/actions';
 import { RootState } from '../../store/reducers';
 import Input from '@material-ui/core/Input';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -51,19 +51,22 @@ const MenuProps = {
 const ColectivoDropdown = () => {
 
     const classes = useStyles();
-    const dispatch = useDispatch();
+
     const user = useSelector((state: RootState) => state.authentication.user);
     const colectivos = useSelector((state: RootState) => state.colectivos);
+    const colectivosSelected = useSelector((state: RootState) => state.selectedColectivo);
 
-    // TODO: PASAR A REDUX!!
-    const [colectivosSeleccionados, setColectivosSeleccionados] = React.useState<number[]>([]);
+    const dispatch = useDispatch();
 
-    if (user?.token && colectivos.length === 0) {
-        dispatch(colectivoActions.get_all());
-    }
+
+    useEffect(() => {
+        if (colectivos.length === 0) {
+            dispatch(colectivoActions.get_all());
+        }
+    }, [user]);
 
     const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-        setColectivosSeleccionados(event.target.value as number[]);
+        dispatch(selectedColectivoActions.set(event.target.value as number))
     }
 
     const renderSelected = (selected: number[]) => {
@@ -86,7 +89,7 @@ const ColectivoDropdown = () => {
                     onChange={handleChange}
                     name="colectivo"
                     input={<Input />}
-                    value={colectivosSeleccionados}
+                    value={colectivosSelected}
                     renderValue={(selected) => renderSelected(selected as number[])}
                     className={classes.multiSelect}
                     MenuProps={MenuProps}
@@ -94,7 +97,7 @@ const ColectivoDropdown = () => {
                 >
                     {colectivos.map((colectivo) =>
                         <MenuItem key={colectivo.id} value={colectivo.id}>
-                            <Checkbox checked={colectivosSeleccionados.indexOf(colectivo.id || 0) > -1} />
+                            <Checkbox checked={colectivosSelected.indexOf(colectivo.id || 0) > -1} />
                             <ListItemText primary={colectivo.nombre} />
                         </MenuItem>
                     )}

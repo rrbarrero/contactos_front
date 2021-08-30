@@ -7,7 +7,7 @@ interface LoginData {
     password: string;
 }
 
-const login = async (username: string, password: string): Promise<string> => {
+const login = async (username: string, password: string): Promise<User> => {
     const user: User = { username: '', logedIn: false };
     const url = process.env.REACT_APP_LOGIN_URL || "not env defined";
 
@@ -16,21 +16,21 @@ const login = async (username: string, password: string): Promise<string> => {
         password: password,
     };
 
-    
+
     const response = await axios.post(url, loginData);
     user.username = username;
     user.token = response.data.token;
     user.logedIn = true;
     localStorage.setItem('user', JSON.stringify(user));
-    
-    return username;
+
+    return user;
 }
 
 const token_refresh = async (): Promise<string> => {
     const url = process.env.REACT_APP_BASE_URL || "not env defined";
 
     const state = store.getState();
-    if(!state.authentication.user){
+    if (!state.authentication.user) {
         throw new Error("Not token for refresh");
     }
 
@@ -56,14 +56,16 @@ const token_refresh = async (): Promise<string> => {
 
 
 const isAuthenticated = (): boolean => {
-    const userData: string | null = localStorage.getItem('user')
-    if (userData) {
-        const user: User = JSON.parse(userData);
-        if (user.logedIn) {
-            return true;
-        }
-    }
-    return false
+    const state = store.getState();
+    return state.authentication.loggingIn;
+    // const userData: string | null = localStorage.getItem('user')
+    // if (userData) {
+    //     const user: User = JSON.parse(userData);
+    //     if (user.logedIn) {
+    //         return true;
+    //     }
+    // }
+    // return false
 }
 
 const logout = (): boolean => {

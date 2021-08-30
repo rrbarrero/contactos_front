@@ -18,11 +18,11 @@ type DispatchType = {
 
 export function login(username: string, password: string) {
     return (dispatch: (arg0: DispatchType) => void) => {
-        dispatch(request(username));
         userService.login(username, password).then(
             user => {
-                dispatch(success(user));
-                history.push('/');
+                dispatch(request(user));
+                dispatch(success(user.username));
+                history.push('/contactos');
             },
             error => {
                 dispatch(failure(error.toString()));
@@ -31,7 +31,7 @@ export function login(username: string, password: string) {
         );
 
     };
-    function request(user: string) { return { type: userConstants.LOGIN_REQUEST, payload: user } }
+    function request(user: User) { return { type: userConstants.LOGIN_REQUEST, payload: user } }
     function success(user: string) { return { type: userConstants.LOGIN_SUCCESS, payload: user } }
     function failure(error: string) { return { type: userConstants.LOGIN_FAILURE, payload: error } }
 }

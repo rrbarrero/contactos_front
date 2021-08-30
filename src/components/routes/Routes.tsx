@@ -5,16 +5,17 @@ import Landing from "../login/Login"
 import ProtectedRoute from "./ProtectedRoute"
 import UnProtectedRoute from "./UnProtectedRoute"
 import { history } from "../../helpers/";
+import Contactos from "../contactos/Contactos"
 
 const Routes = () => {
 
-    const fallbackUri = `${userService.isAuthenticated() ? '/dashboard' : '/login'}`;
+    const fallbackUri = `${userService.isAuthenticated() ? '/contactos' : '/login'}`;
 
 
     return (
         <Router history={history}>
             <Switch>
-                <ProtectedRoute path="/dashboard" component={Dashboard} />
+                <ProtectedRoute path="/contactos" component={Contactos} />
                 <UnProtectedRoute path="/login" component={Landing} />
                 <Redirect to={fallbackUri} />
             </Switch>

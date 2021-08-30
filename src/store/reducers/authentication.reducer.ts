@@ -18,12 +18,20 @@ export function authentication(state = initialState, action: UserAction): Payloa
         case userConstants.LOGIN_REQUEST:
             return {
                 loggingIn: true,
-                user: action.payload,
+                user: {
+                    username: action.payload.username,
+                    token: action.payload.token,
+                    logedIn: action.payload.logedIn,
+                },
             }
         case userConstants.LOGIN_SUCCESS:
             return {
                 loggingIn: true,
-                user: action.payload,
+                user: {
+                    username: action.payload.username,
+                    token: action.payload.token,
+                    logedIn: action.payload.logedIn,
+                },
             }
         case userConstants.LOGIN_FAILURE:
             return {
