@@ -16,15 +16,15 @@ const useStyles = makeStyles((theme: Theme) =>
 const Contactos = () => {
 
     const classes = useStyles();
-    //const dispatch = useDispatch();
+    const dispatch = useDispatch();
     //const user = useSelector((state: RootState) => state.authentication.user);
-    //const colectivosSelected = useSelector((state: RootState) => state.selectedColectivo);
-    //const cargos = useSelector((state: RootState) => state.cargos);
+    const colectivosSelected = useSelector((state: RootState) => state.selectedColectivo);
+    const cargos = useSelector((state: RootState) => state.cargos);
 
 
-    // useEffect(() => {
-    //     dispatch(cargoActions.get_all(colectivosSelected));
-    // }, [colectivosSelected]);
+    useEffect(() => {
+        dispatch(cargoActions.get_all(colectivosSelected));
+    }, [colectivosSelected, dispatch]);
 
     return (
         <>

@@ -17,11 +17,10 @@ type DispatchType = {
 export function get_all(colectivoSelected: number[]) {
 
     return (dispatch: (arg0: DispatchType) => void) => {
+        dispatch(request(colectivoSelected))
         cargoService.get_all(colectivoSelected).then(
             cargos => {
-                dispatch(request(cargos))
                 dispatch(success(cargos));
-                //history.push('/');
             },
             error => {
                 dispatch(failure(error.toString()));
@@ -29,7 +28,7 @@ export function get_all(colectivoSelected: number[]) {
             }
         );
     };
-    function request(payload: Cargos) { return { type: cargoConstants.CARGO_GET_ALL, payload } }
+    function request(payload: number[]) { return { type: cargoConstants.CARGO_GET_ALL, payload } }
     function success(payload: Cargos) { return { type: cargoConstants.CARGO_SUCCESS, payload } }
     function failure(payload: string) { return { type: cargoConstants.CARGO_ERROR, payload } }
 }

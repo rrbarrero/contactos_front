@@ -63,7 +63,7 @@ const ColectivoDropdown = () => {
         if (colectivos.length === 0) {
             dispatch(colectivoActions.get_all());
         }
-    }, [user]);
+    }, [colectivos.length, dispatch, user]);
 
     const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
         dispatch(selectedColectivoActions.set(event.target.value as number))

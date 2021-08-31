@@ -35,7 +35,6 @@ const get_all = async (): Promise<Colectivos> => {
     const endpoint = 'colectivos/';
     const response = await do_get(endpoint);
     const colectivos: Colectivos = response.data.results;
-    console.log("COLECTIVOS SERVICE", colectivos)
     return colectivos;
 }
 
