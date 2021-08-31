@@ -1,4 +1,5 @@
-import { Switch, Redirect, Router } from "react-router-dom"
+import { Switch, Redirect } from "react-router-dom"
+import { Router } from "react-router";
 import { userService } from "../../services"
 import Dashboard from "../dashboard/Dashboard"
 import Landing from "../login/Login"

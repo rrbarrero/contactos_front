@@ -7,7 +7,7 @@ const do_get = async (endpoint: string) => {
 
     let requestConfig = {
         headers: {
-            Authorization: "Bearer " + state.authentication.user?.token
+            Authorization: "Bearer " + state.authentication.token
         }
     }
 

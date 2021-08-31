@@ -11,6 +11,8 @@ export function colectivos(state = initialState, action: ColectivoAction): Colec
                 nombre: action.payload[0].nombre,
             }]
         case colectivoConstants.COLECTIVO_GET_ALL:
+            return [];
+        case colectivoConstants.COLECTIVO_SUCCESS:
             return action.payload;
         default:
             return state

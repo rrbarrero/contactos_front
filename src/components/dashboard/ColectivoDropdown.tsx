@@ -52,7 +52,7 @@ const ColectivoDropdown = () => {
 
     const classes = useStyles();
 
-    const user = useSelector((state: RootState) => state.authentication.user);
+    const user = useSelector((state: RootState) => state.authentication);
     const colectivos = useSelector((state: RootState) => state.colectivos);
     const colectivosSelected = useSelector((state: RootState) => state.selectedColectivo);
 

@@ -38,10 +38,9 @@ export function get_one(id: number) {
 export function get_all() {
 
     return (dispatch: (arg0: DispatchType) => void) => {
-        //dispatch(request([]));
+        dispatch(request());
         colectivoService.get_all().then(
             colectivos => {
-                dispatch(request(colectivos))
                 dispatch(success(colectivos));
                 history.push('/');
             },
@@ -51,7 +50,7 @@ export function get_all() {
             }
         );
     };
-    function request(payload: Colectivos) { return { type: colectivoConstants.COLECTIVO_GET_ALL, payload } }
+    function request() { return { type: colectivoConstants.COLECTIVO_GET_ALL } }
     function success(payload: Colectivos) { return { type: colectivoConstants.COLECTIVO_SUCCESS, payload} }
     function failure(payload: string) { return { type: colectivoConstants.COLECTIVO_ERROR, payload} }
 }

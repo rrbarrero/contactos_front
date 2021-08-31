@@ -3,7 +3,6 @@ import { AppBar, Button, Toolbar, Typography } from '@material-ui/core';
 import Sidebar from '../sidebar/Sidebar';
 import ExitIcon from '@material-ui/icons/ExitToApp';
 import ColectivoDropdown from './ColectivoDropdown';
-import { history } from "../../helpers/";
 import { colectivoActions, userActions } from '../../store/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/reducers';
@@ -33,11 +32,10 @@ const Dashboard = () => {
 
     const dispatch = useDispatch();
     const classes = useStyles();
-    // const user = useSelector((state: RootState) => state.authentication.user);
+    const user = useSelector((state: RootState) => state.authentication);
 
     const handleLogout = () => {
-        dispatch(userActions.logout());
-        history.push('/login');
+        dispatch(userActions.logout(user));
     }
 
     return (
