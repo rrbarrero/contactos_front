@@ -6,7 +6,7 @@ let initialState: Cargos = [];
 export function cargos(state = initialState, action: CargoAction): Cargos {
     switch (action.type) {
         case cargoConstants.CARGO_GET_ALL:
-            return action.payload;
+            return [];
         case cargoConstants.CARGO_SUCCESS:
             return action.payload;
         default:
