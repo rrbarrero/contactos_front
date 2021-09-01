@@ -32,7 +32,7 @@ const get_one = async (id: number): Promise<Colectivos> => {
 }
 
 const get_all = async (): Promise<Colectivos> => {
-    const endpoint = 'colectivos/';
+    const endpoint = 'colectivos/?limit=300';
     const response = await do_get(endpoint);
     const colectivos: Colectivos = response.data.results;
     return colectivos;

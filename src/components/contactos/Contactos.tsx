@@ -67,8 +67,12 @@ const Contactos = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const colectivosSelected = useSelector((state: RootState) => state.selectedColectivo);
-    const cargos = useSelector((state: RootState) => state.cargos);
-    const cargosSelected = useSelector((state: RootState) => state.selectedCargo);
+    const cargos = useSelector((state: RootState) => state.cargos.rows);
+    const cargosTotalCount: number = useSelector((state: RootState) => state.cargos.count);
+    const cargosNextPageUrl: string = useSelector((state: RootState) => state.cargos.nextPage);
+    const cargosPrevPageUrl: string = useSelector((state: RootState) => state.cargos.prevPage);
+    const cargosCurrentPage: number = useSelector((state: RootState) => state.cargos.currentPage);
+    const cargosSelected: number[] = useSelector((state: RootState) => state.selectedCargo);
 
     const setCargoSelected = (event: GridSelectionModel) => {
         dispatch(selectedCargoActions.cargoSet(event as number[]));
@@ -78,6 +82,16 @@ const Contactos = () => {
         dispatch(cargoActions.get_all(colectivosSelected));
     }, [colectivosSelected, dispatch]);
 
+    const handlePage = (newPage: number) => {
+
+        if (newPage > cargosCurrentPage) {
+            dispatch(cargoActions.get_page(cargosNextPageUrl, newPage));
+        }
+        else {
+            dispatch(cargoActions.get_page(cargosPrevPageUrl, newPage));
+        }
+    }
+
     return (
         <>
             <Dashboard></Dashboard>
@@ -85,10 +99,15 @@ const Contactos = () => {
                 <DataGrid
                     rows={cargos}
                     columns={columns}
-                    pageSize={15}
-                    rowsPerPageOptions={[5]}
+                    pageSize={25}
+                    pagination
+                    paginationMode="server"
+                    rowsPerPageOptions={[0]}
+                    rowCount={cargosTotalCount}
+                    onPageChange={(newPage) => handlePage(newPage)}
                     checkboxSelection
                     disableSelectionOnClick
+                    //autoPageSize
                     onSelectionModelChange={(newSelectionModel) => {
                         setCargoSelected(newSelectionModel);
                     }}

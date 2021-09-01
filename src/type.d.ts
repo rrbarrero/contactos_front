@@ -78,7 +78,13 @@ type Cargo = {
     notas: string;
 }
 
-type Cargos = Cargo[];
+type Cargos = {
+    rows: cargos[];
+    nextPage: string;
+    prevPage: string;
+    count: number;
+    currentPage: number;
+}
 
 type CargoAction = {
     type: string;
