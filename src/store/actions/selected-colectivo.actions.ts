@@ -1,11 +1,11 @@
 import { selectedColectivoConstants } from "../constants"
 
 export const selectedColectivoActions = {
-    set,
+    colectivoSet,
 }
 
 
-export function set(id: number) {
+export function colectivoSet(id: number) {
     return {
         type: selectedColectivoConstants.SELECTED_COLECTIVO_SET,
         payload: id,

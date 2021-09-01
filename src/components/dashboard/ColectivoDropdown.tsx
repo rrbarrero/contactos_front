@@ -66,7 +66,7 @@ const ColectivoDropdown = () => {
     }, [colectivos.length, dispatch, user]);
 
     const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-        dispatch(selectedColectivoActions.set(event.target.value as number))
+        dispatch(selectedColectivoActions.colectivoSet(event.target.value as number))
     }
 
     const renderSelected = (selected: number[]) => {

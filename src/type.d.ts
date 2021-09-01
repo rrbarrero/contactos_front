@@ -84,3 +84,8 @@ type CargoAction = {
     type: string;
     payload: Cargos;
 }
+
+type SelectedCargoAction = {
+    type: string;
+    payload: number[];
+}

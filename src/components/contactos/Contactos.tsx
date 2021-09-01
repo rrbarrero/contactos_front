@@ -1,14 +1,12 @@
 import * as React from 'react';
-// import { GridColDef, GridValueGetterParams } from '@material-ui/data-grid';
 import { DataGrid, GridColDef, GridSelectionModel, GridValueGetterParams } from '@mui/x-data-grid';
 import { alpha, createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { cargoActions } from "../../store/actions/cargo.actions";
-import { colectivoActions } from '../../store/actions/colectivo.actions';
 import { RootState } from "../../store/reducers";
 import Dashboard from "../dashboard/Dashboard";
-import Box from '@material-ui/core/Box';
+import { selectedCargoActions } from '../../store/actions';
 
 const drawerWidth = 240;
 
@@ -17,7 +15,7 @@ const useStyles = makeStyles((theme: Theme) =>
         dataGridContainer: {
             height: 700,
             width: '80%',
-            paddingLeft: drawerWidth,
+            paddingLeft: drawerWidth + 20,
         }
     }),
 );
@@ -68,10 +66,13 @@ const Contactos = () => {
 
     const classes = useStyles();
     const dispatch = useDispatch();
-    //const user = useSelector((state: RootState) => state.authentication.user);
     const colectivosSelected = useSelector((state: RootState) => state.selectedColectivo);
     const cargos = useSelector((state: RootState) => state.cargos);
-    const [cargosSelected, setCargosSelected] = React.useState<GridSelectionModel>([]);
+    const cargosSelected = useSelector((state: RootState) => state.selectedCargo);
+
+    const setCargoSelected = (event: GridSelectionModel) => {
+        dispatch(selectedCargoActions.cargoSet(event as number[]));
+    }
 
     useEffect(() => {
         dispatch(cargoActions.get_all(colectivosSelected));
@@ -89,7 +90,7 @@ const Contactos = () => {
                     checkboxSelection
                     disableSelectionOnClick
                     onSelectionModelChange={(newSelectionModel) => {
-                        setCargosSelected(newSelectionModel);
+                        setCargoSelected(newSelectionModel);
                     }}
                     selectionModel={cargosSelected}
                 />
