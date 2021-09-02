@@ -15,6 +15,7 @@ import { RootState } from "../../store/reducers";
 import Badge from '@material-ui/core/Badge';
 import PersonIcon from '@material-ui/icons/Person';
 import MailIcon from '@material-ui/icons/Mail';
+import AddIcon from '@material-ui/icons/Add';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -35,6 +36,13 @@ const ContextualMenu = () => {
                 <PersonIcon style={{ fontSize: 40 }} />
             </Badge>
             <List component="nav" aria-label="main mailbox folders">
+                <ListItem button>
+                    <ListItemIcon>
+                        <AddIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Nuevo" />
+                </ListItem>
+                <Divider />
                 {selectedCargo.length === 1 &&
                     <ListItem button>
                         <ListItemIcon>
