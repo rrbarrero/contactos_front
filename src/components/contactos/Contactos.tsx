@@ -1,6 +1,6 @@
 import { DataGrid, GridColDef, GridSelectionModel, GridValueGetterParams } from '@mui/x-data-grid';
 import { alpha, createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { cargoActions } from "../../store/actions/cargo.actions";
 import { RootState } from "../../store/reducers";
@@ -29,6 +29,9 @@ const useStyles = makeStyles((theme: Theme) =>
             // marginLeft: 5,
             //backgroundColor: 'rgb(231 232 240)',
             borderRadius: 2,
+        }, backdrop: {
+            zIndex: theme.zIndex.drawer + 1,
+            color: '#fff',
         }
     }),
 );
@@ -94,10 +97,17 @@ const Contactos = () => {
     const cargosPrevPageUrl: string = useSelector((state: RootState) => state.cargos.prevPage);
     const cargosCurrentPage: number = useSelector((state: RootState) => state.cargos.currentPage);
     const cargosSelected: number[] = useSelector((state: RootState) => state.selectedCargo);
+    const searchText = useSelector((state: RootState) => state.searchContacto);
 
     const setCargoSelected = (event: GridSelectionModel) => {
         dispatch(selectedCargoActions.cargoSet(event as number[]));
     }
+
+    useEffect(() => {
+        if (searchText) {
+            dispatch(cargoActions.search(searchText));
+        }
+    }, [searchText, dispatch])
 
     useEffect(() => {
         dispatch(cargoActions.get_all(colectivosSelected));

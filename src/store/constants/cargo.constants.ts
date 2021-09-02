@@ -3,4 +3,5 @@ export const cargoConstants = {
     CARGO_SUCCESS: 'CARGO_SUCCESS',
     CARGO_ERROR: 'CARGO_ERROR',
     CARGO_GET_PAGE: 'CARGO_GET_PAGE',
+    CARGO_SEARCH: 'CARGO_SEARCH',
 }

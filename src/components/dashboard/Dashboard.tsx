@@ -1,5 +1,5 @@
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
-import { AppBar, Button, Toolbar, Typography } from '@material-ui/core';
+import { AppBar, Button, StylesProvider, Toolbar, Typography } from '@material-ui/core';
 import Sidebar from '../sidebar/Sidebar';
 import ExitIcon from '@material-ui/icons/ExitToApp';
 import ColectivoDropdown from './ColectivoDropdown';
@@ -7,6 +7,8 @@ import { colectivoActions, userActions } from '../../store/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/reducers';
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import SearchBox from './SearchBox';
 
 const drawerWidth = 240;
 
@@ -23,6 +25,10 @@ const useStyles = makeStyles((theme: Theme) =>
         title: {
             flexGrow: 1,
             paddingLeft: drawerWidth
+        },
+        headerLink: {
+            color: 'white',
+            textDecoration: 'none',
         }
     }),
 );
@@ -43,8 +49,9 @@ const Dashboard = () => {
             <AppBar position="static">
                 <Toolbar>
                     <Typography variant="h4" noWrap className={classes.title}>
-                        Contactos
+                        <Link className={classes.headerLink} to="/contactos"> Contactos</Link>
                     </Typography>
+                    <SearchBox />
                     <ColectivoDropdown />
                     <Typography variant="h4" noWrap>
                         {/* {user?.username} */}

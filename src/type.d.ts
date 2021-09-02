@@ -42,6 +42,11 @@ type SelectedColectivoAction = {
     payload: number[];
 }
 
+type searchContactoAction = {
+    type: string;
+    payload: string;
+}
+
 type AlertAction = {
     type: string;
     payload: string;
@@ -104,4 +109,9 @@ type CargoAction = {
 type SelectedCargoAction = {
     type: string;
     payload: number[];
+}
+
+type SpinnerAction = {
+    type: string;
+    payload: boolean;
 }

@@ -51,6 +51,15 @@ const ContextualMenu = () => {
                         <ListItemText primary="Modificar" />
                     </ListItem>
                 }
+                {selectedCargo.length === 1 &&
+                    <ListItem button>
+                        <ListItemIcon>
+                            <AddIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Añadir cargo" />
+                    </ListItem>
+                }
+                <Divider />
                 {selectedCargo.length > 0 &&
                     <ListItem button>
                         <ListItemIcon>
@@ -59,6 +68,7 @@ const ContextualMenu = () => {
                         <ListItemText primary="Añadir a lista..." />
                     </ListItem>
                 }
+                <Divider />
                 {selectedCargo.length > 0 &&
                     <ListItem button>
                         <ListItemIcon>

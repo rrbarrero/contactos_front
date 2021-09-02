@@ -62,8 +62,49 @@ const get_page = async (url: string, currentPage = 0): Promise<Cargos> => {
     return cargos;
 }
 
+const search = async (needle: string): Promise<Cargos> => {
+    const url = process.env.REACT_APP_BASE_URL || "not env defined";
+    const state = store.getState();
+
+    let cargos: Cargos = {
+        rows: [],
+        nextPage: '',
+        prevPage: '',
+        currentPage: 0,
+        count: 0,
+    }
+
+    let termino1: string = needle;
+    let termino2: string = '';
+    if (needle.split(' ').length == 2) {
+        termino1 = needle.split(' ')[0];
+        termino2 = needle.split(' ')[1];
+    }
+
+    let requestConfig = {
+        headers: {
+            Authorization: "Bearer " + state.authentication.token
+        },
+        params: { termino1, termino2 },
+    }
+
+    const response = await axios.get(
+        url + "buscar/",
+        requestConfig,
+    );
+
+    cargos.count = response.data.count;
+    cargos.nextPage = response.data.next;
+    cargos.prevPage = response.data.previous;
+    cargos.rows = response.data.results;
+
+    return cargos;
+}
+
+
 
 export const cargoService = {
     get_all,
     get_page,
+    search,
 }
