@@ -1,4 +1,5 @@
 import axios from "axios";
+import { personaService } from ".";
 import { store } from "../store/store";
 
 
@@ -26,6 +27,7 @@ const get_all = async (colectivoSelected: number[], currentPage = 0): Promise<Ca
         count: response.data.count,
         currentPage: currentPage,
     }
+
     return cargos;
 
 }

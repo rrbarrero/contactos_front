@@ -59,8 +59,17 @@ type Persona = {
     tratamiento: Tratamiento;
 }
 
+type Telefono = {
+    id?: number;
+    cargo: number;
+    nombre: string;
+    numero: string;
+    nota: string;
+}
+
 type Cargo = {
     id?: number;
+    persona: Persona;
     cargo: string;
     finalizado: boolean;
     ciudad: string;
@@ -76,6 +85,7 @@ type Cargo = {
     subcolectivo: SubColectivo;
     usuarioModificacion: User;
     notas: string;
+    telefonos: Telefono[];
 }
 
 type Cargos = {

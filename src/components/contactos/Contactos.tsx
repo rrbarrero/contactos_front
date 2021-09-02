@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { DataGrid, GridColDef, GridSelectionModel, GridValueGetterParams } from '@mui/x-data-grid';
 import { alpha, createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { useEffect } from 'react';
@@ -7,21 +6,49 @@ import { cargoActions } from "../../store/actions/cargo.actions";
 import { RootState } from "../../store/reducers";
 import Dashboard from "../dashboard/Dashboard";
 import { selectedCargoActions } from '../../store/actions';
+import { Box } from '@material-ui/core';
+import ContextualMenu from './ContextualMenu';
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
+        wrapper: {
+            display: 'grid',
+            gridTemplateColumns: '85% 13%',
+            columnGap: '10px',
+        },
         dataGridContainer: {
             height: 700,
-            width: '80%',
+            // width: '72%',
             paddingLeft: drawerWidth + 20,
+        },
+        boxOptionsContainer: {
+            height: 700,
+            // width: '15%',
+            // marginLeft: 5,
+            //backgroundColor: 'rgb(231 232 240)',
+            borderRadius: 2,
         }
     }),
 );
 
 const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', width: 120 },
+    { field: 'id', headerName: 'ID', width: 60 },
+    {
+        field: 'nombre',
+        headerName: 'Nombre',
+        width: 170,
+        editable: true,
+        valueFormatter: (params) => params.row?.persona.nombre, //row?.maintenancePlan?.name 
+    },
+    {
+        field: 'apellidos',
+        headerName: 'Apellidos',
+        width: 220,
+        editable: true,
+        valueFormatter: (params) => params.row?.persona.apellidos, //row?.maintenancePlan?.name 
+    },
     {
         field: 'cargo',
         headerName: 'Cargo',
@@ -35,18 +62,12 @@ const columns: GridColDef[] = [
         editable: true,
     },
     {
-        field: 'ciudad',
-        headerName: 'Ciudad',
-        width: 200,
+        field: 'telefonos',
+        headerName: 'Teléfono',
+        width: 150,
         editable: true,
+        valueFormatter: (params) => params.row?.telefonos.length > 0 ? params.row?.telefonos[0].numero : '', //row?.maintenancePlan?.name 
     },
-    {
-        field: 'colectivo',
-        headerName: 'Colectivo',
-        type: 'number',
-        width: 200,
-        editable: true,
-    }
     // {
     //   field: 'fullName',
     //   headerName: 'Full name',
@@ -95,24 +116,29 @@ const Contactos = () => {
     return (
         <>
             <Dashboard></Dashboard>
-            <div className={classes.dataGridContainer}>
-                <DataGrid
-                    rows={cargos}
-                    columns={columns}
-                    pageSize={25}
-                    pagination
-                    paginationMode="server"
-                    rowsPerPageOptions={[0]}
-                    rowCount={cargosTotalCount}
-                    onPageChange={(newPage) => handlePage(newPage)}
-                    checkboxSelection
-                    disableSelectionOnClick
-                    //autoPageSize
-                    onSelectionModelChange={(newSelectionModel) => {
-                        setCargoSelected(newSelectionModel);
-                    }}
-                    selectionModel={cargosSelected}
-                />
+            <div className={classes.wrapper}>
+                <div className={classes.dataGridContainer}>
+                    <DataGrid
+                        rows={cargos}
+                        columns={columns}
+                        pageSize={25}
+                        pagination
+                        paginationMode="server"
+                        rowsPerPageOptions={[0]}
+                        rowCount={cargosTotalCount}
+                        onPageChange={(newPage) => handlePage(newPage)}
+                        checkboxSelection
+                        disableSelectionOnClick
+                        //autoPageSize
+                        onSelectionModelChange={(newSelectionModel) => {
+                            setCargoSelected(newSelectionModel);
+                        }}
+                        selectionModel={cargosSelected}
+                    />
+                </div>
+                <Box className={classes.boxOptionsContainer}>
+                    <ContextualMenu />
+                </Box>
             </div>
         </>
     );
