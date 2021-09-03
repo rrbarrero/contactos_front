@@ -1,6 +1,6 @@
-import { DataGrid, GridColDef, GridSelectionModel, GridValueGetterParams } from '@mui/x-data-grid';
-import { alpha, createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { useEffect, useState } from 'react';
+import { DataGrid, GridColDef, GridSelectionModel } from '@mui/x-data-grid';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { cargoActions } from "../../store/actions/cargo.actions";
 import { RootState } from "../../store/reducers";

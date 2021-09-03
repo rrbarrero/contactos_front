@@ -1,16 +1,13 @@
-import { alpha, withStyles, createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { withStyles, createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
-import ListItem, { ListItemProps } from '@material-ui/core/ListItem';
+import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
-import InboxIcon from '@material-ui/icons/Inbox';
 import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import DraftsIcon from '@material-ui/icons/Drafts';
 import EditIcon from '@material-ui/icons/Edit';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from "../../store/reducers";
 import Badge from '@material-ui/core/Badge';
 import PersonIcon from '@material-ui/icons/Person';
@@ -43,10 +40,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const ContextualMenu = () => {
     const classes = useStyles();
-    const dispatch = useDispatch();
+    //const dispatch = useDispatch();
     const selectedCargo = useSelector((state: RootState) => state.selectedCargo);
 
-    const chipTxt = `Seleccionados ${selectedCargo.length}`;
+    //const chipTxt = `Seleccionados ${selectedCargo.length}`;
 
     return (
         <>

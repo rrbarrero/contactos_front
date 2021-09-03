@@ -1,6 +1,5 @@
 import { cargoService } from "../../services";
 import { cargoConstants } from "../constants";
-import { history } from '../../helpers';
 import { alertActions, spinnerActions } from '.';
 
 export const cargoActions = {

@@ -1,12 +1,11 @@
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
-import { AppBar, Button, StylesProvider, Toolbar, Typography } from '@material-ui/core';
+import { AppBar, Button, Toolbar, Typography } from '@material-ui/core';
 import Sidebar from '../sidebar/Sidebar';
 import ExitIcon from '@material-ui/icons/ExitToApp';
 import ColectivoDropdown from './ColectivoDropdown';
-import { colectivoActions, userActions } from '../../store/actions';
+import { userActions } from '../../store/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/reducers';
-import { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import SearchBox from './SearchBox';
 

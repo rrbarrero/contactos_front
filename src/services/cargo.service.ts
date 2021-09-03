@@ -1,5 +1,4 @@
 import axios from "axios";
-import { personaService } from ".";
 import { store } from "../store/store";
 
 

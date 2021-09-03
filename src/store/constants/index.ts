@@ -6,3 +6,4 @@ export * from './cargo.constants';
 export * from './selected-cargo.constant'
 export * from './search-contacto.constant';
 export * from './spinner-constant';
+export * from './tratamiento.constants';

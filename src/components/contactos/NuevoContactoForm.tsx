@@ -1,11 +1,20 @@
 import 'react-app-polyfill/ie11';
-import { Formik, Field, Form, FormikHelpers, useFormik, FormikProps, withFormik } from 'formik';
-import { alpha, createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { Formik, Form } from 'formik';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Dashboard from '../dashboard/Dashboard';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import ValidationSchema from './ContactoFormValidation';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from "../../store/reducers";
+import { tratamientoActions } from '../../store/actions';
+import { useEffect, useState } from 'react';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import Input from '@material-ui/core/Input';
 
 
 
@@ -22,16 +31,37 @@ const useStyles = makeStyles((theme: Theme) =>
         form: {
             color: 'black',
             textDecoration: 'none',
-        }
+        },
+        formControl: {
+            margin: theme.spacing(1),
+            minWidth: 120,
+        },
+        selectEmpty: {
+            marginTop: theme.spacing(2),
+        },
     }),
 );
 
 const NuevoContactoForm = () => {
 
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const tratamientos = useSelector((state: RootState) => state.tratamientos);
+    const [selectedTratamiento, setSelectedTratamiento] = useState<Tratamiento>();
+
+    useEffect(() => {
+        dispatch(tratamientoActions.get_all_tratamientos());
+    }, [dispatch]);
 
     let initialValues: Cargo = {
-        persona: { tratamiento: { nombre: '' }, nombre: '', apellidos: '' },
+        persona: {
+            tratamiento: {
+                id: tratamientos.length > 0 ? tratamientos[0].id : 0,
+                nombre: tratamientos.length > 0 ? tratamientos[0].nombre : ''
+            },
+            nombre: '',
+            apellidos: ''
+        },
         cargo: '',
         finalizado: false,
         ciudad: '',
@@ -44,6 +74,15 @@ const NuevoContactoForm = () => {
         colectivo: { nombre: '' },
         subcolectivo: { nombre: '', colectivo: { nombre: '' } },
 
+    }
+
+    const handleChangeTratamiento = (e: unknown) => {
+        const tratamiento: Tratamiento | undefined = tratamientos.find(tr => tr.id === e as number);
+        setSelectedTratamiento(tratamiento);
+    };
+
+    const renderSelected = () => {
+        return selectedTratamiento?.nombre;
     }
 
     return (
@@ -71,6 +110,24 @@ const NuevoContactoForm = () => {
                     } = props;
                     return (
                         <Form>
+                            <FormControl className={classes.formControl}>
+                                <InputLabel id="tratamiento-select-label">Tratamiento</InputLabel>
+                                <Select
+                                    labelId="tratamiento-select-label"
+                                    id="tratamiento"
+                                    input={<Input />}
+                                    value={values.persona.tratamiento.id}
+                                    onChange={(e) => handleChangeTratamiento(e.target.value)}
+                                    renderValue={renderSelected}
+                                    defaultValue={tratamientos.length > 0 ? tratamientos[0].id : 0}
+                                >
+                                    {tratamientos.map((tratamiento) =>
+                                        <MenuItem key={tratamiento.id} value={tratamiento.id}>
+                                            {tratamiento.nombre}
+                                        </MenuItem>
+                                    )}
+                                </Select>
+                            </FormControl>
                             <TextField
                                 fullWidth
                                 id="nombre"

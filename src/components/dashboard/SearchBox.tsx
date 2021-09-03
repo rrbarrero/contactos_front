@@ -2,8 +2,7 @@ import React from 'react';
 import { alpha, makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from "../../store/reducers";
+import { useDispatch } from 'react-redux';
 import { searchContactoActions } from '../../store/actions';
 
 

@@ -1,6 +1,5 @@
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 import { Drawer, Divider, List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import PeopleIcon from '@material-ui/icons/People';
 import ListIcon from '@material-ui/icons/List';

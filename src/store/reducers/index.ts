@@ -8,6 +8,7 @@ import { selectedColectivo } from './selected-colectivo.reducer';
 import { selectedCargo } from './selected-cargo.reducers';
 import { searchContacto } from './search-contacto.reducers';
 import { Spinner } from './spinner.reducers';
+import { tratamientos } from './tratamientos.reducers';
 
 const rootReducer = combineReducers({
     authentication,
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
     cargos,
     Spinner,
     alert,
+    tratamientos,
 });
 
 

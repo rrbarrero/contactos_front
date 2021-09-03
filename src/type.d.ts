@@ -57,6 +57,8 @@ type Tratamiento = {
     nombre: string;
 }
 
+type Tratamientos = Tratamiento[];
+
 type Persona = {
     id?: number;
     nombre: string;
@@ -124,4 +126,9 @@ type SelectedCargoAction = {
 type SpinnerAction = {
     type: string;
     payload: boolean;
+}
+
+type TratamientoAction = {
+    type: string;
+    payload: Tratamientos;
 }

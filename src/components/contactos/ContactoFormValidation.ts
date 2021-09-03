@@ -2,6 +2,9 @@ import * as yup from 'yup';
 
 const ValidationSchema = yup.object().shape({
     persona: yup.object().shape({
+        tratamiento: yup.object().shape({
+            id: yup.number().required('Tratamiento requerido')
+        }),
         nombre: yup
             .string()
             .min(4, 'Se necesitan un mínimo de 4 caracteres para el campo nombre')
