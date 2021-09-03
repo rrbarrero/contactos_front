@@ -1,4 +1,4 @@
-import { alpha, createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { alpha, withStyles, createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem, { ListItemProps } from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -16,6 +16,20 @@ import Badge from '@material-ui/core/Badge';
 import PersonIcon from '@material-ui/icons/Person';
 import MailIcon from '@material-ui/icons/Mail';
 import AddIcon from '@material-ui/icons/Add';
+import AlarmOnIcon from '@material-ui/icons/AlarmOn';
+
+const StyledBadge = withStyles((theme: Theme) =>
+    createStyles({
+        badge: {
+            right: -10,
+            // top: -5,
+            border: `2px solid ${theme.palette.background.paper}`,
+            // padding: '0 4px',
+            fontSize: 24,
+            padding: 12,
+        },
+    }),
+)(Badge);
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -32,9 +46,9 @@ const ContextualMenu = () => {
 
     return (
         <>
-            <Badge color="secondary" badgeContent={selectedCargo.length} showZero>
+            <StyledBadge color="primary" badgeContent={selectedCargo.length} >
                 <PersonIcon style={{ fontSize: 40 }} />
-            </Badge>
+            </StyledBadge>
             <List component="nav" aria-label="main mailbox folders">
                 <ListItem button>
                     <ListItemIcon>
@@ -75,6 +89,15 @@ const ContextualMenu = () => {
                             <MailIcon />
                         </ListItemIcon>
                         <ListItemText primary="Enviar correo..." />
+                    </ListItem>
+                }
+                <Divider />
+                {selectedCargo.length > 0 &&
+                    <ListItem button>
+                        <ListItemIcon>
+                            <AlarmOnIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Finalizar cargo" />
                     </ListItem>
                 }
                 <Divider />

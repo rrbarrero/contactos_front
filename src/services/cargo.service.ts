@@ -76,7 +76,7 @@ const search = async (needle: string): Promise<Cargos> => {
 
     let termino1: string = needle;
     let termino2: string = '';
-    if (needle.split(' ').length == 2) {
+    if (needle.split(' ').length === 2) {
         termino1 = needle.split(' ')[0];
         termino2 = needle.split(' ')[1];
     }
