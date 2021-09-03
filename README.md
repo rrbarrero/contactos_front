@@ -1,5 +1,7 @@
 # Anotaciones:
 * https://material-ui.com/api/data-grid/data-grid/
+* https://medium.com/@arfizrahman0/react-form-validation-having-nested-schema-with-formik-yup-and-material-ui-e2a2bb4e0356
+
 
 # Getting Started with Create React App
 

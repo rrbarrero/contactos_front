@@ -1,24 +1,13 @@
 import 'react-app-polyfill/ie11';
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import { Formik, Field, Form, FormikHelpers, useFormik, FormikProps, withFormik } from 'formik';
 import { alpha, createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Dashboard from '../dashboard/Dashboard';
 import TextField from '@material-ui/core/TextField';
-import * as yup from 'yup';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
+import ValidationSchema from './ContactoFormValidation';
 
-const validationSchema = yup.object({
-    nombre: yup
-        .string()
-        .min(4, 'Se necesitan un mínimo de 4 caracteres para el campo nombre')
-        .required('El campo nombre es requerido'),
-    apellidos: yup
-        .string()
-        .min(8, 'Password should be of minimum 8 characters length')
-        .required('Password is required'),
-});
+
 
 const drawerWidth = 240;
 
@@ -63,7 +52,7 @@ const NuevoContactoForm = () => {
             <Box className={classes.box}>
                 <Formik
                     initialValues={initialValues}
-                    // validationSchema={validationSchema}
+                    validationSchema={ValidationSchema}
                     onSubmit={(values, actions) => {
                         alert(JSON.stringify(values, null, 2));
                         actions.setSubmitting(false);

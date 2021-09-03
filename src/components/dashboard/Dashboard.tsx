@@ -7,7 +7,7 @@ import { colectivoActions, userActions } from '../../store/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/reducers';
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import SearchBox from './SearchBox';
 
 const drawerWidth = 240;
@@ -39,6 +39,7 @@ const Dashboard = () => {
     const dispatch = useDispatch();
     const classes = useStyles();
     const user = useSelector((state: RootState) => state.authentication);
+    const location = useLocation();
 
     const handleLogout = () => {
         dispatch(userActions.logout(user));
@@ -51,8 +52,8 @@ const Dashboard = () => {
                     <Typography variant="h4" noWrap className={classes.title}>
                         <Link className={classes.headerLink} to="/contactos"> Contactos</Link>
                     </Typography>
-                    <SearchBox />
-                    <ColectivoDropdown />
+                    {location.pathname === '/contactos' && <SearchBox />}
+                    {location.pathname === '/contactos' && <ColectivoDropdown />}
                     <Typography variant="h4" noWrap>
                         {/* {user?.username} */}
                     </Typography>
