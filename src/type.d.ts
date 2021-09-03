@@ -72,6 +72,16 @@ type Telefono = {
     nota: string;
 }
 
+type Provincia = {
+    id?: number;
+    nombre: string;
+}
+
+type Pais = {
+    id?: number;
+    nombre: string;
+}
+
 type Cargo = {
     id?: number;
     persona: Persona;
@@ -83,14 +93,14 @@ type Cargo = {
     provincia: Provincia;
     pais: Pais;
     empresa: string;
-    fechaCese: Date;
+    fechaCese?: Date;
     fechaAlta: Date;
-    fechaModificacion: Date;
+    fechaModificacion?: Date;
     colectivo: Colectivo;
     subcolectivo: SubColectivo;
-    usuarioModificacion: User;
-    notas: string;
-    telefonos: Telefono[];
+    usuarioModificacion?: User;
+    notas?: string;
+    telefonos?: Telefono[];
 }
 
 type Cargos = {

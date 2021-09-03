@@ -17,6 +17,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import MailIcon from '@material-ui/icons/Mail';
 import AddIcon from '@material-ui/icons/Add';
 import AlarmOnIcon from '@material-ui/icons/AlarmOn';
+import { Link } from 'react-router-dom';
 
 const StyledBadge = withStyles((theme: Theme) =>
     createStyles({
@@ -33,7 +34,10 @@ const StyledBadge = withStyles((theme: Theme) =>
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-
+        headerLink: {
+            color: 'black',
+            textDecoration: 'none',
+        }
     }),
 );
 
@@ -50,14 +54,17 @@ const ContextualMenu = () => {
                 <PersonIcon style={{ fontSize: 40 }} />
             </StyledBadge>
             <List component="nav" aria-label="main mailbox folders">
-                <ListItem button>
-                    <ListItemIcon>
-                        <AddIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Nuevo" />
-                </ListItem>
+                <Link to="/nuevo_contacto" className={classes.headerLink}>
+                    <ListItem button>
+                        <ListItemIcon>
+                            <AddIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Nuevo" />
+                    </ListItem>
+                </Link>
                 <Divider />
                 {selectedCargo.length === 1 &&
+
                     <ListItem button>
                         <ListItemIcon>
                             <EditIcon />
