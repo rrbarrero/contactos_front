@@ -94,10 +94,7 @@ const NuevoContactoForm = () => {
 
     let initialValues: Cargo = {
         persona: {
-            tratamiento: {
-                id: tratamientos.length > 0 ? tratamientos[0].id : 0,
-                nombre: tratamientos.length > 0 ? tratamientos[0].nombre : ''
-            },
+            tratamiento: {nombre:''},
             nombre: '',
             apellidos: ''
         },
@@ -106,20 +103,11 @@ const NuevoContactoForm = () => {
         ciudad: '',
         codPostal: '',
         direccion: '',
-        provincia: { 
-            id: provincias.length > 0 ? provincias[0].id : 0,
-            nombre: provincias.length > 0 ? provincias[0].nombre : ''
-         },
-        pais: { 
-            id: paises.length > 0 ? paises[0].id : 0,
-            nombre: paises.length > 0 ? paises[0].nombre : ''
-         },
+        provincia: {nombre: ''},
+        pais: {nombre: ''},
         empresa: '',
         fechaAlta: new Date(),
-        colectivo: { 
-            id: colectivos.length > 0 ? colectivos[0].id : 0,
-            nombre: colectivos.length > 0 ? colectivos[0].nombre : ''
-         },
+        colectivo: {nombre: ''},
         subcolectivo: { nombre: '', colectivo: { nombre: '' } },
 
     }
@@ -127,6 +115,7 @@ const NuevoContactoForm = () => {
     const handleChangeTratamiento = (e: unknown) => {
         const tratamiento: Tratamiento | undefined = tratamientos.find(tr => tr.id === e as number);
         setSelectedTratamiento(tratamiento);
+        console.log(selectedPais);
     };
 
     const handleChangeProvincia = (e: unknown) => {
@@ -137,6 +126,7 @@ const NuevoContactoForm = () => {
     const handleChangePais = (e: unknown) => {
         const pais: Pais | undefined = paises.find(pa => pa.id === e as number);
         setSelectedPais(pais);
+        console.log(selectedTratamiento);
     };
 
     const handleChangeColectivo = (e: unknown) => {
@@ -176,7 +166,7 @@ const NuevoContactoForm = () => {
                 <div></div>
                 <Formik
                     initialValues={initialValues}
-                    validationSchema={ValidationSchema}
+                    //validationSchema={ValidationSchema}
                     onSubmit={(values, actions) => {
                         values.fechaAlta = new Date();
                         if (selectedTratamiento) {
