@@ -18,8 +18,10 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+//import moment from 'moment';
 
 
+//moment.locale("es");
 
 const drawerWidth = 240;
 
@@ -51,6 +53,11 @@ const useStyles = makeStyles((theme: Theme) =>
         control: {
             padding: theme.spacing(2),
         },
+        dateField: {
+            marginLeft: theme.spacing(1),
+            marginRight: theme.spacing(1),
+            width: 200,
+        }
     }),
 );
 
@@ -72,6 +79,7 @@ const NuevoContactoForm = () => {
     const [selectedColectivo, setSelectedColectivo] = useState<Colectivo>();
     const [selectedSubColectivo, setSelectedSubColectivo] = useState<SubColectivo>();
     const [cargoTerminado, setCargoTerminado] = useState(false);
+    const [fechaCese, setFechaCese] = useState(new Date());
 
     useEffect(() => {
         dispatch(tratamientoActions.get_all_tratamientos());
@@ -144,8 +152,7 @@ const NuevoContactoForm = () => {
 
     const handleChangeCargoTerminado = (event: React.ChangeEvent<HTMLInputElement>) => {
         setCargoTerminado(event.target.checked);
-      };
-    
+    };
 
     const renderSelectedTratamiento = () => {
         return selectedTratamiento?.nombre;
@@ -181,6 +188,7 @@ const NuevoContactoForm = () => {
                             values.persona.tratamiento = { ...selectedTratamiento };
                         }
                         values.finalizado = cargoTerminado;
+                        console.log("SUBMITED FORM", values);
                         alert(JSON.stringify(values, null, 2));
                         actions.setSubmitting(false);
                     }}
@@ -364,12 +372,24 @@ const NuevoContactoForm = () => {
                                         </Select>
                                     </Grid>
                                 </Grid>
-                                
                                 <FormControlLabel control={<Checkbox
                                     checked={cargoTerminado}
                                     onChange={handleChangeCargoTerminado}
                                     inputProps={{ 'aria-label': 'controlled' }}
                                     />} label="Cargo terminado" />
+
+                                <TextField
+                                    id="date"
+                                    label="Fecha de cese"
+                                    type="date"
+                                    value={values.fechaCese}
+                                    defaultValue={fechaCese}
+                                    className={classes.dateField}
+                                    InputLabelProps={{
+                                    shrink: true,
+                                    }}
+                                />
+
                                 <Button className={classes.submitButton} color="primary" variant="contained" type="submit">
                                     Submit
                                 </Button>
