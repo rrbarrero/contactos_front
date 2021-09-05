@@ -16,6 +16,8 @@ import Select from '@material-ui/core/Select';
 import Input from '@material-ui/core/Input';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 
 
@@ -69,6 +71,7 @@ const NuevoContactoForm = () => {
     const [selectedPais, setSelectedPais] = useState<Pais>();
     const [selectedColectivo, setSelectedColectivo] = useState<Colectivo>();
     const [selectedSubColectivo, setSelectedSubColectivo] = useState<SubColectivo>();
+    const [cargoTerminado, setCargoTerminado] = useState(false);
 
     useEffect(() => {
         dispatch(tratamientoActions.get_all_tratamientos());
@@ -139,6 +142,11 @@ const NuevoContactoForm = () => {
         setSelectedSubColectivo(subColectivo);
     };
 
+    const handleChangeCargoTerminado = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setCargoTerminado(event.target.checked);
+      };
+    
+
     const renderSelectedTratamiento = () => {
         return selectedTratamiento?.nombre;
     }
@@ -172,6 +180,7 @@ const NuevoContactoForm = () => {
                         if (selectedTratamiento) {
                             values.persona.tratamiento = { ...selectedTratamiento };
                         }
+                        values.finalizado = cargoTerminado;
                         alert(JSON.stringify(values, null, 2));
                         actions.setSubmitting(false);
                     }}
@@ -355,6 +364,12 @@ const NuevoContactoForm = () => {
                                         </Select>
                                     </Grid>
                                 </Grid>
+                                
+                                <FormControlLabel control={<Checkbox
+                                    checked={cargoTerminado}
+                                    onChange={handleChangeCargoTerminado}
+                                    inputProps={{ 'aria-label': 'controlled' }}
+                                    />} label="Cargo terminado" />
                                 <Button className={classes.submitButton} color="primary" variant="contained" type="submit">
                                     Submit
                                 </Button>
