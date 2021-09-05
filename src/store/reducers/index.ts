@@ -9,6 +9,9 @@ import { selectedCargo } from './selected-cargo.reducers';
 import { searchContacto } from './search-contacto.reducers';
 import { Spinner } from './spinner.reducers';
 import { tratamientos } from './tratamientos.reducers';
+import { provincias } from './provincia.reducers';
+import { paises } from './pais.reducers';
+import { subColectivos } from './subcolectivos.reducers';
 
 const rootReducer = combineReducers({
     authentication,
@@ -20,6 +23,9 @@ const rootReducer = combineReducers({
     Spinner,
     alert,
     tratamientos,
+    provincias,
+    paises,
+    subColectivos,
 });
 
 

@@ -6,6 +6,7 @@ import ListIcon from '@material-ui/icons/List';
 import ShareIcon from '@material-ui/icons/Share';
 import FolderIcon from '@material-ui/icons/Folder';
 import FolderSharedIcon from '@material-ui/icons/FolderShared';
+import { Link } from 'react-router-dom';
 
 
 
@@ -30,6 +31,10 @@ const useStyles = makeStyles((theme: Theme) =>
             backgroundColor: theme.palette.background.default,
             padding: theme.spacing(3),
         },
+        Link: {
+            color: 'black',
+            textDecoration: 'none',
+        }
     }),
 );
 
@@ -49,10 +54,12 @@ const Sidebar = () => {
             <div className={classes.toolbar} />
             <Divider />
             <List>
+                <Link to="/contactos" className={classes.Link}>
                 <ListItem button key={1} >
                     <ListItemIcon><PeopleIcon /></ListItemIcon>
                     <ListItemText primary="Contactos" />
                 </ListItem>
+                </Link>
                 <ListItem button key={2} >
                     <ListItemIcon><ListIcon /></ListItemIcon>
                     <ListItemText primary="Listas" />

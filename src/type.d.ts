@@ -30,11 +30,16 @@ type SubColectivo = {
     nombre: string;
 }
 
-type SubColectivos = SubColectivos[];
+type SubColectivos = SubColectivo[];
 
 type ColectivoAction = {
     type: string;
     payload: Colectivos;
+}
+
+type SubColectivoAction = {
+    type: string;
+    payload: SubColectivos;
 }
 
 type SelectedColectivoAction = {
@@ -79,10 +84,24 @@ type Provincia = {
     nombre: string;
 }
 
+type Provincias = Provincia[];
+
+type ProvinciaAction = {
+    type: string;
+    payload: Provincias;
+}
+
 type Pais = {
     id?: number;
     nombre: string;
 }
+
+type PaisAction = {
+    type: string;
+    payload: Paises;
+}
+
+type Paises = Pais[];
 
 type Cargo = {
     id?: number;

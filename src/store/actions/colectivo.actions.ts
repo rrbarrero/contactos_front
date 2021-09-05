@@ -5,7 +5,7 @@ import { alertActions } from './';
 
 export const colectivoActions = {
     get_one,
-    get_all,
+    get_all_colectivos,
 }
 
 type DispatchType = {
@@ -35,14 +35,13 @@ export function get_one(id: number) {
     function failure(error: string) { return { type: colectivoConstants.COLECTIVO_ERROR, payload: error } }
 }
 
-export function get_all() {
+export function get_all_colectivos() {
 
     return (dispatch: (arg0: DispatchType) => void) => {
         dispatch(request());
         colectivoService.get_all().then(
             colectivos => {
                 dispatch(success(colectivos));
-                history.push('/');
             },
             error => {
                 dispatch(failure(error.toString()));

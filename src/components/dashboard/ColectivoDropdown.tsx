@@ -61,7 +61,7 @@ const ColectivoDropdown = () => {
 
     useEffect(() => {
         if (colectivos.length === 0) {
-            dispatch(colectivoActions.get_all());
+            dispatch(colectivoActions.get_all_colectivos());
         }
     }, [colectivos.length, dispatch, user]);
 

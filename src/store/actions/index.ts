@@ -6,3 +6,6 @@ export * from './selected-cargo.actions';
 export * from './search-contacto.actions';
 export * from './spinner.actions';
 export * from './tratamiento.actions';
+export * from './provincia.actions';
+export * from './pais.actions';
+export * from './subcolectivo.actions';

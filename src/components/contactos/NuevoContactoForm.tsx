@@ -8,11 +8,10 @@ import Box from '@material-ui/core/Box';
 import ValidationSchema from './ContactoFormValidation';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from "../../store/reducers";
-import { tratamientoActions } from '../../store/actions';
+import { colectivoActions, paisActions, provinciaActions, subColectivoActions, tratamientoActions } from '../../store/actions';
 import { useEffect, useState } from 'react';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Input from '@material-ui/core/Input';
 import Grid from '@material-ui/core/Grid';
@@ -57,12 +56,41 @@ const NuevoContactoForm = () => {
 
     const classes = useStyles();
     const dispatch = useDispatch();
+
     const tratamientos = useSelector((state: RootState) => state.tratamientos);
+    const provincias = useSelector((state: RootState) => state.provincias);
+    const paises = useSelector((state: RootState) => state.paises);
+    const colectivos = useSelector((state: RootState) => state.colectivos);
+    const subColectivos = useSelector((state: RootState) => state.subColectivos);
+    
+
     const [selectedTratamiento, setSelectedTratamiento] = useState<Tratamiento>();
+    const [selectedProvincia, setSelectedProvincia] = useState<Provincia>();
+    const [selectedPais, setSelectedPais] = useState<Pais>();
+    const [selectedColectivo, setSelectedColectivo] = useState<Colectivo>();
+    const [selectedSubColectivo, setSelectedSubColectivo] = useState<SubColectivo>();
 
     useEffect(() => {
         dispatch(tratamientoActions.get_all_tratamientos());
     }, [dispatch]);
+
+    useEffect(() => {
+        dispatch(provinciaActions.get_all_provincias());
+    }, [dispatch]);
+
+    useEffect(() => {
+        dispatch(paisActions.get_all_paises());
+    }, [dispatch]);
+
+    useEffect(() => {
+        dispatch(colectivoActions.get_all_colectivos);
+    }, [dispatch]);
+
+    useEffect(()=>{
+        if(selectedColectivo){
+            dispatch(subColectivoActions.get_subcolectivos(selectedColectivo));
+        }
+    },[selectedColectivo, dispatch]);
 
     let initialValues: Cargo = {
         persona: {
@@ -78,11 +106,20 @@ const NuevoContactoForm = () => {
         ciudad: '',
         codPostal: '',
         direccion: '',
-        provincia: { nombre: '' },
-        pais: { nombre: '' },
+        provincia: { 
+            id: provincias.length > 0 ? provincias[0].id : 0,
+            nombre: provincias.length > 0 ? provincias[0].nombre : ''
+         },
+        pais: { 
+            id: paises.length > 0 ? paises[0].id : 0,
+            nombre: paises.length > 0 ? paises[0].nombre : ''
+         },
         empresa: '',
         fechaAlta: new Date(),
-        colectivo: { nombre: '' },
+        colectivo: { 
+            id: colectivos.length > 0 ? colectivos[0].id : 0,
+            nombre: colectivos.length > 0 ? colectivos[0].nombre : ''
+         },
         subcolectivo: { nombre: '', colectivo: { nombre: '' } },
 
     }
@@ -92,8 +129,44 @@ const NuevoContactoForm = () => {
         setSelectedTratamiento(tratamiento);
     };
 
-    const renderSelected = () => {
+    const handleChangeProvincia = (e: unknown) => {
+        const provincia: Provincia | undefined = provincias.find(pr => pr.id === e as number);
+        setSelectedProvincia(provincia);
+    };
+
+    const handleChangePais = (e: unknown) => {
+        const pais: Pais | undefined = paises.find(pa => pa.id === e as number);
+        setSelectedPais(pais);
+    };
+
+    const handleChangeColectivo = (e: unknown) => {
+        const colectivo: Colectivo | undefined = colectivos.find(co => co.id === e as number);
+        setSelectedColectivo(colectivo);
+    };
+
+    const handleChangeSubColectivo = (e: unknown) => {
+        const subColectivo: SubColectivo | undefined = subColectivos.find(su => su.id === e as number);
+        setSelectedSubColectivo(subColectivo);
+    };
+
+    const renderSelectedTratamiento = () => {
         return selectedTratamiento?.nombre;
+    }
+
+    const renderSelectedProvincia = () => {
+        return selectedProvincia?.nombre;
+    }
+
+    const renderSelectedPais = () => {
+        return selectedPais?.nombre;
+    }
+
+    const renderSelectedColectivo = () => {
+        return selectedColectivo?.nombre;
+    }
+
+    const renderSelectedSubColectivo = () => {
+        return selectedSubColectivo?.nombre;
     }
 
     return (
@@ -137,7 +210,7 @@ const NuevoContactoForm = () => {
                                             input={<Input />}
                                             value={values.persona.tratamiento.id}
                                             onChange={(e) => handleChangeTratamiento(e.target.value)}
-                                            renderValue={renderSelected}
+                                            renderValue={renderSelectedTratamiento}
                                             defaultValue={tratamientos.length > 0 ? tratamientos[0].id : 0}
                                         >
                                             {tratamientos.map((tratamiento) =>
@@ -212,12 +285,84 @@ const NuevoContactoForm = () => {
                                             fullWidth
                                             id="direccion"
                                             name="direccion"
-                                            label="Direccion"
+                                            label="Dirección"
                                             value={values.direccion}
                                             onChange={handleChange}
                                             error={touched.direccion && Boolean(errors.direccion)}
                                             helperText={touched.direccion && errors.direccion}
                                         />
+                                    </Grid>
+                                    <Grid item md={2} xs={12}>
+                                        <InputLabel id="provincia-select-label">Provincia</InputLabel>
+                                        <Select
+                                            labelId="provincia-select-label"
+                                            id="provincia"
+                                            input={<Input />}
+                                            value={values.provincia.id}
+                                            onChange={(e) => handleChangeProvincia(e.target.value)}
+                                            renderValue={renderSelectedProvincia}
+                                            defaultValue={provincias.length > 0 ? provincias[0].id : 0}
+                                        >
+                                            {provincias.map((provincia) =>
+                                                <MenuItem key={provincia.id} value={provincia.id}>
+                                                    {provincia.nombre}
+                                                </MenuItem>
+                                            )}
+                                        </Select>
+                                    </Grid>
+                                    <Grid item md={2} xs={12}>
+                                        <InputLabel id="pais-select-label">Pais</InputLabel>
+                                        <Select
+                                            labelId="pais-select-label"
+                                            id="pais"
+                                            input={<Input />}
+                                            value={values.pais.id}
+                                            onChange={(e) => handleChangePais(e.target.value)}
+                                            renderValue={renderSelectedPais}
+                                            defaultValue={paises.length > 0 ? paises[0].id : 0}
+                                        >
+                                            {paises.map((pais) =>
+                                                <MenuItem key={pais.id} value={pais.id}>
+                                                    {pais.nombre}
+                                                </MenuItem>
+                                            )}
+                                        </Select>
+                                    </Grid>
+                                    <Grid item md={2} xs={12}>
+                                        <InputLabel id="colectivo-select-label">Colectivo</InputLabel>
+                                        <Select
+                                            labelId="colectivo-select-label"
+                                            id="colectivo"
+                                            input={<Input />}
+                                            value={values.colectivo.id}
+                                            onChange={(e) => handleChangeColectivo(e.target.value)}
+                                            renderValue={renderSelectedColectivo}
+                                            defaultValue={colectivos.length > 0 ? colectivos[0].id : 0}
+                                        >
+                                            {colectivos.map((colectivo) =>
+                                                <MenuItem key={colectivo.id} value={colectivo.id}>
+                                                    {colectivo.nombre}
+                                                </MenuItem>
+                                            )}
+                                        </Select>
+                                    </Grid>
+                                    <Grid item md={2} xs={12}>
+                                        <InputLabel id="subcolectivo-select-label">SubColectivo</InputLabel>
+                                        <Select
+                                            labelId="subcolectivo-select-label"
+                                            id="subcolectivo"
+                                            input={<Input />}
+                                            value={values.subcolectivo ? values.subcolectivo.id : 0}
+                                            onChange={(e) => handleChangeSubColectivo(e.target.value)}
+                                            renderValue={renderSelectedSubColectivo}
+                                            defaultValue={subColectivos.length > 0 ? subColectivos[0].id : 0}
+                                        >
+                                            {subColectivos.map((subColectivo) =>
+                                                <MenuItem key={subColectivo.id} value={subColectivo.id}>
+                                                    {subColectivo.nombre}
+                                                </MenuItem>
+                                            )}
+                                        </Select>
                                     </Grid>
                                 </Grid>
                                 <Button className={classes.submitButton} color="primary" variant="contained" type="submit">
