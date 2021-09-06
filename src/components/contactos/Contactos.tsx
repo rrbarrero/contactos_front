@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { cargoActions } from "../../store/actions/cargo.actions";
 import { RootState } from "../../store/reducers";
 import Dashboard from "../dashboard/Dashboard";
-import { selectedCargoActions } from '../../store/actions';
+import { selectionsActions } from '../../store/actions';
 import { Box } from '@material-ui/core';
 import ContextualMenu from './ContextualMenu';
 
@@ -96,11 +96,11 @@ const Contactos = () => {
     const cargosNextPageUrl: string = useSelector((state: RootState) => state.cargos.nextPage);
     const cargosPrevPageUrl: string = useSelector((state: RootState) => state.cargos.prevPage);
     const cargosCurrentPage: number = useSelector((state: RootState) => state.cargos.currentPage);
-    const cargosSelected: number[] = useSelector((state: RootState) => state.selectedCargo);
+    const cargosSelected: number[] = useSelector((state: RootState) => state.selectionReducer.cargos);
     const searchText = useSelector((state: RootState) => state.searchContacto);
 
     const setCargoSelected = (event: GridSelectionModel) => {
-        dispatch(selectedCargoActions.cargoSet(event as number[]));
+        dispatch(selectionsActions.cargoSet(event as number[]));
     }
 
     useEffect(() => {

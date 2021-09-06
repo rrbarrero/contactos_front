@@ -1,11 +1,13 @@
 import { selectionsConstants } from "../constants";
 
 type SelectionReducerType = {
+    cargos: number[],
     colectivos: number[];
     pais: number;
 }
 
 const initialState: SelectionReducerType = {
+    cargos: [],
     colectivos: [],
     pais: 0,
 };
@@ -22,6 +24,11 @@ export function selectionReducer(state = initialState, action: { type: string; p
             return {
                 ...state,
                 pais: action.payload as number,
+            }
+        case selectionsConstants.SELECTED_CARGO_SET:
+            return {
+                ...state,
+                cargos: action.payload as number[],
             }
         default:
             return state
