@@ -12,11 +12,12 @@ import { tratamientos } from './tratamientos.reducers';
 import { provincias } from './provincia.reducers';
 import { paises } from './pais.reducers';
 import { subColectivos } from './subcolectivos.reducers';
+import { selectionReducer } from './selections.reducer';
 
 const rootReducer = combineReducers({
     authentication,
     colectivos,
-    selectedColectivo,
+    //selectedColectivo,
     selectedCargo,
     searchContacto,
     cargos,
@@ -26,6 +27,8 @@ const rootReducer = combineReducers({
     provincias,
     paises,
     subColectivos,
+    selectionReducer,
+    
 });
 
 

@@ -18,6 +18,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import SelectPais from './formFields/SelectPais';
 //import moment from 'moment';
 
 
@@ -68,14 +69,14 @@ const NuevoContactoForm = () => {
 
     const tratamientos = useSelector((state: RootState) => state.tratamientos);
     const provincias = useSelector((state: RootState) => state.provincias);
-    const paises = useSelector((state: RootState) => state.paises);
+    
     const colectivos = useSelector((state: RootState) => state.colectivos);
     const subColectivos = useSelector((state: RootState) => state.subColectivos);
     
 
     const [selectedTratamiento, setSelectedTratamiento] = useState<Tratamiento>();
     const [selectedProvincia, setSelectedProvincia] = useState<Provincia>();
-    const [selectedPais, setSelectedPais] = useState<Pais>();
+    
     const [selectedColectivo, setSelectedColectivo] = useState<Colectivo>();
     const [selectedSubColectivo, setSelectedSubColectivo] = useState<SubColectivo>();
     const [cargoTerminado, setCargoTerminado] = useState(false);
@@ -89,12 +90,10 @@ const NuevoContactoForm = () => {
         dispatch(provinciaActions.get_all_provincias());
     }, [dispatch]);
 
-    useEffect(() => {
-        dispatch(paisActions.get_all_paises());
-    }, [dispatch]);
+  
 
     useEffect(() => {
-        dispatch(colectivoActions.get_all_colectivos);
+        dispatch(colectivoActions.get_all_colectivos());
     }, [dispatch]);
 
     useEffect(()=>{
@@ -102,6 +101,24 @@ const NuevoContactoForm = () => {
             dispatch(subColectivoActions.get_subcolectivos(selectedColectivo));
         }
     },[selectedColectivo, dispatch]);
+
+        useEffect(()=>{
+        if(provincias.length>0){
+            const defaultProvincia = provincias.find((provincia)=>provincia.nombre.toLowerCase()==='cáceres');
+            if(defaultProvincia){
+                setSelectedProvincia(defaultProvincia);
+            }
+        }
+    }, [provincias]);
+
+    useEffect(()=> {
+        if(colectivos.length>0){
+            const defaultColectivo = colectivos.find((colectivo)=> colectivo.nombre.toLowerCase()==='junta de extremadura');
+            if(defaultColectivo){
+                setSelectedColectivo(defaultColectivo);
+            }
+        }
+    },[colectivos]);
 
     let initialValues: Cargo = {
         persona: {
@@ -114,7 +131,7 @@ const NuevoContactoForm = () => {
         ciudad: '',
         codPostal: '',
         direccion: '',
-        provincia: {nombre: ''},
+        provincia: {nombre: 'España'},
         pais: {nombre: ''},
         empresa: '',
         fechaAlta: new Date(),
@@ -126,7 +143,6 @@ const NuevoContactoForm = () => {
     const handleChangeTratamiento = (e: unknown) => {
         const tratamiento: Tratamiento | undefined = tratamientos.find(tr => tr.id === e as number);
         setSelectedTratamiento(tratamiento);
-        console.log(selectedPais);
     };
 
     const handleChangeProvincia = (e: unknown) => {
@@ -134,11 +150,7 @@ const NuevoContactoForm = () => {
         setSelectedProvincia(provincia);
     };
 
-    const handleChangePais = (e: unknown) => {
-        const pais: Pais | undefined = paises.find(pa => pa.id === e as number);
-        setSelectedPais(pais);
-        console.log(selectedTratamiento);
-    };
+ 
 
     const handleChangeColectivo = (e: unknown) => {
         const colectivo: Colectivo | undefined = colectivos.find(co => co.id === e as number);
@@ -162,9 +174,6 @@ const NuevoContactoForm = () => {
         return selectedProvincia?.nombre;
     }
 
-    const renderSelectedPais = () => {
-        return selectedPais?.nombre;
-    }
 
     const renderSelectedColectivo = () => {
         return selectedColectivo?.nombre;
@@ -299,59 +308,26 @@ const NuevoContactoForm = () => {
                                             helperText={touched.direccion && errors.direccion}
                                         />
                                     </Grid>
-                                    <Grid item md={2} xs={12}>
-                                        <InputLabel id="provincia-select-label">Provincia</InputLabel>
-                                        <Select
-                                            labelId="provincia-select-label"
-                                            id="provincia"
-                                            input={<Input />}
-                                            value={values.provincia.id}
-                                            onChange={(e) => handleChangeProvincia(e.target.value)}
-                                            renderValue={renderSelectedProvincia}
-                                            defaultValue={provincias.length > 0 ? provincias[0].id : 0}
-                                        >
-                                            {provincias.map((provincia) =>
-                                                <MenuItem key={provincia.id} value={provincia.id}>
-                                                    {provincia.nombre}
-                                                </MenuItem>
-                                            )}
-                                        </Select>
-                                    </Grid>
-                                    <Grid item md={2} xs={12}>
-                                        <InputLabel id="pais-select-label">Pais</InputLabel>
-                                        <Select
-                                            labelId="pais-select-label"
-                                            id="pais"
-                                            input={<Input />}
-                                            value={values.pais.id}
-                                            onChange={(e) => handleChangePais(e.target.value)}
-                                            renderValue={renderSelectedPais}
-                                            defaultValue={paises.length > 0 ? paises[0].id : 0}
-                                        >
-                                            {paises.map((pais) =>
-                                                <MenuItem key={pais.id} value={pais.id}>
-                                                    {pais.nombre}
-                                                </MenuItem>
-                                            )}
-                                        </Select>
-                                    </Grid>
+                                    
+                                    <SelectPais {...values.pais} />
+                                    
                                     <Grid item md={2} xs={12}>
                                         <InputLabel id="colectivo-select-label">Colectivo</InputLabel>
-                                        <Select
+                                        {selectedColectivo && <Select
                                             labelId="colectivo-select-label"
                                             id="colectivo"
                                             input={<Input />}
                                             value={values.colectivo.id}
                                             onChange={(e) => handleChangeColectivo(e.target.value)}
                                             renderValue={renderSelectedColectivo}
-                                            defaultValue={colectivos.length > 0 ? colectivos[0].id : 0}
+                                            defaultValue={selectedColectivo?.id}
                                         >
                                             {colectivos.map((colectivo) =>
                                                 <MenuItem key={colectivo.id} value={colectivo.id}>
                                                     {colectivo.nombre}
                                                 </MenuItem>
                                             )}
-                                        </Select>
+                                        </Select>}
                                     </Grid>
                                     <Grid item md={2} xs={12}>
                                         <InputLabel id="subcolectivo-select-label">SubColectivo</InputLabel>

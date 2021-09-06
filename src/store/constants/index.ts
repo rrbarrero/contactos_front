@@ -10,3 +10,4 @@ export * from './tratamiento.constants';
 export * from './provincia.constants';
 export * from './pais.constants';
 export * from './subcolectivo.constants';
+export * from './selections.constants';

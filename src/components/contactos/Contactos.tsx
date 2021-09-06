@@ -90,7 +90,7 @@ const Contactos = () => {
 
     const classes = useStyles();
     const dispatch = useDispatch();
-    const colectivosSelected = useSelector((state: RootState) => state.selectedColectivo);
+    const colectivosSelected = useSelector((state: RootState) => state.selectionReducer.colectivos);
     const cargos = useSelector((state: RootState) => state.cargos.rows);
     const cargosTotalCount: number = useSelector((state: RootState) => state.cargos.count);
     const cargosNextPageUrl: string = useSelector((state: RootState) => state.cargos.nextPage);
