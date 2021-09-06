@@ -4,7 +4,6 @@ import { alert } from './alert.reducer';
 import { authentication } from './authentication.reducer';
 import { cargos } from './cargo.reducers';
 import { colectivos } from './colectivos.reducer';
-import { selectedColectivo } from './selected-colectivo.reducer';
 import { selectedCargo } from './selected-cargo.reducers';
 import { searchContacto } from './search-contacto.reducers';
 import { Spinner } from './spinner.reducers';
@@ -17,7 +16,6 @@ import { selectionReducer } from './selections.reducer';
 const rootReducer = combineReducers({
     authentication,
     colectivos,
-    //selectedColectivo,
     selectedCargo,
     searchContacto,
     cargos,
@@ -28,7 +26,7 @@ const rootReducer = combineReducers({
     paises,
     subColectivos,
     selectionReducer,
-    
+
 });
 
 
