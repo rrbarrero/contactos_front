@@ -11,47 +11,57 @@ import MenuItem from "@material-ui/core/MenuItem";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        
+
     }),
 );
 
 
 const SelectColectivo = (values: Colectivo) => {
 
+    const DEFAULT_SELECTED = 'junta de extremadura';
     const classes = useStyles();
     const dispatch = useDispatch();
 
     const colectivos = useSelector((state: RootState) => state.colectivos);
-    const selectedColectivo: number = useSelector((state: RootState) => state.selectionReducer.single_colectivo);
-    
-    useEffect(()=>{
-        if(selectedColectivo){
-            const colectivo = colectivos.find((col)=>col.id===selectedColectivo);
-            if(colectivo){
+    const selectedColectivo: number = useSelector((state: RootState) => state.selectionReducer.singleColectivo);
+
+    useEffect(() => {
+        /*
+            Refresh state of subColectivos on selectedColectivo change
+        */
+        if (selectedColectivo) {
+            const colectivo = colectivos.find((col) => col.id === selectedColectivo);
+            if (colectivo) {
                 dispatch(subColectivoActions.get_subcolectivos(colectivo));
             }
         }
-    },[selectedColectivo, dispatch, colectivos]);
+    }, [selectedColectivo, dispatch, colectivos]);
 
-    useEffect(()=> {
-        if(colectivos.length>0){
-            const colectivo = colectivos.find((colectivo)=> colectivo.nombre.toLowerCase()==='junta de extremadura');
-            if(colectivo?.id){
+    useEffect(() => {
+        /*
+            Fix default selectedColectivo to "junta de extremadura"
+        */
+        if (colectivos.length > 0) {
+            const colectivo = colectivos.find((colectivo) => colectivo.nombre.toLowerCase() === DEFAULT_SELECTED);
+            if (colectivo?.id) {
                 dispatch(selectionsActions.colectivoSingleSet(colectivo.id));
             }
         }
-    },[colectivos, dispatch]);
+    }, [colectivos, dispatch]);
 
     const handleChangeColectivo = (e: unknown) => {
+        /*
+            Set state of selectedColectivo on inputSelect change
+        */
         const colectivo: Colectivo | undefined = colectivos.find(co => co.id === e as number);
-        if(colectivo?.id){
+        if (colectivo?.id) {
             dispatch(selectionsActions.colectivoSingleSet(colectivo.id));
         }
     };
 
     const renderSelectedColectivo = () => {
-        const colectivo = colectivos.find((col)=>col.id===selectedColectivo);
-        if(colectivo){
+        const colectivo = colectivos.find((col) => col.id === selectedColectivo);
+        if (colectivo) {
             return colectivo.nombre;
         }
     }
@@ -59,7 +69,7 @@ const SelectColectivo = (values: Colectivo) => {
     return (
         <Grid item md={2} xs={12}>
             <InputLabel id="colectivo-select-label">Colectivo</InputLabel>
-            {selectedColectivo!==0 && <Select
+            {selectedColectivo !== 0 && <Select
                 labelId="colectivo-select-label"
                 id="colectivo"
                 input={<Input />}

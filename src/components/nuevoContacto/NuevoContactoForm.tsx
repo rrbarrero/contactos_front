@@ -8,7 +8,7 @@ import Box from '@material-ui/core/Box';
 import ValidationSchema from './ContactoFormValidation';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from "../../store/reducers";
-import { colectivoActions, paisActions, provinciaActions, subColectivoActions, tratamientoActions } from '../../store/actions';
+import { colectivoActions,  provinciaActions, tratamientoActions } from '../../store/actions';
 import { useEffect, useState } from 'react';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -21,6 +21,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import SelectPais from './formFields/SelectPais';
 import SelectColectivo from './formFields/SelectColectivo';
 import moment from 'moment';
+import SelectSubColectivo from './formFields/SelectSubColectivo';
+import SelectTratamiento from './formFields/SelectTratamiento';
 
 
 //moment.locale("es");
@@ -68,15 +70,12 @@ const NuevoContactoForm = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
-    const tratamientos = useSelector((state: RootState) => state.tratamientos);
     const provincias = useSelector((state: RootState) => state.provincias);
     
-    const colectivos = useSelector((state: RootState) => state.colectivos);
+    //const colectivos = useSelector((state: RootState) => state.colectivos);
     
-    const [selectedTratamiento, setSelectedTratamiento] = useState<Tratamiento>();
     const [selectedProvincia, setSelectedProvincia] = useState<Provincia>();
-    const subColectivos = useSelector((state: RootState) => state.subColectivos);
-    const [selectedSubColectivo, setSelectedSubColectivo] = useState<SubColectivo>();
+    
     const [cargoTerminado, setCargoTerminado] = useState(false);
     const [fechaCese, setFechaCese] = useState(moment().format('yyyy-MM-DD'));
 
@@ -125,38 +124,24 @@ const NuevoContactoForm = () => {
 
     }
 
-    const handleChangeTratamiento = (e: unknown) => {
-        const tratamiento: Tratamiento | undefined = tratamientos.find(tr => tr.id === e as number);
-        setSelectedTratamiento(tratamiento);
-    };
-
+   
     const handleChangeProvincia = (e: unknown) => {
         const provincia: Provincia | undefined = provincias.find(pr => pr.id === e as number);
         setSelectedProvincia(provincia);
     };
 
 
-    const handleChangeSubColectivo = (e: unknown) => {
-        const subColectivo: SubColectivo | undefined = subColectivos.find(su => su.id === e as number);
-        setSelectedSubColectivo(subColectivo);
-    };
-
     const handleChangeCargoTerminado = (event: React.ChangeEvent<HTMLInputElement>) => {
         setCargoTerminado(event.target.checked);
     };
 
-    const renderSelectedTratamiento = () => {
-        return selectedTratamiento?.nombre;
-    }
-
+ 
     const renderSelectedProvincia = () => {
         return selectedProvincia?.nombre;
     }
 
 
-    const renderSelectedSubColectivo = () => {
-        return selectedSubColectivo?.nombre;
-    }
+   
 
     return (
         <>
@@ -168,9 +153,9 @@ const NuevoContactoForm = () => {
                     //validationSchema={ValidationSchema}
                     onSubmit={(values, actions) => {
                         values.fechaAlta = new Date();
-                        if (selectedTratamiento) {
+                        /* if (selectedTratamiento) {
                             values.persona.tratamiento = { ...selectedTratamiento };
-                        }
+                        } */
                         values.finalizado = cargoTerminado;
                         console.log("SUBMITED FORM", values);
                         alert(JSON.stringify(values, null, 2));
@@ -193,24 +178,7 @@ const NuevoContactoForm = () => {
                             <Paper className={classes.control}>
 
                                 <Grid container spacing={2}>
-                                    <Grid item md={2} xs={12}>
-                                        <InputLabel id="tratamiento-select-label">Tratamiento</InputLabel>
-                                        <Select
-                                            labelId="tratamiento-select-label"
-                                            id="tratamiento"
-                                            input={<Input />}
-                                            value={values.persona.tratamiento.id}
-                                            onChange={(e) => handleChangeTratamiento(e.target.value)}
-                                            renderValue={renderSelectedTratamiento}
-                                            defaultValue={tratamientos.length > 0 ? tratamientos[0].id : 0}
-                                        >
-                                            {tratamientos.map((tratamiento) =>
-                                                <MenuItem key={tratamiento.id} value={tratamiento.id}>
-                                                    {tratamiento.nombre}
-                                                </MenuItem>
-                                            )}
-                                        </Select>
-                                    </Grid>
+                                    <SelectTratamiento {...values.persona.tratamiento }/>
                                     <Grid item md={2} xs={12} className={classes.inputItem}>
                                         <TextField
                                             fullWidth
@@ -283,29 +251,9 @@ const NuevoContactoForm = () => {
                                             helperText={touched.direccion && errors.direccion}
                                         />
                                     </Grid>
-                                    
                                     <SelectPais {...values.pais} />
-                                    
                                     <SelectColectivo {...values.colectivo } />
-                                    
-                                    <Grid item md={2} xs={12}>
-                                        <InputLabel id="subcolectivo-select-label">SubColectivo</InputLabel>
-                                        <Select
-                                            labelId="subcolectivo-select-label"
-                                            id="subcolectivo"
-                                            input={<Input />}
-                                            value={values.subcolectivo ? values.subcolectivo.id : 0}
-                                            onChange={(e) => handleChangeSubColectivo(e.target.value)}
-                                            renderValue={renderSelectedSubColectivo}
-                                            defaultValue={subColectivos.length > 0 ? subColectivos[0].id : 0}
-                                        >
-                                            {subColectivos.map((subColectivo) =>
-                                                <MenuItem key={subColectivo.id} value={subColectivo.id}>
-                                                    {subColectivo.nombre}
-                                                </MenuItem>
-                                            )}
-                                        </Select>
-                                    </Grid>
+                                    <SelectSubColectivo {...values.subcolectivo } />
                                 </Grid>
                                 <FormControlLabel control={<Checkbox
                                     checked={cargoTerminado}

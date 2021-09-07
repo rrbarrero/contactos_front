@@ -55,7 +55,7 @@ const ColectivoDropdown = () => {
     const user = useSelector((state: RootState) => state.authentication);
     const colectivos = useSelector((state: RootState) => state.colectivos);
     //const colectivosSelected = useSelector((state: RootState) => state.selectedColectivo);
-    const colectivosSelected = useSelector((state: RootState) => state.selectionReducer.multi_colectivos);
+    const colectivosSelected = useSelector((state: RootState) => state.selectionReducer.multiColectivos);
 
     const dispatch = useDispatch();
 
