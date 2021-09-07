@@ -8,8 +8,12 @@ import { RootState } from "../../../store/reducers";
 import Input from '@material-ui/core/Input';
 import MenuItem from "@material-ui/core/MenuItem";
 
+type InputType = {
+    values: Pais,
+    classStyle: string,
+}
 
-const SelectPais = (values: Pais) => {
+const SelectPais =  ({values, classStyle}: InputType) => {
 
     const DEFAULT_SELECTED = 'españa';
 
@@ -55,7 +59,7 @@ const SelectPais = (values: Pais) => {
 
     return (
 
-        <Grid item md={2} xs={12}>
+        <Grid item md={6} xs={12} className={classStyle}>
             <InputLabel id="pais-select-label">Pais</InputLabel>
             {selectedPais && <Select
                 labelId="pais-select-label"

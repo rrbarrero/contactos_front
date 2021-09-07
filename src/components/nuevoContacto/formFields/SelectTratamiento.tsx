@@ -9,7 +9,13 @@ import { RootState } from "../../../store/reducers";
 import Input from '@material-ui/core/Input';
 import MenuItem from "@material-ui/core/MenuItem";
 
-const SelectTratamiento = (values: Tratamiento) => {
+
+type InputType = {
+    values: Tratamiento,
+    classStyle: string,
+}
+
+const SelectTratamiento = ({values, classStyle}: InputType) => {
 
     const DEFAULT_SELECTED = 'sr. d.';
     const dispatch = useDispatch();
@@ -45,7 +51,7 @@ const SelectTratamiento = (values: Tratamiento) => {
 
     return (
 
-        <Grid item md={2} xs={12}>
+        <Grid item md={3} xs={12} className={classStyle}>
             <InputLabel id="tratamiento-select-label">Tratamiento</InputLabel>
             {selectedTratamiento !== 0 && <Select
                 labelId="tratamiento-select-label"

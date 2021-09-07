@@ -8,7 +8,7 @@ import Box from '@material-ui/core/Box';
 import ValidationSchema from './ContactoFormValidation';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from "../../store/reducers";
-import { colectivoActions,  provinciaActions, tratamientoActions } from '../../store/actions';
+import { colectivoActions, provinciaActions, tratamientoActions } from '../../store/actions';
 import { useEffect, useState } from 'react';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
         box: {
             paddingLeft: drawerWidth + 20,
             display: 'grid',
-            gridTemplateColumns: '2% 90% 2%',
+            gridTemplateColumns: '70% 25%',
             columnGap: '20px',
         },
         form: {
@@ -53,6 +53,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         inputItem: {
             marginLeft: 30,
+            marginTop: 30,
         },
         control: {
             padding: theme.spacing(2),
@@ -71,11 +72,11 @@ const NuevoContactoForm = () => {
     const dispatch = useDispatch();
 
     const provincias = useSelector((state: RootState) => state.provincias);
-    
+
     //const colectivos = useSelector((state: RootState) => state.colectivos);
-    
+
     const [selectedProvincia, setSelectedProvincia] = useState<Provincia>();
-    
+
     const [cargoTerminado, setCargoTerminado] = useState(false);
     const [fechaCese, setFechaCese] = useState(moment().format('yyyy-MM-DD'));
 
@@ -87,26 +88,26 @@ const NuevoContactoForm = () => {
         dispatch(provinciaActions.get_all_provincias());
     }, [dispatch]);
 
-  
+
     useEffect(() => {
         dispatch(colectivoActions.get_all_colectivos());
     }, [dispatch]);
 
-    
-        useEffect(()=>{
-        if(provincias.length>0){
-            const defaultProvincia = provincias.find((provincia)=>provincia.nombre.toLowerCase()==='cáceres');
-            if(defaultProvincia){
+
+    useEffect(() => {
+        if (provincias.length > 0) {
+            const defaultProvincia = provincias.find((provincia) => provincia.nombre.toLowerCase() === 'cáceres');
+            if (defaultProvincia) {
                 setSelectedProvincia(defaultProvincia);
             }
         }
     }, [provincias]);
 
-    
+
 
     let initialValues: Cargo = {
         persona: {
-            tratamiento: {nombre:''},
+            tratamiento: { nombre: '' },
             nombre: '',
             apellidos: ''
         },
@@ -115,16 +116,16 @@ const NuevoContactoForm = () => {
         ciudad: '',
         codPostal: '',
         direccion: '',
-        provincia: {nombre: 'España'},
-        pais: {nombre: ''},
+        provincia: { nombre: 'España' },
+        pais: { nombre: '' },
         empresa: '',
         fechaAlta: new Date(),
-        colectivo: {nombre: ''},
+        colectivo: { nombre: '' },
         subcolectivo: { nombre: '', colectivo: { nombre: '' } },
 
     }
 
-   
+
     const handleChangeProvincia = (e: unknown) => {
         const provincia: Provincia | undefined = provincias.find(pr => pr.id === e as number);
         setSelectedProvincia(provincia);
@@ -135,19 +136,18 @@ const NuevoContactoForm = () => {
         setCargoTerminado(event.target.checked);
     };
 
- 
+
     const renderSelectedProvincia = () => {
         return selectedProvincia?.nombre;
     }
 
 
-   
+
 
     return (
         <>
             <Dashboard></Dashboard>
             <Box className={classes.box}>
-                <div></div>
                 <Formik
                     initialValues={initialValues}
                     //validationSchema={ValidationSchema}
@@ -178,8 +178,8 @@ const NuevoContactoForm = () => {
                             <Paper className={classes.control}>
 
                                 <Grid container spacing={2}>
-                                    <SelectTratamiento {...values.persona.tratamiento }/>
-                                    <Grid item md={2} xs={12} className={classes.inputItem}>
+                                    <SelectTratamiento values={values.persona.tratamiento as Tratamiento} classStyle={classes.inputItem} />
+                                    <Grid item md={3} xs={12} className={classes.inputItem}>
                                         <TextField
                                             fullWidth
                                             id="nombre"
@@ -191,7 +191,7 @@ const NuevoContactoForm = () => {
                                             helperText={touched.persona?.nombre && errors.persona?.nombre}
                                         />
                                     </Grid>
-                                    <Grid item md={2} xs={12} className={classes.inputItem}>
+                                    <Grid item md={4} xs={12} className={classes.inputItem}>
                                         <TextField
                                             fullWidth
                                             id="apellidos"
@@ -203,7 +203,7 @@ const NuevoContactoForm = () => {
                                             helperText={touched.persona?.apellidos && errors.persona?.apellidos}
                                         />
                                     </Grid>
-                                    <Grid item md={3} xs={12} className={classes.inputItem}>
+                                    <Grid item md={4} xs={12} className={classes.inputItem}>
                                         <TextField
                                             fullWidth
                                             id="cargo"
@@ -215,7 +215,7 @@ const NuevoContactoForm = () => {
                                             helperText={touched.cargo && errors.cargo}
                                         />
                                     </Grid>
-                                    <Grid item md={3} xs={12} className={classes.inputItem}>
+                                    <Grid item md={4} xs={12} className={classes.inputItem}>
                                         <TextField
                                             fullWidth
                                             id="empresa"
@@ -227,7 +227,7 @@ const NuevoContactoForm = () => {
                                             helperText={touched.empresa && errors.empresa}
                                         />
                                     </Grid>
-                                    <Grid item md={2} xs={12} className={classes.inputItem}>
+                                    <Grid item md={3} xs={12} className={classes.inputItem}>
                                         <TextField
                                             fullWidth
                                             id="ciudad"
@@ -239,7 +239,7 @@ const NuevoContactoForm = () => {
                                             helperText={touched.ciudad && errors.ciudad}
                                         />
                                     </Grid>
-                                    <Grid item md={2} xs={12} className={classes.inputItem}>
+                                    <Grid item md={5} xs={12} className={classes.inputItem}>
                                         <TextField
                                             fullWidth
                                             id="direccion"
@@ -251,28 +251,31 @@ const NuevoContactoForm = () => {
                                             helperText={touched.direccion && errors.direccion}
                                         />
                                     </Grid>
-                                    <SelectPais {...values.pais} />
-                                    <SelectColectivo {...values.colectivo } />
-                                    <SelectSubColectivo {...values.subcolectivo } />
+                                    <SelectPais values={values.pais as Pais} classStyle={classes.inputItem} />
+                                    <SelectColectivo values={values.colectivo as Colectivo} classStyle={classes.inputItem} />
+                                    <SelectSubColectivo values={values.subcolectivo as SubColectivo} classStyle={classes.inputItem} />
+                                    <Grid item md={5} xs={12} className={classes.inputItem}>
+                                        <FormControlLabel control={
+                                            <Checkbox
+                                                checked={cargoTerminado}
+                                                onChange={handleChangeCargoTerminado}
+                                                inputProps={{ 'aria-label': 'controlled' }}
+                                            />} label="Cargo terminado" />
+                                    </Grid>
+                                    <Grid item md={5} xs={12} className={classes.inputItem}>
+                                        {cargoTerminado && <TextField
+                                            id="date"
+                                            label="Fecha de cese"
+                                            type="date"
+                                            value={values.fechaCese}
+                                            defaultValue={fechaCese}
+                                            className={classes.dateField}
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                        />}
+                                    </Grid>
                                 </Grid>
-                                <FormControlLabel control={<Checkbox
-                                    checked={cargoTerminado}
-                                    onChange={handleChangeCargoTerminado}
-                                    inputProps={{ 'aria-label': 'controlled' }}
-                                    />} label="Cargo terminado" />
-
-                                {cargoTerminado && <TextField
-                                    id="date"
-                                    label="Fecha de cese"
-                                    type="date"
-                                    value={values.fechaCese}
-                                    defaultValue={fechaCese}
-                                    className={classes.dateField}
-                                    InputLabelProps={{
-                                    shrink: true,
-                                    }}
-                                />}
-
                                 <Button className={classes.submitButton} color="primary" variant="contained" type="submit">
                                     Submit
                                 </Button>
@@ -282,7 +285,6 @@ const NuevoContactoForm = () => {
                     );
                 }}
                 </Formik>
-                <div></div>
             </Box>
         </>
     );

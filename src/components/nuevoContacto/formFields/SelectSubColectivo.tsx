@@ -8,7 +8,12 @@ import { RootState } from "../../../store/reducers";
 import Input from '@material-ui/core/Input';
 import MenuItem from "@material-ui/core/MenuItem";
 
-const SelectSubColectivo = (values: SubColectivo) => {
+type InputType = {
+    values: SubColectivo,
+    classStyle: string,
+}
+
+const SelectSubColectivo =  ({values, classStyle}: InputType) => {
 
     /*
         Logic about subColectivo inputSelect
@@ -47,7 +52,7 @@ const SelectSubColectivo = (values: SubColectivo) => {
     }
 
     return (
-        <Grid item md={2} xs={12}>
+        <Grid item md={5} xs={12} className={classStyle}>
             <InputLabel id="subcolectivo-select-label">SubColectivo</InputLabel>
             {selectedSubColectivo && <Select
                 labelId="subcolectivo-select-label"

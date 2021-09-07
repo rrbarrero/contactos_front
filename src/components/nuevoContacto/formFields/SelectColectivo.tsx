@@ -1,4 +1,3 @@
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
@@ -9,17 +8,16 @@ import { RootState } from "../../../store/reducers";
 import Input from '@material-ui/core/Input';
 import MenuItem from "@material-ui/core/MenuItem";
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
 
-    }),
-);
+type InputType = {
+    values: Colectivo,
+    classStyle: string,
+}
 
 
-const SelectColectivo = (values: Colectivo) => {
+const SelectColectivo =  ({values, classStyle}: InputType) => {
 
     const DEFAULT_SELECTED = 'junta de extremadura';
-    const classes = useStyles();
     const dispatch = useDispatch();
 
     const colectivos = useSelector((state: RootState) => state.colectivos);
@@ -67,7 +65,7 @@ const SelectColectivo = (values: Colectivo) => {
     }
 
     return (
-        <Grid item md={2} xs={12}>
+        <Grid item md={6} xs={12} className={classStyle}>
             <InputLabel id="colectivo-select-label">Colectivo</InputLabel>
             {selectedColectivo !== 0 && <Select
                 labelId="colectivo-select-label"
