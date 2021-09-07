@@ -19,7 +19,8 @@ import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import SelectPais from './formFields/SelectPais';
-//import moment from 'moment';
+import SelectColectivo from './formFields/SelectColectivo';
+import moment from 'moment';
 
 
 //moment.locale("es");
@@ -71,16 +72,13 @@ const NuevoContactoForm = () => {
     const provincias = useSelector((state: RootState) => state.provincias);
     
     const colectivos = useSelector((state: RootState) => state.colectivos);
-    const subColectivos = useSelector((state: RootState) => state.subColectivos);
     
-
     const [selectedTratamiento, setSelectedTratamiento] = useState<Tratamiento>();
     const [selectedProvincia, setSelectedProvincia] = useState<Provincia>();
-    
-    const [selectedColectivo, setSelectedColectivo] = useState<Colectivo>();
+    const subColectivos = useSelector((state: RootState) => state.subColectivos);
     const [selectedSubColectivo, setSelectedSubColectivo] = useState<SubColectivo>();
     const [cargoTerminado, setCargoTerminado] = useState(false);
-    const [fechaCese, setFechaCese] = useState(new Date());
+    const [fechaCese, setFechaCese] = useState(moment().format('yyyy-MM-DD'));
 
     useEffect(() => {
         dispatch(tratamientoActions.get_all_tratamientos());
@@ -91,17 +89,11 @@ const NuevoContactoForm = () => {
     }, [dispatch]);
 
   
-
     useEffect(() => {
         dispatch(colectivoActions.get_all_colectivos());
     }, [dispatch]);
 
-    useEffect(()=>{
-        if(selectedColectivo){
-            dispatch(subColectivoActions.get_subcolectivos(selectedColectivo));
-        }
-    },[selectedColectivo, dispatch]);
-
+    
         useEffect(()=>{
         if(provincias.length>0){
             const defaultProvincia = provincias.find((provincia)=>provincia.nombre.toLowerCase()==='cáceres');
@@ -111,14 +103,7 @@ const NuevoContactoForm = () => {
         }
     }, [provincias]);
 
-    useEffect(()=> {
-        if(colectivos.length>0){
-            const defaultColectivo = colectivos.find((colectivo)=> colectivo.nombre.toLowerCase()==='junta de extremadura');
-            if(defaultColectivo){
-                setSelectedColectivo(defaultColectivo);
-            }
-        }
-    },[colectivos]);
+    
 
     let initialValues: Cargo = {
         persona: {
@@ -150,12 +135,6 @@ const NuevoContactoForm = () => {
         setSelectedProvincia(provincia);
     };
 
- 
-
-    const handleChangeColectivo = (e: unknown) => {
-        const colectivo: Colectivo | undefined = colectivos.find(co => co.id === e as number);
-        setSelectedColectivo(colectivo);
-    };
 
     const handleChangeSubColectivo = (e: unknown) => {
         const subColectivo: SubColectivo | undefined = subColectivos.find(su => su.id === e as number);
@@ -174,10 +153,6 @@ const NuevoContactoForm = () => {
         return selectedProvincia?.nombre;
     }
 
-
-    const renderSelectedColectivo = () => {
-        return selectedColectivo?.nombre;
-    }
 
     const renderSelectedSubColectivo = () => {
         return selectedSubColectivo?.nombre;
@@ -311,24 +286,8 @@ const NuevoContactoForm = () => {
                                     
                                     <SelectPais {...values.pais} />
                                     
-                                    <Grid item md={2} xs={12}>
-                                        <InputLabel id="colectivo-select-label">Colectivo</InputLabel>
-                                        {selectedColectivo && <Select
-                                            labelId="colectivo-select-label"
-                                            id="colectivo"
-                                            input={<Input />}
-                                            value={values.colectivo.id}
-                                            onChange={(e) => handleChangeColectivo(e.target.value)}
-                                            renderValue={renderSelectedColectivo}
-                                            defaultValue={selectedColectivo?.id}
-                                        >
-                                            {colectivos.map((colectivo) =>
-                                                <MenuItem key={colectivo.id} value={colectivo.id}>
-                                                    {colectivo.nombre}
-                                                </MenuItem>
-                                            )}
-                                        </Select>}
-                                    </Grid>
+                                    <SelectColectivo {...values.colectivo } />
+                                    
                                     <Grid item md={2} xs={12}>
                                         <InputLabel id="subcolectivo-select-label">SubColectivo</InputLabel>
                                         <Select
@@ -354,7 +313,7 @@ const NuevoContactoForm = () => {
                                     inputProps={{ 'aria-label': 'controlled' }}
                                     />} label="Cargo terminado" />
 
-                                <TextField
+                                {cargoTerminado && <TextField
                                     id="date"
                                     label="Fecha de cese"
                                     type="date"
@@ -364,7 +323,7 @@ const NuevoContactoForm = () => {
                                     InputLabelProps={{
                                     shrink: true,
                                     }}
-                                />
+                                />}
 
                                 <Button className={classes.submitButton} color="primary" variant="contained" type="submit">
                                     Submit

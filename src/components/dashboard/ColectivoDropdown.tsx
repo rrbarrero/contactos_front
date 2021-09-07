@@ -55,7 +55,7 @@ const ColectivoDropdown = () => {
     const user = useSelector((state: RootState) => state.authentication);
     const colectivos = useSelector((state: RootState) => state.colectivos);
     //const colectivosSelected = useSelector((state: RootState) => state.selectedColectivo);
-    const colectivosSelected = useSelector((state: RootState) => state.selectionReducer.colectivos);
+    const colectivosSelected = useSelector((state: RootState) => state.selectionReducer.multi_colectivos);
 
     const dispatch = useDispatch();
 
@@ -68,7 +68,7 @@ const ColectivoDropdown = () => {
 
     const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
         //dispatch(selectedColectivoActions.colectivoSet(event.target.value as number))
-        dispatch(selectionsActions.colectivoSet(event.target.value as number))
+        dispatch(selectionsActions.colectivoMultiSet(event.target.value as number))
     }
 
     const renderSelected = (selected: number[]) => {

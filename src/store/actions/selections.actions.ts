@@ -2,7 +2,8 @@ import { selectionsConstants } from "../constants"
 
 export const selectionsActions = {
     paisSet,
-    colectivoSet,
+    colectivoMultiSet,
+    colectivoSingleSet,
     cargoSet,
 }
 
@@ -14,9 +15,16 @@ export function paisSet(id: number) {
     }
 }
 
-export function colectivoSet(id: number) {
+export function colectivoMultiSet(id: number) {
     return {
-        type: selectionsConstants.SELECTED_COLECTIVO_SET,
+        type: selectionsConstants.SET_MULTI_COLECTIVO,
+        payload: id,
+    }
+}
+
+export function colectivoSingleSet(id: number) {
+    return {
+        type: selectionsConstants.SET_SINGLE_COLECTIVO,
         payload: id,
     }
 }

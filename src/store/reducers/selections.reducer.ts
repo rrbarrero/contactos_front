@@ -1,24 +1,31 @@
 import { selectionsConstants } from "../constants";
 
 type SelectionReducerType = {
-    cargos: number[],
-    colectivos: number[];
+    cargos: number[];
+    multi_colectivos: number[];
+    single_colectivo: number;
     pais: number;
 }
 
 const initialState: SelectionReducerType = {
     cargos: [],
-    colectivos: [],
+    multi_colectivos: [],
+    single_colectivo: 0,
     pais: 0,
 };
 
 
 export function selectionReducer(state = initialState, action: { type: string; payload: number | number[]; }): SelectionReducerType {
     switch (action.type) {
-        case selectionsConstants.SELECTED_COLECTIVO_SET:
+        case selectionsConstants.SET_MULTI_COLECTIVO:
             return {
                 ...state,
-                colectivos: action.payload as number[],
+                multi_colectivos: action.payload as number[],
+            }
+        case selectionsConstants.SET_SINGLE_COLECTIVO:
+            return {
+                ...state,
+                single_colectivo: action.payload as number,
             }
         case selectionsConstants.SELECTED_PAIS_SET:
             return {

@@ -5,8 +5,8 @@ import Landing from "../login/Login"
 import ProtectedRoute from "./ProtectedRoute"
 import UnProtectedRoute from "./UnProtectedRoute"
 import { history } from "../../helpers/";
-import Contactos from "../contactos/Contactos"
-import NuevoContactoForm from "../contactos/NuevoContactoForm";
+import Contactos from "../listarContactos/Contactos"
+import NuevoContactoForm from "../nuevoContacto/NuevoContactoForm";
 
 const Routes = () => {
 
