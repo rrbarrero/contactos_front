@@ -122,6 +122,7 @@ const Landing = () => {
                                 type={datos.showPassword ? 'text' : 'password'}
                                 value={datos.password}
                                 onChange={handleChange('password')}
+                                name="password"
                                 endAdornment={
                                     <InputAdornment position="end">
                                         <IconButton
@@ -137,7 +138,7 @@ const Landing = () => {
                             />
                         </FormControl>
                     </Grid>
-                    <Button variant="contained" color="primary" type="submit" className={classes.submitStyle}>Enviar</Button>
+                    <Button variant="contained" color="primary" id="loginSubmit" type="submit" className={classes.submitStyle}>Enviar</Button>
                 </form>
             </Box>
 
