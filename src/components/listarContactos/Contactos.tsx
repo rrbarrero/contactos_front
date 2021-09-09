@@ -2,7 +2,7 @@ import { DataGrid, GridColDef, GridSelectionModel } from '@mui/x-data-grid';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { cargoActions } from "../../store/actions/cargo.actions";
+import { cargosActions } from "../../store/actions/cargos.actions";
 import { RootState } from "../../store/reducers";
 import Dashboard from "../dashboard/Dashboard";
 import { selectionsActions } from '../../store/actions';
@@ -105,21 +105,21 @@ const Contactos = () => {
 
     useEffect(() => {
         if (searchText) {
-            dispatch(cargoActions.search(searchText));
+            dispatch(cargosActions.search(searchText));
         }
     }, [searchText, dispatch])
 
     useEffect(() => {
-        dispatch(cargoActions.get_all(colectivosSelected));
+        dispatch(cargosActions.get_all(colectivosSelected));
     }, [colectivosSelected, dispatch]);
 
     const handlePage = (newPage: number) => {
 
         if (newPage > cargosCurrentPage) {
-            dispatch(cargoActions.get_page(cargosNextPageUrl, newPage));
+            dispatch(cargosActions.get_page(cargosNextPageUrl, newPage));
         }
         else {
-            dispatch(cargoActions.get_page(cargosPrevPageUrl, newPage));
+            dispatch(cargosActions.get_page(cargosPrevPageUrl, newPage));
         }
     }
 

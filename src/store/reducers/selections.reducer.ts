@@ -7,6 +7,7 @@ type SelectionReducerType = {
     singleColectivo: number;
     subColectivo: number;
     pais: number;
+    stepperCurrent: number;
 }
 
 const initialState: SelectionReducerType = {
@@ -16,6 +17,7 @@ const initialState: SelectionReducerType = {
     singleColectivo: 0,
     subColectivo: 0,
     pais: 0,
+    stepperCurrent: 0,
 };
 
 
@@ -50,6 +52,11 @@ export function selectionReducer(state = initialState, action: { type: string; p
             return {
                 ...state,
                 cargos: action.payload as number[],
+            }
+        case selectionsConstants.SET_STEPPER_CURRENT:
+            return {
+                ...state,
+                stepperCurrent: action.payload as number,
             }
         default:
             return state

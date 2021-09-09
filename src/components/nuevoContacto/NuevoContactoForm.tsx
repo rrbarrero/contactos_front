@@ -8,7 +8,7 @@ import Box from '@material-ui/core/Box';
 import ValidationSchema from './ContactoFormValidation';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from "../../store/reducers";
-import { colectivoActions, provinciaActions, tratamientoActions } from '../../store/actions';
+import { colectivoActions, provinciaActions, selectionsActions, tratamientoActions } from '../../store/actions';
 import { useEffect, useState } from 'react';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -23,6 +23,7 @@ import SelectColectivo from './formFields/SelectColectivo';
 import moment from 'moment';
 import SelectSubColectivo from './formFields/SelectSubColectivo';
 import SelectTratamiento from './formFields/SelectTratamiento';
+import NuevoContactoStepper from './NuevoContactoStepper';
 
 
 //moment.locale("es");
@@ -33,9 +34,10 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         box: {
             paddingLeft: drawerWidth + 20,
+            paddingRight: 20,
             display: 'grid',
-            gridTemplateColumns: '70% 25%',
-            columnGap: '20px',
+            // gridTemplateColumns: '70% 25%',
+            // columnGap: '20px',
         },
         form: {
             color: 'black',
@@ -48,9 +50,7 @@ const useStyles = makeStyles((theme: Theme) =>
         selectEmpty: {
             marginTop: theme.spacing(2),
         },
-        submitButton: {
-            marginTop: 14,
-        },
+
         inputItem: {
             marginLeft: 30,
             marginTop: 30,
@@ -79,6 +79,10 @@ const NuevoContactoForm = () => {
 
     const [cargoTerminado, setCargoTerminado] = useState(false);
     const [fechaCese, setFechaCese] = useState(moment().format('yyyy-MM-DD'));
+
+    useEffect(() => {
+        dispatch(selectionsActions.stepperSet(0));
+    }, [dispatch]);
 
     useEffect(() => {
         dispatch(tratamientoActions.get_all_tratamientos());
@@ -178,7 +182,7 @@ const NuevoContactoForm = () => {
                             <Paper className={classes.control}>
 
                                 <Grid container spacing={2}>
-                                    <SelectTratamiento values={values.persona.tratamiento as Tratamiento} classStyle={classes.inputItem} />
+                                    <SelectTratamiento {...classes} />
                                     <Grid item md={3} xs={12} className={classes.inputItem}>
                                         <TextField
                                             fullWidth
@@ -276,9 +280,8 @@ const NuevoContactoForm = () => {
                                         />}
                                     </Grid>
                                 </Grid>
-                                <Button className={classes.submitButton} color="primary" variant="contained" type="submit">
-                                    Submit
-                                </Button>
+                                <NuevoContactoStepper />
+
                             </Paper>
 
                         </Form>

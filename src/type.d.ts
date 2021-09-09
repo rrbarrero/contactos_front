@@ -134,6 +134,11 @@ type Cargos = {
 
 type CargoAction = {
     type: string;
+    payload: string|Persona|Tratamiento|Ciudad|Pais|Colectivo|SubColectivo;
+}
+
+type CargosAction = {
+    type: string;
     payload: Cargos;
 }
 

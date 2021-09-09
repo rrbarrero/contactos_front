@@ -2,7 +2,8 @@ import { combineReducers } from 'redux';
 
 import { alert } from './alert.reducer';
 import { authentication } from './authentication.reducer';
-import { cargos } from './cargo.reducers';
+import { cargo } from './cargo.reducers';
+import { cargos } from './cargos.reducers';
 import { colectivos } from './colectivos.reducer';
 import { searchContacto } from './search-contacto.reducers';
 import { Spinner } from './spinner.reducers';
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
     authentication,
     colectivos,
     searchContacto,
+    cargo,
     cargos,
     Spinner,
     alert,

@@ -7,6 +7,7 @@ export const selectionsActions = {
     colectivoSingleSet,
     subColectivoSet,
     cargoSet,
+    stepperSet,
 }
 
 export function tratamientoSet(id: number) {
@@ -48,5 +49,12 @@ export function cargoSet(ids: number[]) {
     return {
         type: selectionsConstants.SET_CARGO,
         payload: ids,
+    }
+}
+
+export function stepperSet(currentStep: number) {
+    return {
+        type: selectionsConstants.SET_STEPPER_CURRENT,
+        payload: currentStep,
     }
 }
