@@ -31,6 +31,11 @@ export function cargo(state = initialState, action: CargoAction): Cargo {
                 }
                 
             }
+        case cargoConstants.SET_PAIS:
+            return {
+                ...state,
+                pais: action.payload as Pais,
+            }
         default:
             return state
     }

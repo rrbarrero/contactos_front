@@ -1,10 +1,8 @@
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-//import { selectionsActions } from "../../../store/actions";
 import { RootState } from "../../../store/reducers";
 import Input from '@material-ui/core/Input';
 import MenuItem from "@material-ui/core/MenuItem";
@@ -17,7 +15,6 @@ const SelectTratamiento = (classes: ClassNameMap) => {
     const DEFAULT_SELECTED = 'sr. d.';
     const dispatch = useDispatch();
     const tratamientos = useSelector((state: RootState) => state.tratamientos);
-    //const selectedTratamiento = useSelector((state: RootState) => state.selectionReducer.tratamiento);
     const selectedTratamiento = useSelector((state: RootState) => state.cargo.persona.tratamiento);
 
     useEffect(() => {
@@ -36,7 +33,6 @@ const SelectTratamiento = (classes: ClassNameMap) => {
         const tratamiento: Tratamiento | undefined = tratamientos.find(tr => tr.id === e as number);
         if (tratamiento) {
             dispatch(cargoActions.setTratamiento(tratamiento));
-            //dispatch(selectionsActions.tratamientoSet(tratamiento.id));
         }
     };
 
@@ -55,7 +51,6 @@ const SelectTratamiento = (classes: ClassNameMap) => {
                 value={selectedTratamiento}
                 onChange={(e) => handleChangeTratamiento(e.target.value)}
                 renderValue={renderSelectedTratamiento}
-            // defaultValue={tratamientos.length > 0 ? tratamientos[0].id : 0}
             >
                 {tratamientos.map((tratamiento) =>
                     <MenuItem key={tratamiento.id} value={tratamiento.id}>

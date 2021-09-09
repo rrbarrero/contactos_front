@@ -255,7 +255,7 @@ const NuevoContactoForm = () => {
                                             helperText={touched.direccion && errors.direccion}
                                         />
                                     </Grid>
-                                    <SelectPais values={values.pais as Pais} classStyle={classes.inputItem} />
+                                    <SelectPais {...classes} />
                                     <SelectColectivo values={values.colectivo as Colectivo} classStyle={classes.inputItem} />
                                     <SelectSubColectivo values={values.subcolectivo as SubColectivo} classStyle={classes.inputItem} />
                                     <Grid item md={5} xs={12} className={classes.inputItem}>

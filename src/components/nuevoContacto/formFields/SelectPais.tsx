@@ -3,23 +3,19 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { paisActions, selectionsActions } from "../../../store/actions";
+import { cargoActions, paisActions } from "../../../store/actions";
 import { RootState } from "../../../store/reducers";
 import Input from '@material-ui/core/Input';
 import MenuItem from "@material-ui/core/MenuItem";
+import { ClassNameMap } from "@material-ui/core/styles/withStyles";
 
-type InputType = {
-    values: Pais,
-    classStyle: string,
-}
-
-const SelectPais =  ({values, classStyle}: InputType) => {
+const SelectPais = (classes: ClassNameMap) => {
 
     const DEFAULT_SELECTED = 'españa';
 
     const dispatch = useDispatch();
     const paises = useSelector((state: RootState) => state.paises);
-    const selectedPais = useSelector((state: RootState) => state.selectionReducer.pais);
+    const selectedPais = useSelector((state: RootState) => state.cargo.pais);
 
     useEffect(() => {
         /*
@@ -34,8 +30,8 @@ const SelectPais =  ({values, classStyle}: InputType) => {
         */
         if (paises.length > 0) {
             const defaultPais = paises.find((pais) => pais.nombre.toLowerCase() === DEFAULT_SELECTED);
-            if (defaultPais?.id) {
-                dispatch(selectionsActions.paisSet(defaultPais.id));
+            if (defaultPais) {
+                dispatch(cargoActions.setPais(defaultPais));
             }
         }
     }, [dispatch, paises]);
@@ -45,30 +41,26 @@ const SelectPais =  ({values, classStyle}: InputType) => {
             Set state of selectedPais on inputSelect change
         */
         const pais = paises.find(pa => pa.id === e as number);
-        if (pais?.id) {
-            dispatch(selectionsActions.paisSet(pais.id));
+        if (pais) {
+            dispatch(cargoActions.setPais(pais));
         }
     };
 
     const renderSelectedPais = () => {
-        const currentPais: Pais | undefined = paises.find((pais) => pais.id === selectedPais);
-        if (currentPais) {
-            return currentPais.nombre;
-        }
+        return selectedPais.nombre;
     }
 
     return (
 
-        <Grid item md={6} xs={12} className={classStyle}>
+        <Grid item md={6} xs={12} className={classes.inputItem}>
             <InputLabel id="pais-select-label">Pais</InputLabel>
             {selectedPais && <Select
                 labelId="pais-select-label"
                 id="pais"
                 input={<Input />}
-                value={values.id}
+                value={selectedPais}
                 onChange={(e) => handleChangePais(e.target.value)}
                 renderValue={renderSelectedPais}
-                defaultValue={selectedPais}
             >
                 {paises.map((pais) =>
                     <MenuItem key={pais.id} value={pais.id}>
