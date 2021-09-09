@@ -3,37 +3,27 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectionsActions, subColectivoActions } from "../../../store/actions";
+import { cargoActions, selectionsActions, subColectivoActions } from "../../../store/actions";
 import { RootState } from "../../../store/reducers";
 import Input from '@material-ui/core/Input';
 import MenuItem from "@material-ui/core/MenuItem";
+import { ClassNameMap } from "@material-ui/core/styles/withStyles";
 
 
-type InputType = {
-    values: Colectivo,
-    classStyle: string,
-}
-
-
-const SelectColectivo =  ({values, classStyle}: InputType) => {
+const SelectColectivo = (classes: ClassNameMap) => {
 
     const DEFAULT_SELECTED = 'junta de extremadura';
     const dispatch = useDispatch();
 
     const colectivos = useSelector((state: RootState) => state.colectivos);
-    const selectedColectivo: number = useSelector((state: RootState) => state.selectionReducer.singleColectivo);
+    const selectedColectivo: Colectivo = useSelector((state: RootState) => state.cargo.colectivo);
 
     useEffect(() => {
         /*
             Refresh state of subColectivos on selectedColectivo change
         */
-        if (selectedColectivo) {
-            const colectivo = colectivos.find((col) => col.id === selectedColectivo);
-            if (colectivo) {
-                dispatch(subColectivoActions.get_subcolectivos(colectivo));
-            }
-        }
-    }, [selectedColectivo, dispatch, colectivos]);
+        dispatch(subColectivoActions.get_subcolectivos(selectedColectivo));
+    }, [selectedColectivo, dispatch]);
 
     useEffect(() => {
         /*
@@ -42,7 +32,7 @@ const SelectColectivo =  ({values, classStyle}: InputType) => {
         if (colectivos.length > 0) {
             const colectivo = colectivos.find((colectivo) => colectivo.nombre.toLowerCase() === DEFAULT_SELECTED);
             if (colectivo?.id) {
-                dispatch(selectionsActions.colectivoSingleSet(colectivo.id));
+                dispatch(cargoActions.setColectivo(colectivo));
             }
         }
     }, [colectivos, dispatch]);
@@ -53,25 +43,22 @@ const SelectColectivo =  ({values, classStyle}: InputType) => {
         */
         const colectivo: Colectivo | undefined = colectivos.find(co => co.id === e as number);
         if (colectivo?.id) {
-            dispatch(selectionsActions.colectivoSingleSet(colectivo.id));
+            dispatch(cargoActions.setColectivo(colectivo));
         }
     };
 
     const renderSelectedColectivo = () => {
-        const colectivo = colectivos.find((col) => col.id === selectedColectivo);
-        if (colectivo) {
-            return colectivo.nombre;
-        }
+        return selectedColectivo.nombre;
     }
 
     return (
-        <Grid item md={6} xs={12} className={classStyle}>
+        <Grid item md={6} xs={12} className={classes.inputItem}>
             <InputLabel id="colectivo-select-label">Colectivo</InputLabel>
-            {selectedColectivo !== 0 && <Select
+            <Select
                 labelId="colectivo-select-label"
                 id="colectivo"
                 input={<Input />}
-                value={values.id}
+                value={selectedColectivo}
                 onChange={(e) => handleChangeColectivo(e.target.value)}
                 renderValue={renderSelectedColectivo}
                 defaultValue={selectedColectivo}
@@ -81,7 +68,7 @@ const SelectColectivo =  ({values, classStyle}: InputType) => {
                         {colectivo.nombre}
                     </MenuItem>
                 )}
-            </Select>}
+            </Select>
         </Grid>
     )
 }

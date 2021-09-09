@@ -3,17 +3,13 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectionsActions } from "../../../store/actions";
+import { cargoActions, selectionsActions } from "../../../store/actions";
 import { RootState } from "../../../store/reducers";
 import Input from '@material-ui/core/Input';
 import MenuItem from "@material-ui/core/MenuItem";
+import { ClassNameMap } from "@material-ui/core/styles/withStyles";
 
-type InputType = {
-    values: SubColectivo,
-    classStyle: string,
-}
-
-const SelectSubColectivo =  ({values, classStyle}: InputType) => {
+const SelectSubColectivo = (classes: ClassNameMap) => {
 
     /*
         Logic about subColectivo inputSelect
@@ -21,9 +17,9 @@ const SelectSubColectivo =  ({values, classStyle}: InputType) => {
 
     const dispatch = useDispatch();
 
-    const selectedColectivo = useSelector((state: RootState) => state.selectionReducer.singleColectivo);
-    const selectedSubColectivo = useSelector((state: RootState) => state.selectionReducer.subColectivo);
-    const subColectivos = useSelector((state: RootState) => state.subColectivos);
+    const selectedColectivo: Colectivo = useSelector((state: RootState) => state.cargo.colectivo);
+    const selectedSubColectivo: SubColectivo = useSelector((state: RootState) => state.cargo.subcolectivo);
+    const subColectivos: SubColectivos = useSelector((state: RootState) => state.subColectivos);
 
     const handleChangeSubColectivo = (e: unknown) => {
         /* 
@@ -31,7 +27,7 @@ const SelectSubColectivo =  ({values, classStyle}: InputType) => {
         */
         const subColectivo: SubColectivo | undefined = subColectivos.find(su => su.id === e as number);
         if (subColectivo?.id) {
-            dispatch(selectionsActions.subColectivoSet(subColectivo.id));
+            dispatch(cargoActions.setColectivo(subColectivo));
         }
     };
 
@@ -40,25 +36,22 @@ const SelectSubColectivo =  ({values, classStyle}: InputType) => {
             Set first subColectivo when change Colectivo
         */
         if (subColectivos[0]?.id) {
-            dispatch(selectionsActions.subColectivoSet(subColectivos[0].id));
+            dispatch(cargoActions.setSubColectivo(subColectivos[0]));
         }
     }, [dispatch, selectedColectivo, subColectivos]);
 
     const renderSelectedSubColectivo = () => {
-        const subColectivo = subColectivos.find((sub) => sub.id === selectedSubColectivo);
-        if (subColectivo) {
-            return subColectivo.nombre;
-        }
+        return selectedSubColectivo.nombre;
     }
 
     return (
-        <Grid item md={5} xs={12} className={classStyle}>
+        <Grid item md={5} xs={12} className={classes.inputItem}>
             <InputLabel id="subcolectivo-select-label">SubColectivo</InputLabel>
             {selectedSubColectivo && <Select
                 labelId="subcolectivo-select-label"
                 id="subcolectivo"
                 input={<Input />}
-                value={values ? values.id : 0}
+                value={selectedSubColectivo}
                 onChange={(e) => handleChangeSubColectivo(e.target.value)}
                 renderValue={renderSelectedSubColectivo}
                 defaultValue={subColectivos.length > 0 ? subColectivos[0].id : 0}

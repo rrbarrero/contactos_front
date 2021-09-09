@@ -3,6 +3,15 @@ import { cargoConstants } from "../constants"
 export const cargoActions = {
     setTratamiento,
     setPais,
+    setPersonaNombre,
+    setPersonaApellidos,
+    setCargo,
+    setCiudad,
+    setDireccion,
+    setEmpresa,
+    setFechaCese,
+    setColectivo,
+    setSubColectivo,
 }
 
 export function setTratamiento(tratamiento: Tratamiento) {
@@ -18,3 +27,71 @@ export function setPais(pais: Pais) {
         payload: pais,
     }
 }
+
+export function setPersonaNombre(nombre: string) {
+    return {
+        type: cargoConstants.SET_PERSONA_NOMBRE,
+        payload: nombre,
+    }
+}
+
+export function setPersonaApellidos(apellidos: string) {
+    return {
+        type: cargoConstants.SET_PERSONA_APELLIDOS,
+        payload: apellidos,
+    }
+}
+
+export function setCargo(cargo: string) {
+    return {
+        type: cargoConstants.SET_CARGO,
+        payload: cargo,
+    }
+}
+
+export function setEmpresa(empresa: string) {
+    return {
+        type: cargoConstants.SET_EMPRESA,
+        payload: empresa,
+    }
+}
+
+export function setCiudad(ciudad: string) {
+    return {
+        type: cargoConstants.SET_CIUDAD,
+        payload: ciudad,
+    }
+}
+
+export function setDireccion(direccion: string) {
+    return {
+        type: cargoConstants.SET_DIRECCION,
+        payload: direccion,
+    }
+}
+
+export function setFechaCese(fechaCese: string) {
+    return {
+        type: cargoConstants.SET_FECHA_CESE,
+        payload: fechaCese,
+    }
+}
+
+export function setColectivo(colectivo: Colectivo) {
+    return {
+        type: cargoConstants.SET_COLECTIVO,
+        payload: colectivo,
+    }
+}
+
+export function setSubColectivo(subColectivo: SubColectivo) {
+    return {
+        type: cargoConstants.SET_SUBCOLECTIVO,
+        payload: subColectivo,
+    }
+}
+
+
+
+
+
