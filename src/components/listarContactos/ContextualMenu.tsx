@@ -40,14 +40,11 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const ContextualMenu = () => {
     const classes = useStyles();
-    //const dispatch = useDispatch();
-    const selectedCargo = useSelector((state: RootState) => state.appStates.cargos);
-
-    //const chipTxt = `Seleccionados ${selectedCargo.length}`;
+    const selectedCargos = useSelector((state: RootState) => state.appStates.selectedCargos);
 
     return (
         <>
-            <StyledBadge color="primary" badgeContent={selectedCargo.length} >
+            <StyledBadge color="primary" badgeContent={selectedCargos.length} >
                 <PersonIcon style={{ fontSize: 40 }} />
             </StyledBadge>
             <List component="nav" aria-label="main mailbox folders">
@@ -60,7 +57,7 @@ const ContextualMenu = () => {
                     </ListItem>
                 </Link>
                 <Divider />
-                {selectedCargo.length === 1 &&
+                {selectedCargos.length === 1 &&
 
                     <ListItem button>
                         <ListItemIcon>
@@ -69,7 +66,7 @@ const ContextualMenu = () => {
                         <ListItemText primary="Modificar" />
                     </ListItem>
                 }
-                {selectedCargo.length === 1 &&
+                {selectedCargos.length === 1 &&
                     <ListItem button>
                         <ListItemIcon>
                             <AddIcon />
@@ -78,7 +75,7 @@ const ContextualMenu = () => {
                     </ListItem>
                 }
                 <Divider />
-                {selectedCargo.length > 0 &&
+                {selectedCargos.length > 0 &&
                     <ListItem button>
                         <ListItemIcon>
                             <PlaylistAddCheckIcon />
@@ -87,7 +84,7 @@ const ContextualMenu = () => {
                     </ListItem>
                 }
                 <Divider />
-                {selectedCargo.length > 0 &&
+                {selectedCargos.length > 0 &&
                     <ListItem button>
                         <ListItemIcon>
                             <MailIcon />
@@ -96,7 +93,7 @@ const ContextualMenu = () => {
                     </ListItem>
                 }
                 <Divider />
-                {selectedCargo.length > 0 &&
+                {selectedCargos.length > 0 &&
                     <ListItem button>
                         <ListItemIcon>
                             <AlarmOnIcon />
@@ -105,7 +102,7 @@ const ContextualMenu = () => {
                     </ListItem>
                 }
                 <Divider />
-                {selectedCargo.length > 0 &&
+                {selectedCargos.length > 0 &&
                     <ListItem button>
                         <ListItemIcon>
                             <DeleteForeverIcon />

@@ -5,7 +5,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from "./store/reducers";
-import { spinnerActions } from './store/actions';
+import { appActions, spinnerActions } from './store/actions';
+import { useEffect } from 'react';
 
 
 
@@ -21,6 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
 function App() {
   const classes = useStyles();
   const dispatch = useDispatch();
+  dispatch(spinnerActions.toggleState(false));
   const spinnerState = useSelector((state: RootState) => state.Spinner);
 
   const handleClose = () => {

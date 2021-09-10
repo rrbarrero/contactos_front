@@ -90,13 +90,13 @@ const Contactos = () => {
 
     const classes = useStyles();
     const dispatch = useDispatch();
-    const colectivosSelected = useSelector((state: RootState) => state.appStates.multiColectivos);
-    const cargosSelected: number[] = useSelector((state: RootState) => state.appStates.cargos);
+    const colectivosSelected = useSelector((state: RootState) => state.appStates.selectedColectivos);
+    const cargosSelected: number[] = useSelector((state: RootState) => state.appStates.selectedCargos);
     const cargos = useSelector((state: RootState) => state.cargos);
     const searchText = useSelector((state: RootState) => state.searchContacto);
 
     const setCargoSelected = (event: GridSelectionModel) => {
-        dispatch(appActions.cargoSet(event as number[]));
+        dispatch(appActions.setSelectedCargos(event as number[]));
     }
 
     useEffect(() => {
@@ -121,7 +121,7 @@ const Contactos = () => {
 
     return (
         <>
-            <Dashboard></Dashboard>
+            <Dashboard />
             <div className={classes.wrapper}>
                 <div className={classes.dataGridContainer}>
                     <DataGrid
@@ -130,7 +130,7 @@ const Contactos = () => {
                         pageSize={25}
                         pagination
                         paginationMode="server"
-                        rowsPerPageOptions={[0]}
+                        rowsPerPageOptions={[25]}
                         rowCount={cargos.count}
                         onPageChange={(newPage) => handlePage(newPage)}
                         checkboxSelection

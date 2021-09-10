@@ -54,8 +54,7 @@ const ColectivoDropdown = () => {
 
     const user = useSelector((state: RootState) => state.authentication);
     const colectivos = useSelector((state: RootState) => state.colectivos);
-    //const colectivosSelected = useSelector((state: RootState) => state.selectedColectivo);
-    const colectivosSelected = useSelector((state: RootState) => state.appStates.multiColectivos);
+    const selectedColectivos = useSelector((state: RootState) => state.appStates.selectedColectivos);
 
     const dispatch = useDispatch();
 
@@ -67,8 +66,7 @@ const ColectivoDropdown = () => {
     }, [colectivos.length, dispatch, user]);
 
     const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-        //dispatch(selectedColectivoActions.colectivoSet(event.target.value as number))
-        dispatch(appActions.colectivoMultiSet(event.target.value as number))
+        dispatch(appActions.setSelectedColectivos(event.target.value as number))
     }
 
     const renderSelected = (selected: number[]) => {
@@ -91,7 +89,7 @@ const ColectivoDropdown = () => {
                     onChange={handleChange}
                     name="colectivo"
                     input={<Input />}
-                    value={colectivosSelected}
+                    value={selectedColectivos}
                     renderValue={(selected) => renderSelected(selected as number[])}
                     className={classes.multiSelect}
                     MenuProps={MenuProps}
@@ -99,7 +97,7 @@ const ColectivoDropdown = () => {
                 >
                     {colectivos.map((colectivo) =>
                         <MenuItem key={colectivo.id} value={colectivo.id}>
-                            <Checkbox checked={colectivosSelected.indexOf(colectivo.id || 0) > -1} />
+                            <Checkbox checked={selectedColectivos.indexOf(colectivo.id || 0) > -1} />
                             <ListItemText primary={colectivo.nombre} />
                         </MenuItem>
                     )}

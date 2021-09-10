@@ -1,21 +1,21 @@
 import { appStatesConstants } from "../constants"
 
 export const appActions = {
-    colectivoMultiSet,
-    cargoSet,
+    setSelectedColectivos,
+    setSelectedCargos,
     stepperSet,
 }
 
-export function colectivoMultiSet(id: number) {
+export function setSelectedColectivos(id: number) {
     return {
-        type: appStatesConstants.SET_MULTI_COLECTIVO,
+        type: appStatesConstants.SET_SELECTED_COLECTIVOS,
         payload: id,
     }
 }
 
-export function cargoSet(ids: number[]) {
+export function setSelectedCargos(ids: number[]) {
     return {
-        type: appStatesConstants.SET_CARGO,
+        type: appStatesConstants.SET_SELECTED_CARGOS,
         payload: ids,
     }
 }
