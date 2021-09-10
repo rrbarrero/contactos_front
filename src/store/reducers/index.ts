@@ -11,7 +11,7 @@ import { tratamientos } from './tratamientos.reducers';
 import { provincias } from './provincia.reducers';
 import { paises } from './pais.reducers';
 import { subColectivos } from './subcolectivos.reducers';
-import { selectionReducer } from './selections.reducer';
+import { appStates } from './app-states.reducer';
 
 const rootReducer = combineReducers({
     authentication,
@@ -25,7 +25,7 @@ const rootReducer = combineReducers({
     provincias,
     paises,
     subColectivos,
-    selectionReducer,
+    appStates,
 
 });
 

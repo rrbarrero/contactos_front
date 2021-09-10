@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { RootState } from '../../store/reducers';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectionsActions } from '../../store/actions';
+import { appActions } from '../../store/actions';
 import SaveIcon from '@material-ui/icons/Save';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -49,10 +49,10 @@ export default function NuevoContactoStepper() {
   //const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set<number>());
   const steps = getSteps();
-  const activeStep = useSelector((state: RootState) => state.selectionReducer.stepperCurrent);
+  const activeStep = useSelector((state: RootState) => state.appStates.stepperCurrent);
 
   const setActiveStep = (step: number) => {
-    dispatch(selectionsActions.stepperSet(step));
+    dispatch(appActions.stepperSet(step));
   }
 
   const isStepOptional = (step: number) => {

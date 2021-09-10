@@ -7,6 +7,6 @@ export * from './tratamiento.actions';
 export * from './provincia.actions';
 export * from './pais.actions';
 export * from './subcolectivo.actions';
-export * from './selections.actions';
+export * from './app-actions';
 export * from './cargo.actions';
 export * from './cargos.actions';

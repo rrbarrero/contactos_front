@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const ContextualMenu = () => {
     const classes = useStyles();
     //const dispatch = useDispatch();
-    const selectedCargo = useSelector((state: RootState) => state.selectionReducer.cargos);
+    const selectedCargo = useSelector((state: RootState) => state.appStates.cargos);
 
     //const chipTxt = `Seleccionados ${selectedCargo.length}`;
 

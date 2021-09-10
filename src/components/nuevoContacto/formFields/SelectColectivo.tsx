@@ -3,7 +3,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { cargoActions, selectionsActions, subColectivoActions } from "../../../store/actions";
+import { cargoActions, subColectivoActions } from "../../../store/actions";
 import { RootState } from "../../../store/reducers";
 import Input from '@material-ui/core/Input';
 import MenuItem from "@material-ui/core/MenuItem";

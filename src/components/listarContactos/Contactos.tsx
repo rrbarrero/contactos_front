@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { cargosActions } from "../../store/actions/cargos.actions";
 import { RootState } from "../../store/reducers";
 import Dashboard from "../dashboard/Dashboard";
-import { selectionsActions } from '../../store/actions';
+import { appActions } from '../../store/actions';
 import { Box } from '@material-ui/core';
 import ContextualMenu from './ContextualMenu';
 
@@ -90,17 +90,13 @@ const Contactos = () => {
 
     const classes = useStyles();
     const dispatch = useDispatch();
-    const colectivosSelected = useSelector((state: RootState) => state.selectionReducer.multiColectivos);
-    const cargos = useSelector((state: RootState) => state.cargos.rows);
-    const cargosTotalCount: number = useSelector((state: RootState) => state.cargos.count);
-    const cargosNextPageUrl: string = useSelector((state: RootState) => state.cargos.nextPage);
-    const cargosPrevPageUrl: string = useSelector((state: RootState) => state.cargos.prevPage);
-    const cargosCurrentPage: number = useSelector((state: RootState) => state.cargos.currentPage);
-    const cargosSelected: number[] = useSelector((state: RootState) => state.selectionReducer.cargos);
+    const colectivosSelected = useSelector((state: RootState) => state.appStates.multiColectivos);
+    const cargosSelected: number[] = useSelector((state: RootState) => state.appStates.cargos);
+    const cargos = useSelector((state: RootState) => state.cargos);
     const searchText = useSelector((state: RootState) => state.searchContacto);
 
     const setCargoSelected = (event: GridSelectionModel) => {
-        dispatch(selectionsActions.cargoSet(event as number[]));
+        dispatch(appActions.cargoSet(event as number[]));
     }
 
     useEffect(() => {
@@ -115,11 +111,11 @@ const Contactos = () => {
 
     const handlePage = (newPage: number) => {
 
-        if (newPage > cargosCurrentPage) {
-            dispatch(cargosActions.get_page(cargosNextPageUrl, newPage));
+        if (newPage > cargos.currentPage) {
+            dispatch(cargosActions.get_page(cargos.nextPage, newPage));
         }
         else {
-            dispatch(cargosActions.get_page(cargosPrevPageUrl, newPage));
+            dispatch(cargosActions.get_page(cargos.prevPage, newPage));
         }
     }
 
@@ -129,13 +125,13 @@ const Contactos = () => {
             <div className={classes.wrapper}>
                 <div className={classes.dataGridContainer}>
                     <DataGrid
-                        rows={cargos}
+                        rows={cargos.rows}
                         columns={columns}
                         pageSize={25}
                         pagination
                         paginationMode="server"
                         rowsPerPageOptions={[0]}
-                        rowCount={cargosTotalCount}
+                        rowCount={cargos.count}
                         onPageChange={(newPage) => handlePage(newPage)}
                         checkboxSelection
                         disableSelectionOnClick

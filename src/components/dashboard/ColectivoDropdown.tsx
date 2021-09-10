@@ -5,7 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { useDispatch, useSelector } from 'react-redux';
-import { colectivoActions, selectionsActions } from '../../store/actions';
+import { colectivoActions, appActions } from '../../store/actions';
 import { RootState } from '../../store/reducers';
 import Input from '@material-ui/core/Input';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -55,7 +55,7 @@ const ColectivoDropdown = () => {
     const user = useSelector((state: RootState) => state.authentication);
     const colectivos = useSelector((state: RootState) => state.colectivos);
     //const colectivosSelected = useSelector((state: RootState) => state.selectedColectivo);
-    const colectivosSelected = useSelector((state: RootState) => state.selectionReducer.multiColectivos);
+    const colectivosSelected = useSelector((state: RootState) => state.appStates.multiColectivos);
 
     const dispatch = useDispatch();
 
@@ -68,7 +68,7 @@ const ColectivoDropdown = () => {
 
     const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
         //dispatch(selectedColectivoActions.colectivoSet(event.target.value as number))
-        dispatch(selectionsActions.colectivoMultiSet(event.target.value as number))
+        dispatch(appActions.colectivoMultiSet(event.target.value as number))
     }
 
     const renderSelected = (selected: number[]) => {

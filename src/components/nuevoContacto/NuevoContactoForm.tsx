@@ -8,7 +8,7 @@ import Box from '@material-ui/core/Box';
 import ValidationSchema from './ContactoFormValidation';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from "../../store/reducers";
-import { cargoActions, colectivoActions, paisActions, provinciaActions, selectionsActions, tratamientoActions } from '../../store/actions';
+import { cargoActions, colectivoActions, paisActions, provinciaActions, appActions, tratamientoActions } from '../../store/actions';
 import { useEffect, useState } from 'react';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -86,7 +86,7 @@ const NuevoContactoForm = () => {
     const [fechaCese, setFechaCese] = useState(moment().format('yyyy-MM-DD'));
 
     useEffect(() => {
-        dispatch(selectionsActions.stepperSet(0));
+        dispatch(appActions.stepperSet(0));
     }, [dispatch]);
 
     useEffect(() => {
