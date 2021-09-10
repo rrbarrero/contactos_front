@@ -1,7 +1,6 @@
 import { cargoConstants } from "../constants";
 
-
-let initialState: Cargo = {
+export let initialCargoState: Cargo = {
     persona: {
         tratamiento: { nombre: '' },
         nombre: '',
@@ -20,7 +19,7 @@ let initialState: Cargo = {
     subcolectivo: { nombre: '', colectivo: { nombre: '' } },
 };
 
-export function cargo(state = initialState, action: CargoAction): Cargo {
+export function cargo(state = initialCargoState, action: CargoAction): Cargo {
     switch (action.type) {
         case cargoConstants.SET_TRATAMIENTO:
             return {
@@ -85,6 +84,11 @@ export function cargo(state = initialState, action: CargoAction): Cargo {
             return {
                 ...state,
                 direccion: action.payload as string,
+            }
+        case cargoConstants.SET_FINALIZADO:
+            return {
+                ...state,
+                finalizado: action.payload as boolean,
             }
         default:
             return state

@@ -9,13 +9,20 @@ import Input from '@material-ui/core/Input';
 import MenuItem from "@material-ui/core/MenuItem";
 import { ClassNameMap } from "@material-ui/core/styles/withStyles";
 
-const SelectSubColectivo = (classes: ClassNameMap) => {
+type SelectArgs = {
+    classes: ClassNameMap,
+    cargoValues: Cargo,
+}
+
+
+const SelectSubColectivo = (selectArgs: SelectArgs) => {
 
     /*
         Logic about subColectivo inputSelect
     */
 
     const dispatch = useDispatch();
+    const { classes, cargoValues } = selectArgs;
 
     const selectedColectivo: Colectivo = useSelector((state: RootState) => state.cargo.colectivo);
     const selectedSubColectivo: SubColectivo = useSelector((state: RootState) => state.cargo.subcolectivo);
@@ -28,6 +35,7 @@ const SelectSubColectivo = (classes: ClassNameMap) => {
         const subColectivo: SubColectivo | undefined = subColectivos.find(su => su.id === e as number);
         if (subColectivo?.id) {
             dispatch(cargoActions.setColectivo(subColectivo));
+            cargoValues.subcolectivo = subColectivo;
         }
     };
 
@@ -37,8 +45,9 @@ const SelectSubColectivo = (classes: ClassNameMap) => {
         */
         if (subColectivos[0]?.id) {
             dispatch(cargoActions.setSubColectivo(subColectivos[0]));
+            cargoValues.subcolectivo = subColectivos[0];
         }
-    }, [dispatch, selectedColectivo, subColectivos]);
+    }, [cargoValues, dispatch, selectedColectivo, subColectivos]);
 
     const renderSelectedSubColectivo = () => {
         return selectedSubColectivo.nombre;

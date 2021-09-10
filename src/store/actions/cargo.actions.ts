@@ -12,6 +12,8 @@ export const cargoActions = {
     setFechaCese,
     setColectivo,
     setSubColectivo,
+    setProvincia,
+    setFinalizado,
 }
 
 export function setTratamiento(tratamiento: Tratamiento) {
@@ -25,6 +27,13 @@ export function setPais(pais: Pais) {
     return {
         type: cargoConstants.SET_PAIS,
         payload: pais,
+    }
+}
+
+export function setProvincia(provincia: Provincia) {
+    return {
+        type: cargoConstants.SET_PROVINCIA,
+        payload: provincia,
     }
 }
 
@@ -88,6 +97,13 @@ export function setSubColectivo(subColectivo: SubColectivo) {
     return {
         type: cargoConstants.SET_SUBCOLECTIVO,
         payload: subColectivo,
+    }
+}
+
+export function setFinalizado(finalizado: boolean){
+    return {
+        type: cargoConstants.SET_FINALIZADO,
+        payload: finalizado,
     }
 }
 

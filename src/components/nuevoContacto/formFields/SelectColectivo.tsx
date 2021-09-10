@@ -9,9 +9,14 @@ import Input from '@material-ui/core/Input';
 import MenuItem from "@material-ui/core/MenuItem";
 import { ClassNameMap } from "@material-ui/core/styles/withStyles";
 
+type SelectArgs = {
+    classes: ClassNameMap,
+    cargoValues: Cargo,
+}
 
-const SelectColectivo = (classes: ClassNameMap) => {
+const SelectColectivo = (selectArgs: SelectArgs) => {
 
+    const { classes, cargoValues } = selectArgs;
     const DEFAULT_SELECTED = 'junta de extremadura';
     const dispatch = useDispatch();
 
@@ -36,9 +41,10 @@ const SelectColectivo = (classes: ClassNameMap) => {
             const colectivo = colectivos.find((colectivo) => colectivo.nombre.toLowerCase() === DEFAULT_SELECTED);
             if (colectivo?.id) {
                 dispatch(cargoActions.setColectivo(colectivo));
+                cargoValues.colectivo = colectivo;
             }
         }
-    }, [colectivos, dispatch]);
+    }, [cargoValues, colectivos, dispatch]);
 
     const handleChangeColectivo = (e: unknown) => {
         /*
@@ -47,6 +53,7 @@ const SelectColectivo = (classes: ClassNameMap) => {
         const colectivo: Colectivo | undefined = colectivos.find(co => co.id === e as number);
         if (colectivo?.id) {
             dispatch(cargoActions.setColectivo(colectivo));
+            cargoValues.colectivo = colectivo;
         }
     };
 

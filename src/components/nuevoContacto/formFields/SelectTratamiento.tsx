@@ -9,10 +9,16 @@ import MenuItem from "@material-ui/core/MenuItem";
 import { cargoActions } from "../../../store/actions/";
 import { ClassNameMap } from '@material-ui/core/styles/withStyles';
 
+type SelectArgs = {
+    classes: ClassNameMap,
+    cargoValues: Cargo,
+}
 
-const SelectTratamiento = (classes: ClassNameMap) => {
+
+const SelectTratamiento = (selectArgs: SelectArgs) => {
 
     const DEFAULT_SELECTED = 'sr. d.';
+    const { classes, cargoValues } = selectArgs;
     const dispatch = useDispatch();
     const tratamientos = useSelector((state: RootState) => state.tratamientos);
     const selectedTratamiento = useSelector((state: RootState) => state.cargo.persona.tratamiento);
@@ -25,14 +31,16 @@ const SelectTratamiento = (classes: ClassNameMap) => {
             const tratamiento = tratamientos.find((tr) => tr.nombre.toLowerCase() === DEFAULT_SELECTED);
             if (tratamiento) {
                 dispatch(cargoActions.setTratamiento(tratamiento));
+                cargoValues.persona.tratamiento = tratamiento;
             }
         }
-    }, [dispatch, tratamientos]);
+    }, [cargoValues.persona, dispatch, tratamientos]);
 
     const handleChangeTratamiento = (e: unknown) => {
         const tratamiento: Tratamiento | undefined = tratamientos.find(tr => tr.id === e as number);
         if (tratamiento) {
             dispatch(cargoActions.setTratamiento(tratamiento));
+            cargoValues.persona.tratamiento = tratamiento;
         }
     };
 

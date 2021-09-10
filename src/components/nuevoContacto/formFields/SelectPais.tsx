@@ -9,9 +9,16 @@ import Input from '@material-ui/core/Input';
 import MenuItem from "@material-ui/core/MenuItem";
 import { ClassNameMap } from "@material-ui/core/styles/withStyles";
 
-const SelectPais = (classes: ClassNameMap) => {
+type SelectArgs = {
+    classes: ClassNameMap,
+    cargoValues: Cargo,
+}
+
+
+const SelectPais = (selectArgs: SelectArgs) => {
 
     const DEFAULT_SELECTED = 'españa';
+    const { classes, cargoValues } = selectArgs;
 
     const dispatch = useDispatch();
     const paises = useSelector((state: RootState) => state.paises);
@@ -24,8 +31,9 @@ const SelectPais = (classes: ClassNameMap) => {
         const pais = paises.find((pais) => pais.nombre.toLowerCase() === DEFAULT_SELECTED);
         if (pais?.id) {
             dispatch(cargoActions.setPais(pais));
+            cargoValues.pais = pais;
         }
-    }, [dispatch, paises]);
+    }, [cargoValues, dispatch, paises]);
 
     const handleChangePais = (paisId: number) => {
         /*
@@ -34,6 +42,7 @@ const SelectPais = (classes: ClassNameMap) => {
         const pais = paises.find(pa => pa.id === paisId);
         if (pais?.id) {
             dispatch(cargoActions.setPais(pais));
+            cargoValues.pais = pais;
         }
     };
 
@@ -43,7 +52,7 @@ const SelectPais = (classes: ClassNameMap) => {
 
     return (
 
-        <Grid item md={6} xs={12} className={classes.inputItem}>
+        <Grid item md={4} xs={12} className={classes.inputItem}>
             <InputLabel id="pais-select-label">Pais</InputLabel>
             {selectedPais.id && <Select
                 labelId="pais-select-label"

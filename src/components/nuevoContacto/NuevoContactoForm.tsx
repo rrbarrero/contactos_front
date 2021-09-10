@@ -24,6 +24,8 @@ import moment from 'moment';
 import SelectSubColectivo from './formFields/SelectSubColectivo';
 import SelectTratamiento from './formFields/SelectTratamiento';
 import NuevoContactoStepper from './NuevoContactoStepper';
+import SelectProvincia from './formFields/SelectProvincia';
+import { initialCargoState } from '../../store/reducers/cargo.reducers';
 
 
 //moment.locale("es");
@@ -71,16 +73,17 @@ const NuevoContactoForm = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
-    const cargo = useSelector((state: RootState) => state.cargo);
+    const nombre = useSelector((state: RootState) => state.cargo.persona.nombre);
+    const apellidos = useSelector((state: RootState) => state.cargo.persona.apellidos);
+    const cargo = useSelector((state: RootState) => state.cargo.cargo);
+    const empresa = useSelector((state: RootState) => state.cargo.empresa);
+    const finalizado = useSelector((state: RootState) => state.cargo.finalizado);
+    const direccion = useSelector((state: RootState) => state.cargo.direccion);
+    const ciudad = useSelector((state: RootState) => state.cargo.ciudad);
 
 
-    const provincias = useSelector((state: RootState) => state.provincias);
-
-    // TODO: PASAR A REDUX
-    const [selectedProvincia, setSelectedProvincia] = useState<Provincia>();
-
-    // TODO: PASAR A REDUX
-    const [cargoTerminado, setCargoTerminado] = useState(false);
+    // // TODO: PASAR A REDUX
+    // const [cargoTerminado, setCargoTerminado] = useState(false);
 
     // TODO: PASAR A REDUX
     const [fechaCese, setFechaCese] = useState(moment().format('yyyy-MM-DD'));
@@ -106,60 +109,44 @@ const NuevoContactoForm = () => {
     }, [dispatch]);
 
 
-    useEffect(() => {
-        if (provincias.length > 0) {
-            const defaultProvincia = provincias.find((provincia) => provincia.nombre.toLowerCase() === 'cáceres');
-            if (defaultProvincia) {
-                setSelectedProvincia(defaultProvincia);
-            }
-        }
-    }, [provincias]);
-
-
-    const handleChangeProvincia = (e: unknown) => {
-        const provincia: Provincia | undefined = provincias.find(pr => pr.id === e as number);
-        setSelectedProvincia(provincia);
+    const handleChangeFinalizado = (e: boolean) => {
+        dispatch(cargoActions.setFinalizado(e));
     };
 
-
-    const handleChangeCargoTerminado = (e: boolean) => {
-        setCargoTerminado(e);
-    };
-
-    const handleChangeNombre = (nombre: string) => {
+    const handleChangeNombre = (nombre: string, formValues: Cargo) => {
         dispatch(cargoActions.setPersonaNombre(nombre));
+        formValues.persona.nombre = nombre;
     }
 
-    const handleChangeApellidos = (apellidos: string) => {
+    const handleChangeApellidos = (apellidos: string, formValues: Cargo) => {
         dispatch(cargoActions.setPersonaApellidos(apellidos));
+        formValues.persona.apellidos = apellidos;
     }
 
-    const handleChangeCargo = (cargo: string) => {
-        dispatch(cargoActions.setCargo(cargo));
+    const handleChangeCargo = (cargoCargo: string, formValues: Cargo) => {
+        dispatch(cargoActions.setCargo(cargoCargo));
+        formValues.cargo = cargoCargo;
     }
 
-    const handleChangeEmpresa = (empresa: string) => {
+    const handleChangeEmpresa = (empresa: string, formValues: Cargo) => {
         dispatch(cargoActions.setEmpresa(empresa));
+        formValues.empresa = empresa;
     }
 
-    const handleChangeCiudad = (ciudad: string) => {
+    const handleChangeCiudad = (ciudad: string, formValues: Cargo) => {
         dispatch(cargoActions.setCiudad(ciudad));
+        formValues.ciudad = ciudad;
     }
 
-    const handleChangeDireccion = (direccion: string) => {
+    const handleChangeDireccion = (direccion: string, formValues: Cargo) => {
         dispatch(cargoActions.setDireccion(direccion));
+        formValues.direccion = direccion;
     }
 
-    const handleChangeFechaCese = (fechaCese: string) => {
+    const handleChangeFechaCese = (fechaCese: string, formValues: Cargo) => {
         dispatch(cargoActions.setFechaCese(fechaCese));
+        formValues.fechaCese = fechaCese;
     }
-
-
-    const renderSelectedProvincia = () => {
-        return selectedProvincia?.nombre;
-    }
-
-
 
 
     return (
@@ -167,7 +154,7 @@ const NuevoContactoForm = () => {
             <Dashboard></Dashboard>
             <Box className={classes.box}>
                 <Formik
-                    initialValues={cargo}
+                    initialValues={initialCargoState}
                     //validationSchema={ValidationSchema}
                     onSubmit={(values, actions) => {
                         //values.fechaAlta = new Date();
@@ -196,17 +183,17 @@ const NuevoContactoForm = () => {
                             <Paper className={classes.control}>
 
                                 <Grid container spacing={2}>
-                                    <SelectTratamiento {...classes} />
+                                    <SelectTratamiento classes={classes} cargoValues={values} />
                                     <Grid item md={3} xs={12} className={classes.inputItem}>
                                         <TextField
                                             fullWidth
                                             id="nombre"
                                             name="persona.nombre"
                                             label="Nombre"
-                                            value={cargo.persona.nombre}
-                                            onChange={(e) => handleChangeNombre(e.target.value)}
-                                        //error={touched.persona?.nombre && Boolean(errors.persona?.nombre)}
-                                        //helperText={touched.persona?.nombre && errors.persona?.nombre}
+                                            value={nombre}
+                                            onChange={(e) => handleChangeNombre(e.target.value, values)}
+                                            error={touched.persona?.nombre && Boolean(errors.persona?.nombre)}
+                                            helperText={touched.persona?.nombre && errors.persona?.nombre}
                                         />
                                     </Grid>
                                     <Grid item md={4} xs={12} className={classes.inputItem}>
@@ -215,10 +202,10 @@ const NuevoContactoForm = () => {
                                             id="apellidos"
                                             name="persona.apellidos"
                                             label="Apellidos"
-                                            value={cargo.persona.apellidos}
-                                            onChange={(e) => handleChangeApellidos(e.target.value)}
-                                        //error={touched.persona?.apellidos && Boolean(errors.persona?.apellidos)}
-                                        //helperText={touched.persona?.apellidos && errors.persona?.apellidos}
+                                            value={apellidos}
+                                            onChange={(e) => handleChangeApellidos(e.target.value, values)}
+                                            error={touched.persona?.apellidos && Boolean(errors.persona?.apellidos)}
+                                            helperText={touched.persona?.apellidos && errors.persona?.apellidos}
                                         />
                                     </Grid>
                                     <Grid item md={4} xs={12} className={classes.inputItem}>
@@ -227,10 +214,10 @@ const NuevoContactoForm = () => {
                                             id="cargo"
                                             name="cargo"
                                             label="Cargo"
-                                            value={cargo.cargo}
-                                            onChange={(e) => handleChangeCargo(e.target.value)}
-                                        //error={touched.cargo && Boolean(errors.cargo)}
-                                        //helperText={touched.cargo && errors.cargo}
+                                            value={cargo}
+                                            onChange={(e) => handleChangeCargo(e.target.value, values)}
+                                            error={touched.cargo && Boolean(errors.cargo)}
+                                            helperText={touched.cargo && errors.cargo}
                                         />
                                     </Grid>
                                     <Grid item md={4} xs={12} className={classes.inputItem}>
@@ -239,22 +226,10 @@ const NuevoContactoForm = () => {
                                             id="empresa"
                                             name="empresa"
                                             label="Empresa"
-                                            value={cargo.empresa}
-                                            onChange={(e) => handleChangeEmpresa(e.target.value)}
+                                            value={empresa}
+                                            onChange={(e) => handleChangeEmpresa(e.target.value, values)}
                                             error={touched.empresa && Boolean(errors.empresa)}
                                             helperText={touched.empresa && errors.empresa}
-                                        />
-                                    </Grid>
-                                    <Grid item md={3} xs={12} className={classes.inputItem}>
-                                        <TextField
-                                            fullWidth
-                                            id="ciudad"
-                                            name="ciudad"
-                                            label="Ciudad"
-                                            value={cargo.ciudad}
-                                            onChange={(e) => handleChangeCiudad(e.target.value)}
-                                        //error={touched.ciudad && Boolean(errors.ciudad)}
-                                        //helperText={touched.ciudad && errors.ciudad}
                                         />
                                     </Grid>
                                     <Grid item md={5} xs={12} className={classes.inputItem}>
@@ -263,30 +238,43 @@ const NuevoContactoForm = () => {
                                             id="direccion"
                                             name="direccion"
                                             label="Dirección"
-                                            value={cargo.direccion}
-                                            onChange={(e) => handleChangeDireccion(e.target.value)}
-                                        //error={touched.direccion && Boolean(errors.direccion)}
-                                        //helperText={touched.direccion && errors.direccion}
+                                            value={direccion}
+                                            onChange={(e) => handleChangeDireccion(e.target.value, values)}
+                                            error={touched.direccion && Boolean(errors.direccion)}
+                                            helperText={touched.direccion && errors.direccion}
                                         />
                                     </Grid>
-                                    <SelectPais {...classes} />
-                                    <SelectColectivo {...classes} />
-                                    <SelectSubColectivo {...classes} />
+                                    <Grid item md={3} xs={12} className={classes.inputItem}>
+                                        <TextField
+                                            fullWidth
+                                            id="ciudad"
+                                            name="ciudad"
+                                            label="Ciudad"
+                                            value={ciudad}
+                                            onChange={(e) => handleChangeCiudad(e.target.value, values)}
+                                            error={touched.ciudad && Boolean(errors.ciudad)}
+                                            helperText={touched.ciudad && errors.ciudad}
+                                        />
+                                    </Grid>
+                                    <SelectProvincia classes={classes} cargoValues={values} />
+                                    <SelectPais classes={classes} cargoValues={values} />
+                                    <SelectColectivo classes={classes} cargoValues={values} />
+                                    <SelectSubColectivo classes={classes} cargoValues={values} />
                                     <Grid item md={5} xs={12} className={classes.inputItem}>
                                         <FormControlLabel control={
                                             <Checkbox
-                                                checked={cargoTerminado}
-                                                onChange={(e) => handleChangeCargoTerminado(e.target.checked)}
+                                                checked={finalizado}
+                                                onChange={(e) => handleChangeFinalizado(e.target.checked)}
                                                 inputProps={{ 'aria-label': 'controlled' }}
                                             />} label="Cargo terminado" />
                                     </Grid>
                                     <Grid item md={5} xs={12} className={classes.inputItem}>
-                                        {cargoTerminado && <TextField
+                                        {finalizado && <TextField
                                             id="date"
                                             label="Fecha de cese"
                                             type="date"
-                                            value={cargo.fechaCese}
-                                            onChange={(e) => handleChangeFechaCese(e.target.value)}
+                                            value={fechaCese}
+                                            onChange={(e) => handleChangeFechaCese(e.target.value, values)}
                                             //defaultValue={fechaCese}
                                             className={classes.dateField}
                                             InputLabelProps={{

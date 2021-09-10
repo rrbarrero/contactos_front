@@ -39,6 +39,15 @@ const Dashboard = () => {
     const classes = useStyles();
     const user = useSelector((state: RootState) => state.authentication);
     const location = useLocation();
+    const nombre = useSelector((state: RootState) => state.cargo.persona.nombre);
+    const apellidos = useSelector((state: RootState) => state.cargo.persona.apellidos);
+
+    const NuevoContactoGetFullName = () => {
+        if (location.pathname === '/nuevo_contacto') {
+            return `: ${nombre} ${apellidos}`
+        }
+        return ''
+    }
 
     const handleLogout = () => {
         dispatch(userActions.logout(user));
@@ -49,7 +58,7 @@ const Dashboard = () => {
             <AppBar position="static">
                 <Toolbar>
                     <Typography variant="h4" noWrap className={classes.title}>
-                        <Link className={classes.headerLink} to="/contactos"> Contactos</Link>
+                        <Link className={classes.headerLink} to="/contactos"> Contactos{NuevoContactoGetFullName()} </Link>
                     </Typography>
                     {location.pathname === '/contactos' && <SearchBox />}
                     {location.pathname === '/contactos' && <ColectivoDropdown />}

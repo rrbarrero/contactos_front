@@ -114,7 +114,7 @@ type Cargo = {
     provincia: Provincia;
     pais: Pais;
     empresa: string;
-    fechaCese?: Date;
+    fechaCese?: string;
     fechaAlta: Date;
     fechaModificacion?: Date;
     colectivo: Colectivo;
