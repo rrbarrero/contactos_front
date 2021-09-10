@@ -42,11 +42,13 @@ const Dashboard = () => {
     const nombre = useSelector((state: RootState) => state.cargo.persona.nombre);
     const apellidos = useSelector((state: RootState) => state.cargo.persona.apellidos);
 
-    const NuevoContactoGetFullName = () => {
-        if (location.pathname === '/nuevo_contacto') {
-            return `: ${nombre} ${apellidos}`
+    const GetTitle = () => {
+        switch (location.pathname) {
+            case '/nuevo_contacto':
+                return `Nuevo contacto: ${nombre} ${apellidos}`
+            default:
+                return "Contactos"
         }
-        return ''
     }
 
     const handleLogout = () => {
@@ -58,7 +60,7 @@ const Dashboard = () => {
             <AppBar position="static">
                 <Toolbar>
                     <Typography variant="h4" noWrap className={classes.title}>
-                        <Link className={classes.headerLink} to="/contactos"> Contactos{NuevoContactoGetFullName()} </Link>
+                        <Link className={classes.headerLink} to="/contactos"> {GetTitle()} </Link>
                     </Typography>
                     {location.pathname === '/contactos' && <SearchBox />}
                     {location.pathname === '/contactos' && <ColectivoDropdown />}
