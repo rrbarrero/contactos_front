@@ -47,14 +47,13 @@ const SelectSubColectivo = (classes: ClassNameMap) => {
     return (
         <Grid item md={5} xs={12} className={classes.inputItem}>
             <InputLabel id="subcolectivo-select-label">SubColectivo</InputLabel>
-            {selectedSubColectivo && <Select
+            {selectedSubColectivo.id && <Select
                 labelId="subcolectivo-select-label"
                 id="subcolectivo"
                 input={<Input />}
-                value={selectedSubColectivo}
+                value={selectedSubColectivo.id}
                 onChange={(e) => handleChangeSubColectivo(e.target.value)}
                 renderValue={renderSelectedSubColectivo}
-                defaultValue={subColectivos.length > 0 ? subColectivos[0].id : 0}
             >
                 {subColectivos.map((subColectivo) =>
                     <MenuItem key={subColectivo.id} value={subColectivo.id}>

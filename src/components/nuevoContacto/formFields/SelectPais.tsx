@@ -17,13 +17,6 @@ const SelectPais = (classes: ClassNameMap) => {
     const paises = useSelector((state: RootState) => state.paises);
     const selectedPais: Pais = useSelector((state: RootState) => state.cargo.pais);
 
-    // useEffect(() => {
-    //     /*
-    //         Load all paises;
-    //     */
-    //     dispatch(paisActions.get_all_paises());
-    // }, [dispatch]);
-
     useEffect(() => {
         /*
             Fix default país to "españa"
@@ -52,11 +45,11 @@ const SelectPais = (classes: ClassNameMap) => {
 
         <Grid item md={6} xs={12} className={classes.inputItem}>
             <InputLabel id="pais-select-label">Pais</InputLabel>
-            <Select
+            {selectedPais.id && <Select
                 labelId="pais-select-label"
                 id="pais"
                 input={<Input />}
-                value={selectedPais}
+                value={selectedPais.id ? selectedPais.id : 1}
                 onChange={(e) => handleChangePais(e.target.value as number)}
                 renderValue={renderSelectedPais}
             >
@@ -65,7 +58,7 @@ const SelectPais = (classes: ClassNameMap) => {
                         {pais.nombre}
                     </MenuItem>
                 )}
-            </Select>
+            </Select>}
         </Grid>
     );
 }

@@ -22,7 +22,10 @@ const SelectColectivo = (classes: ClassNameMap) => {
         /*
             Refresh state of subColectivos on selectedColectivo change
         */
-        dispatch(subColectivoActions.get_subcolectivos(selectedColectivo));
+        if (selectedColectivo.id) {
+            dispatch(subColectivoActions.get_subcolectivos(selectedColectivo));
+        }
+
     }, [selectedColectivo, dispatch]);
 
     useEffect(() => {
@@ -54,21 +57,20 @@ const SelectColectivo = (classes: ClassNameMap) => {
     return (
         <Grid item md={6} xs={12} className={classes.inputItem}>
             <InputLabel id="colectivo-select-label">Colectivo</InputLabel>
-            <Select
+            {selectedColectivo.id && <Select
                 labelId="colectivo-select-label"
                 id="colectivo"
                 input={<Input />}
-                value={selectedColectivo}
+                value={selectedColectivo.id ? selectedColectivo.id : 1}
                 onChange={(e) => handleChangeColectivo(e.target.value)}
                 renderValue={renderSelectedColectivo}
-                defaultValue={selectedColectivo}
             >
                 {colectivos.map((colectivo) =>
                     <MenuItem key={colectivo.id} value={colectivo.id}>
                         {colectivo.nombre}
                     </MenuItem>
                 )}
-            </Select>
+            </Select>}
         </Grid>
     )
 }

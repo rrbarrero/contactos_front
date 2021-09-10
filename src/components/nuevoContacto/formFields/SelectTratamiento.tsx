@@ -44,11 +44,11 @@ const SelectTratamiento = (classes: ClassNameMap) => {
 
         <Grid item md={3} xs={12} className={classes.inputItem}>
             <InputLabel id="tratamiento-select-label">Tratamiento</InputLabel>
-            <Select
+            {selectedTratamiento.id && <Select
                 labelId="tratamiento-select-label"
                 id="tratamiento"
                 input={<Input />}
-                value={selectedTratamiento}
+                value={selectedTratamiento.id}
                 onChange={(e) => handleChangeTratamiento(e.target.value)}
                 renderValue={renderSelectedTratamiento}
             >
@@ -57,7 +57,7 @@ const SelectTratamiento = (classes: ClassNameMap) => {
                         {tratamiento.nombre}
                     </MenuItem>
                 )}
-            </Select>
+            </Select>}
         </Grid>
     );
 
