@@ -2,31 +2,15 @@ import 'react-app-polyfill/ie11';
 import { Formik, Form } from 'formik';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Dashboard from '../dashboard/Dashboard';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
-import ValidationSchema from './ContactoFormValidation';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from "../../store/reducers";
-import { cargoActions, colectivoActions, paisActions, provinciaActions, appActions, tratamientoActions } from '../../store/actions';
-import { useEffect, useState } from 'react';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-import Input from '@material-ui/core/Input';
-import Grid from '@material-ui/core/Grid';
+import { useEffect } from 'react';
 import Paper from '@material-ui/core/Paper';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import SelectPais from './formFields/SelectPais';
-import SelectColectivo from './formFields/SelectColectivo';
-import moment from 'moment';
-import SelectSubColectivo from './formFields/SelectSubColectivo';
-import SelectTratamiento from './formFields/SelectTratamiento';
 import NuevoContactoStepper from './NuevoContactoStepper';
-import SelectProvincia from './formFields/SelectProvincia';
 import { initialCargoState } from '../../store/reducers/cargo.reducers';
 import FormStepOne from './FormStepOne';
+import { appActions, colectivoActions, paisActions, provinciaActions, tratamientoActions } from '../../store/actions';
 
 
 //moment.locale("es");
@@ -77,12 +61,6 @@ const NuevoContactoForm = () => {
 
     const formStepPage = useSelector((state: RootState) => state.appStates.stepperCurrent);
 
-
-    // // TODO: PASAR A REDUX
-    // const [cargoTerminado, setCargoTerminado] = useState(false);
-
-
-
     useEffect(() => {
         dispatch(appActions.stepperSet(0));
     }, [dispatch]);
@@ -128,12 +106,12 @@ const NuevoContactoForm = () => {
                         values,
                         touched,
                         errors,
-                        dirty,
-                        isSubmitting,
-                        handleChange,
-                        handleBlur,
-                        handleSubmit,
-                        handleReset
+                        // dirty,
+                        // isSubmitting,
+                        // handleChange,
+                        // handleBlur,
+                        // handleSubmit,
+                        // handleReset
                     } = props;
                     return (
                         <Form>
