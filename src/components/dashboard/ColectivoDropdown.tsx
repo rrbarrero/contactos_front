@@ -51,13 +51,11 @@ const MenuProps = {
 const ColectivoDropdown = () => {
 
     const classes = useStyles();
+    const dispatch = useDispatch();
 
     const user = useSelector((state: RootState) => state.authentication);
     const colectivos = useSelector((state: RootState) => state.colectivos);
     const selectedColectivos = useSelector((state: RootState) => state.appStates.selectedColectivos);
-
-    const dispatch = useDispatch();
-
 
     useEffect(() => {
         if (colectivos.length === 0) {
@@ -65,8 +63,8 @@ const ColectivoDropdown = () => {
         }
     }, [colectivos.length, dispatch, user]);
 
-    const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-        dispatch(appActions.setSelectedColectivos(event.target.value as number))
+    const handleChange = (colectivoId: number) => {
+        dispatch(appActions.setSelectedColectivos(colectivoId));
     }
 
     const renderSelected = (selected: number[]) => {
@@ -86,7 +84,7 @@ const ColectivoDropdown = () => {
                 <Select
                     labelId="colectivos-checkbox-label"
                     id="colectivos-checkbox"
-                    onChange={handleChange}
+                    onChange={(e) => handleChange(e.target.value as number)}
                     name="colectivo"
                     input={<Input />}
                     value={selectedColectivos}
