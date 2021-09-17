@@ -119,6 +119,9 @@ export default function NuevoContactoStepper() {
       <div>
         {activeStep === steps.length ? (
           <div>
+            <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+              Atrás
+            </Button>
             <Button
               className={classes.submitButton}
               color="primary"

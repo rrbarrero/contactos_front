@@ -16,7 +16,8 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 type FormStepOneProps = {
-    formTouched: FormikTouched<Cargo>
+    formValues: Cargo,
+    formTouched: FormikTouched<Cargo>,
     formErrors: FormikErrors<Cargo>,
 }
 
@@ -43,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const FormStepTwo = ({ formTouched, formErrors }: FormStepOneProps) => {
+const FormStepTwo = ({ formValues, formTouched, formErrors }: FormStepOneProps) => {
 
     const dispatch = useDispatch();
     const classes = useStyles();
@@ -79,11 +80,13 @@ const FormStepTwo = ({ formTouched, formErrors }: FormStepOneProps) => {
 
     const handleAddTelefono = () => {
         dispatch(cargoActions.addTelefono(telefono));
+        formValues.telefonos = [...formValues.telefonos, telefono];
         setTelefono(_telf);
     }
 
     const handleAddCorreo = () => {
         dispatch(cargoActions.addCorreo(correo));
+        formValues.correos = [...formValues.correos, correo];
         setCorreo(_mail);
     }
 

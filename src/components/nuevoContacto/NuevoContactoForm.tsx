@@ -121,6 +121,7 @@ const NuevoContactoForm = () => {
             }
             case 1: {
                 comp = <FormStepTwo
+                    formValues={values}
                     formErrors={errors}
                     formTouched={touched} />
                 break;
