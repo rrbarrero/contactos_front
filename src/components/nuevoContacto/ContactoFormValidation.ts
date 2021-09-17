@@ -11,8 +11,8 @@ const ValidationSchema = yup.object().shape({
             .required('El campo nombre es requerido'),
         apellidos: yup
             .string()
-            .min(8, 'Password should be of minimum 8 characters length')
-            .required('Password is required'),
+            .min(8, 'Se necesitan un mínimo de 8 caracteres para el campo apellidos')
+            .required('El campo apellidos es requerido'),
     }),
     ciudad: yup.string().min(4, "Mínimo 4 caracteres para el campo ciudad").required("El campo ciudad es requerido"),
 });

@@ -1,6 +1,6 @@
 import { cargoConstants } from "../constants";
 
-export let initialCargoState: Cargo = {
+export const initialCargoState: Cargo = {
     persona: {
         tratamiento: { nombre: '' },
         nombre: '',
@@ -17,6 +17,8 @@ export let initialCargoState: Cargo = {
     fechaAlta: new Date(),
     colectivo: { nombre: '' },
     subcolectivo: { nombre: '', colectivo: { nombre: '' } },
+    telefonos: [],
+    correos: [],
 };
 
 export function cargo(state = initialCargoState, action: CargoAction): Cargo {
@@ -34,7 +36,7 @@ export function cargo(state = initialCargoState, action: CargoAction): Cargo {
                 ...state,
                 pais: action.payload as Pais,
             }
-         case cargoConstants.SET_COLECTIVO:
+        case cargoConstants.SET_COLECTIVO:
             return {
                 ...state,
                 colectivo: action.payload as Colectivo,
@@ -55,7 +57,7 @@ export function cargo(state = initialCargoState, action: CargoAction): Cargo {
                 persona: {
                     ...state.persona,
                     nombre: action.payload as string,
-                } 
+                }
             }
         case cargoConstants.SET_PERSONA_APELLIDOS:
             return {
@@ -63,7 +65,7 @@ export function cargo(state = initialCargoState, action: CargoAction): Cargo {
                 persona: {
                     ...state.persona,
                     apellidos: action.payload as string,
-                } 
+                }
             }
         case cargoConstants.SET_CARGO:
             return {
@@ -90,8 +92,35 @@ export function cargo(state = initialCargoState, action: CargoAction): Cargo {
                 ...state,
                 finalizado: action.payload as boolean,
             }
+        case cargoConstants.ADD_TELEFONO:
+            return {
+                ...state,
+                telefonos: [...state.telefonos, action.payload],
+            }
+        case cargoConstants.ADD_CORREO:
+            return {
+                ...state,
+                correos: [...state.correos, action.payload],
+            }
+        case cargoConstants.RESET:
+            return {
+                ...initialCargoState,
+                persona: {
+                    ...initialCargoState.persona,
+                    tratamiento: { ...initialCargoState.persona.tratamiento },
+                },
+                provincia: { ...initialCargoState.provincia },
+                pais: { ...initialCargoState.pais },
+                colectivo: { ...initialCargoState.colectivo },
+                subcolectivo: {
+                    ...initialCargoState.subcolectivo,
+                    colectivo: { ...initialCargoState.subcolectivo.colectivo }
+                },
+                telefonos: [...initialCargoState.telefonos],
+                correos: [...initialCargoState.correos],
+            }
         default:
-            return state
+            return state;
     }
 
 }

@@ -1,5 +1,5 @@
 import 'react-app-polyfill/ie11';
-import { Formik, Form } from 'formik';
+import { Formik, Form, FormikErrors, FormikTouched } from 'formik';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Dashboard from '../dashboard/Dashboard';
 import Box from '@material-ui/core/Box';
@@ -10,7 +10,9 @@ import Paper from '@material-ui/core/Paper';
 import NuevoContactoStepper from './NuevoContactoStepper';
 import { initialCargoState } from '../../store/reducers/cargo.reducers';
 import FormStepOne from './FormStepOne';
-import { appActions, colectivoActions, paisActions, provinciaActions, tratamientoActions } from '../../store/actions';
+import { appActions, cargoActions, colectivoActions, paisActions, provinciaActions, tratamientoActions } from '../../store/actions';
+import FormStepTwo from './FormStepTwo';
+import ValidationSchema from './ContactoFormValidation';
 
 
 //moment.locale("es");
@@ -40,7 +42,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
         inputItem: {
             marginLeft: 30,
-            marginTop: 30,
+            marginTop: 15,
         },
         control: {
             padding: theme.spacing(2),
@@ -58,8 +60,28 @@ const NuevoContactoForm = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
+    let formInitialValues = {
+        ...initialCargoState,
+        persona: {
+            ...initialCargoState.persona,
+            tratamiento: { ...initialCargoState.persona.tratamiento },
+        },
+        provincia: { ...initialCargoState.provincia },
+        pais: { ...initialCargoState.pais },
+        colectivo: { ...initialCargoState.colectivo },
+        subcolectivo: {
+            ...initialCargoState.subcolectivo,
+            colectivo: { ...initialCargoState.subcolectivo.colectivo }
+        },
+        telefonos: [...initialCargoState.telefonos],
+        correos: [...initialCargoState.correos],
+    };
 
     const formStepPage = useSelector((state: RootState) => state.appStates.stepperCurrent);
+
+    useEffect(() => {
+        dispatch(cargoActions.reset());
+    }, [dispatch]);
 
     useEffect(() => {
         dispatch(appActions.stepperSet(0));
@@ -81,16 +103,45 @@ const NuevoContactoForm = () => {
         dispatch(colectivoActions.get_all_colectivos());
     }, [dispatch]);
 
+    type TypeCurrentStepComp = {
+        values: Cargo,
+        touched: FormikTouched<Cargo>
+        errors: FormikErrors<Cargo>,
+        handleBlur: any,
+    }
 
+    const CurrentStepComp = ({ values, errors, touched, handleBlur }: TypeCurrentStepComp) => {
+        let comp: JSX.Element = <></>;
+        switch (formStepPage) {
+            case 0: {
+                comp = <FormStepOne
+                    formValues={values}
+                    formErrors={errors}
+                    formTouched={touched}
+                    classes={classes}
+                    handleBlur={handleBlur} />
+                break;
+            }
+            case 1: {
+                comp = <FormStepTwo
+                    formValues={values}
+                    formErrors={errors}
+                    formTouched={touched} />
+                break;
+            }
+        }
+        return comp;
 
+    }
 
     return (
         <>
             <Dashboard></Dashboard>
             <Box className={classes.box}>
                 <Formik
-                    initialValues={initialCargoState}
-                    //validationSchema={ValidationSchema}
+                    initialValues={formInitialValues}
+                    validationSchema={ValidationSchema}
+                    validateOnBlur={true}
                     onSubmit={(values, actions) => {
                         //values.fechaAlta = new Date();
                         /* if (selectedTratamiento) {
@@ -109,21 +160,14 @@ const NuevoContactoForm = () => {
                         // dirty,
                         // isSubmitting,
                         // handleChange,
-                        // handleBlur,
+                        handleBlur,
                         // handleSubmit,
                         // handleReset
                     } = props;
                     return (
                         <Form>
                             <Paper className={classes.control}>
-                                {formStepPage === 0 && <FormStepOne
-                                    formValues={values}
-                                    formErrors={errors}
-                                    formTouched={touched}
-                                    classes={classes}
-                                />}
-
-
+                                <CurrentStepComp values={values} errors={errors} touched={touched} handleBlur={handleBlur} />
                                 <NuevoContactoStepper />
 
                             </Paper>

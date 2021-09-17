@@ -73,9 +73,17 @@ type Persona = {
 
 type Telefono = {
     id?: number;
-    cargo: number;
+    cargo?: number;
     nombre: string;
     numero: string;
+    nota: string;
+}
+
+type Correo = {
+    id?: number;
+    cargo?: number;
+    nombre: string;
+    email: string;
     nota: string;
 }
 
@@ -121,7 +129,8 @@ type Cargo = {
     subcolectivo: SubColectivo;
     usuarioModificacion?: User;
     notas?: string;
-    telefonos?: Telefono[];
+    telefonos: Telefono[];
+    correos: Correo[];
 }
 
 type Cargos = {
@@ -134,7 +143,7 @@ type Cargos = {
 
 type CargoAction = {
     type: string;
-    payload: string|Persona|Tratamiento|Ciudad|Pais|Colectivo|SubColectivo;
+    payload: string | Persona | Tratamiento | Ciudad | Pais | Colectivo | SubColectivo;
 }
 
 type CargosAction = {

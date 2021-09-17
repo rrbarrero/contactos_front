@@ -21,11 +21,11 @@ type FormStepOneProps = {
     formValues: Cargo,
     formTouched: FormikTouched<Cargo>
     formErrors: FormikErrors<Cargo>,
+    handleBlur: any,
 }
 
-const FormStepOne = (props: FormStepOneProps) => {
+const FormStepOne = ({ classes, formValues, formTouched, formErrors, handleBlur }: FormStepOneProps) => {
 
-    const { classes, formValues, formTouched, formErrors } = props;
     const dispatch = useDispatch();
 
     const nombre = useSelector((state: RootState) => state.cargo.persona.nombre);
@@ -90,6 +90,7 @@ const FormStepOne = (props: FormStepOneProps) => {
                     label="Nombre"
                     value={nombre}
                     onChange={(e) => handleChangeNombre(e.target.value, formValues)}
+                    onBlur={handleBlur}
                     error={formTouched.persona?.nombre && Boolean(formErrors.persona?.nombre)}
                     helperText={formTouched.persona?.nombre && formErrors.persona?.nombre}
                 />
@@ -102,6 +103,7 @@ const FormStepOne = (props: FormStepOneProps) => {
                     label="Apellidos"
                     value={apellidos}
                     onChange={(e) => handleChangeApellidos(e.target.value, formValues)}
+                    onBlur={handleBlur}
                     error={formTouched.persona?.apellidos && Boolean(formErrors.persona?.apellidos)}
                     helperText={formTouched.persona?.apellidos && formErrors.persona?.apellidos}
                 />
@@ -114,6 +116,7 @@ const FormStepOne = (props: FormStepOneProps) => {
                     label="Cargo"
                     value={cargo}
                     onChange={(e) => handleChangeCargo(e.target.value, formValues)}
+                    onBlur={handleBlur}
                     error={formTouched.cargo && Boolean(formErrors.cargo)}
                     helperText={formTouched.cargo && formErrors.cargo}
                 />
@@ -126,6 +129,7 @@ const FormStepOne = (props: FormStepOneProps) => {
                     label="Empresa"
                     value={empresa}
                     onChange={(e) => handleChangeEmpresa(e.target.value, formValues)}
+                    onBlur={handleBlur}
                     error={formTouched.empresa && Boolean(formErrors.empresa)}
                     helperText={formTouched.empresa && formErrors.empresa}
                 />
@@ -138,6 +142,7 @@ const FormStepOne = (props: FormStepOneProps) => {
                     label="Dirección"
                     value={direccion}
                     onChange={(e) => handleChangeDireccion(e.target.value, formValues)}
+                    onBlur={handleBlur}
                     error={formTouched.direccion && Boolean(formErrors.direccion)}
                     helperText={formTouched.direccion && formErrors.direccion}
                 />
@@ -150,6 +155,7 @@ const FormStepOne = (props: FormStepOneProps) => {
                     label="Ciudad"
                     value={ciudad}
                     onChange={(e) => handleChangeCiudad(e.target.value, formValues)}
+                    onBlur={handleBlur}
                     error={formTouched.ciudad && Boolean(formErrors.ciudad)}
                     helperText={formTouched.ciudad && formErrors.ciudad}
                 />
