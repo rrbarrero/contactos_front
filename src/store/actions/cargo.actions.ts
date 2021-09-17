@@ -14,6 +14,8 @@ export const cargoActions = {
     setSubColectivo,
     setProvincia,
     setFinalizado,
+    addTelefono,
+    addCorreo,
 }
 
 export function setTratamiento(tratamiento: Tratamiento) {
@@ -100,14 +102,26 @@ export function setSubColectivo(subColectivo: SubColectivo) {
     }
 }
 
-export function setFinalizado(finalizado: boolean){
+export function setFinalizado(finalizado: boolean) {
     return {
         type: cargoConstants.SET_FINALIZADO,
         payload: finalizado,
     }
 }
 
+export function addTelefono(telefono: Telefono) {
+    return {
+        type: cargoConstants.ADD_TELEFONO,
+        payload: telefono,
+    }
+}
 
+export function addCorreo(correo: Correo) {
+    return {
+        type: cargoConstants.ADD_CORREO,
+        payload: correo,
+    }
+}
 
 
 

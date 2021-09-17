@@ -1,5 +1,5 @@
 import 'react-app-polyfill/ie11';
-import { Formik, Form } from 'formik';
+import { Formik, Form, FormikErrors, FormikTouched } from 'formik';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Dashboard from '../dashboard/Dashboard';
 import Box from '@material-ui/core/Box';
@@ -11,6 +11,7 @@ import NuevoContactoStepper from './NuevoContactoStepper';
 import { initialCargoState } from '../../store/reducers/cargo.reducers';
 import FormStepOne from './FormStepOne';
 import { appActions, colectivoActions, paisActions, provinciaActions, tratamientoActions } from '../../store/actions';
+import FormStepTwo from './FormStepTwo';
 
 
 //moment.locale("es");
@@ -81,8 +82,35 @@ const NuevoContactoForm = () => {
         dispatch(colectivoActions.get_all_colectivos());
     }, [dispatch]);
 
+    type TypeCurrentStepComp = {
+        values: Cargo,
+        touched: FormikTouched<Cargo>
+        errors: FormikErrors<Cargo>,
+    }
 
+    const CurrentStepComp = ({ values, errors, touched }: TypeCurrentStepComp) => {
+        let comp: JSX.Element = <></>;
+        switch (formStepPage) {
+            case 0: {
+                comp = <FormStepOne
+                    formValues={values}
+                    formErrors={errors}
+                    formTouched={touched}
+                    classes={classes} />
+                break;
+            }
+            case 1: {
+                comp = <FormStepTwo
+                    formValues={values}
+                    formErrors={errors}
+                    formTouched={touched}
+                    classes={classes} />
+                break;
+            }
+        }
+        return comp;
 
+    }
 
     return (
         <>
@@ -116,14 +144,7 @@ const NuevoContactoForm = () => {
                     return (
                         <Form>
                             <Paper className={classes.control}>
-                                {formStepPage === 0 && <FormStepOne
-                                    formValues={values}
-                                    formErrors={errors}
-                                    formTouched={touched}
-                                    classes={classes}
-                                />}
-
-
+                                <CurrentStepComp values={values} errors={errors} touched={touched} />
                                 <NuevoContactoStepper />
 
                             </Paper>

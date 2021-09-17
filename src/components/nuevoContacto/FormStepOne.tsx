@@ -23,9 +23,8 @@ type FormStepOneProps = {
     formErrors: FormikErrors<Cargo>,
 }
 
-const FormStepOne = (props: FormStepOneProps) => {
+const FormStepOne = ({ classes, formValues, formTouched, formErrors }: FormStepOneProps) => {
 
-    const { classes, formValues, formTouched, formErrors } = props;
     const dispatch = useDispatch();
 
     const nombre = useSelector((state: RootState) => state.cargo.persona.nombre);
