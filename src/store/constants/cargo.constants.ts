@@ -16,4 +16,5 @@ export const cargoConstants = {
     SET_SUBCOLECTIVO: 'SET_SUBCOLECTIVO',
     ADD_TELEFONO: 'ADD_TELEFONO',
     ADD_CORREO: 'ADD_CORREO',
+    RESET: 'RESET',
 }

@@ -10,7 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import NuevoContactoStepper from './NuevoContactoStepper';
 import { initialCargoState } from '../../store/reducers/cargo.reducers';
 import FormStepOne from './FormStepOne';
-import { appActions, colectivoActions, paisActions, provinciaActions, tratamientoActions } from '../../store/actions';
+import { appActions, cargoActions, colectivoActions, paisActions, provinciaActions, tratamientoActions } from '../../store/actions';
 import FormStepTwo from './FormStepTwo';
 
 
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
         inputItem: {
             marginLeft: 30,
-            marginTop: 30,
+            marginTop: 15,
         },
         control: {
             padding: theme.spacing(2),
@@ -59,8 +59,28 @@ const NuevoContactoForm = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
+    let formInitialValues = {
+        ...initialCargoState,
+        persona: {
+            ...initialCargoState.persona,
+            tratamiento: { ...initialCargoState.persona.tratamiento },
+        },
+        provincia: { ...initialCargoState.provincia },
+        pais: { ...initialCargoState.pais },
+        colectivo: { ...initialCargoState.colectivo },
+        subcolectivo: {
+            ...initialCargoState.subcolectivo,
+            colectivo: { ...initialCargoState.subcolectivo.colectivo }
+        },
+        telefonos: [...initialCargoState.telefonos],
+        correos: [...initialCargoState.correos],
+    };
 
     const formStepPage = useSelector((state: RootState) => state.appStates.stepperCurrent);
+
+    useEffect(() => {
+        dispatch(cargoActions.reset());
+    }, [dispatch]);
 
     useEffect(() => {
         dispatch(appActions.stepperSet(0));
@@ -101,10 +121,8 @@ const NuevoContactoForm = () => {
             }
             case 1: {
                 comp = <FormStepTwo
-                    formValues={values}
                     formErrors={errors}
-                    formTouched={touched}
-                    classes={classes} />
+                    formTouched={touched} />
                 break;
             }
         }
@@ -117,7 +135,7 @@ const NuevoContactoForm = () => {
             <Dashboard></Dashboard>
             <Box className={classes.box}>
                 <Formik
-                    initialValues={initialCargoState}
+                    initialValues={formInitialValues}
                     //validationSchema={ValidationSchema}
                     onSubmit={(values, actions) => {
                         //values.fechaAlta = new Date();

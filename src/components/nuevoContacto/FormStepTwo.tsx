@@ -1,8 +1,7 @@
-import { Button, styled, TextField } from "@material-ui/core";
+import { Button, createStyles, makeStyles, styled, TextField, Theme } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import { ClassNameMap } from "@material-ui/core/styles/withStyles";
 import { FormikErrors, FormikTouched } from 'formik';
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,12 +12,10 @@ const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
     padding: theme.spacing(1),
     textAlign: 'center',
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.primary,
 }));
 
 type FormStepOneProps = {
-    classes: ClassNameMap,
-    formValues: Cargo,
     formTouched: FormikTouched<Cargo>
     formErrors: FormikErrors<Cargo>,
 }
@@ -35,9 +32,22 @@ const _mail: Correo = {
     nota: '',
 }
 
-const FormStepTwo = ({ classes, formValues, formTouched, formErrors }: FormStepOneProps) => {
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        boxStyle: {
+            height: 480,
+        },
+        addButton: {
+            marginTop: 30,
+        }
+    }),
+);
+
+const FormStepTwo = ({ formTouched, formErrors }: FormStepOneProps) => {
 
     const dispatch = useDispatch();
+    const classes = useStyles();
+
     const telefonos = useSelector((state: RootState) => state.cargo.telefonos);
     const correos = useSelector((state: RootState) => state.cargo.correos);
     const [telefono, setTelefono] = useState<Telefono>(_telf);
@@ -80,7 +90,7 @@ const FormStepTwo = ({ classes, formValues, formTouched, formErrors }: FormStepO
 
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 1 }} className={classes.boxStyle}>
             <Grid container spacing={10}>
                 <Grid item xs={8}>
                     <Grid container spacing={8}>
@@ -116,7 +126,7 @@ const FormStepTwo = ({ classes, formValues, formTouched, formErrors }: FormStepO
                                 error={formTouched.telefonos && Boolean(formErrors.telefonos)}
                                 helperText={formTouched.telefonos && formErrors.telefonos}
                             />
-                            <Button variant="contained" onClick={() => handleAddTelefono()}>Adjuntar</Button>
+                            <Button variant="contained" className={classes.addButton} onClick={() => handleAddTelefono()}>Adjuntar</Button>
                         </Grid>
                         <Grid item xs={6}>
                             <h3>Añadir Correo</h3>
@@ -151,7 +161,7 @@ const FormStepTwo = ({ classes, formValues, formTouched, formErrors }: FormStepO
                                 error={formTouched.correos && Boolean(formErrors.correos)}
                                 helperText={formTouched.correos && formErrors.correos}
                             />
-                            <Button variant="contained" onClick={() => handleAddCorreo()}>Adjuntar</Button>
+                            <Button variant="contained" className={classes.addButton} onClick={() => handleAddCorreo()}>Adjuntar</Button>
                         </Grid>
                     </Grid>
                 </Grid>

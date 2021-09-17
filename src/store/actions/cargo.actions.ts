@@ -16,6 +16,7 @@ export const cargoActions = {
     setFinalizado,
     addTelefono,
     addCorreo,
+    reset,
 }
 
 export function setTratamiento(tratamiento: Tratamiento) {
@@ -120,6 +121,13 @@ export function addCorreo(correo: Correo) {
     return {
         type: cargoConstants.ADD_CORREO,
         payload: correo,
+    }
+}
+
+export function reset() {
+    return {
+        type: cargoConstants.RESET,
+        payload: null,
     }
 }
 

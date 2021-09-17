@@ -1,6 +1,6 @@
 import { cargoConstants } from "../constants";
 
-export let initialCargoState: Cargo = {
+export const initialCargoState: Cargo = {
     persona: {
         tratamiento: { nombre: '' },
         nombre: '',
@@ -102,8 +102,25 @@ export function cargo(state = initialCargoState, action: CargoAction): Cargo {
                 ...state,
                 correos: [...state.correos, action.payload],
             }
+        case cargoConstants.RESET:
+            return {
+                ...initialCargoState,
+                persona: {
+                    ...initialCargoState.persona,
+                    tratamiento: { ...initialCargoState.persona.tratamiento },
+                },
+                provincia: { ...initialCargoState.provincia },
+                pais: { ...initialCargoState.pais },
+                colectivo: { ...initialCargoState.colectivo },
+                subcolectivo: {
+                    ...initialCargoState.subcolectivo,
+                    colectivo: { ...initialCargoState.subcolectivo.colectivo }
+                },
+                telefonos: [...initialCargoState.telefonos],
+                correos: [...initialCargoState.correos],
+            }
         default:
-            return state
+            return state;
     }
 
 }
