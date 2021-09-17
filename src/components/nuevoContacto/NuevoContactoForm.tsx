@@ -12,6 +12,7 @@ import { initialCargoState } from '../../store/reducers/cargo.reducers';
 import FormStepOne from './FormStepOne';
 import { appActions, cargoActions, colectivoActions, paisActions, provinciaActions, tratamientoActions } from '../../store/actions';
 import FormStepTwo from './FormStepTwo';
+import ValidationSchema from './ContactoFormValidation';
 
 
 //moment.locale("es");
@@ -106,9 +107,10 @@ const NuevoContactoForm = () => {
         values: Cargo,
         touched: FormikTouched<Cargo>
         errors: FormikErrors<Cargo>,
+        handleBlur: any,
     }
 
-    const CurrentStepComp = ({ values, errors, touched }: TypeCurrentStepComp) => {
+    const CurrentStepComp = ({ values, errors, touched, handleBlur }: TypeCurrentStepComp) => {
         let comp: JSX.Element = <></>;
         switch (formStepPage) {
             case 0: {
@@ -116,7 +118,8 @@ const NuevoContactoForm = () => {
                     formValues={values}
                     formErrors={errors}
                     formTouched={touched}
-                    classes={classes} />
+                    classes={classes}
+                    handleBlur={handleBlur} />
                 break;
             }
             case 1: {
@@ -137,7 +140,8 @@ const NuevoContactoForm = () => {
             <Box className={classes.box}>
                 <Formik
                     initialValues={formInitialValues}
-                    //validationSchema={ValidationSchema}
+                    validationSchema={ValidationSchema}
+                    validateOnBlur={true}
                     onSubmit={(values, actions) => {
                         //values.fechaAlta = new Date();
                         /* if (selectedTratamiento) {
@@ -156,14 +160,14 @@ const NuevoContactoForm = () => {
                         // dirty,
                         // isSubmitting,
                         // handleChange,
-                        // handleBlur,
+                        handleBlur,
                         // handleSubmit,
                         // handleReset
                     } = props;
                     return (
                         <Form>
                             <Paper className={classes.control}>
-                                <CurrentStepComp values={values} errors={errors} touched={touched} />
+                                <CurrentStepComp values={values} errors={errors} touched={touched} handleBlur={handleBlur} />
                                 <NuevoContactoStepper />
 
                             </Paper>
