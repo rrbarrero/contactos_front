@@ -15,8 +15,8 @@ import MailIcon from '@material-ui/icons/Mail';
 import AddIcon from '@material-ui/icons/Add';
 import AlarmOnIcon from '@material-ui/icons/AlarmOn';
 import { Link } from 'react-router-dom';
-import anime from 'animejs';
-import { Fragment, useEffect, useRef } from 'react';
+import { motion } from "framer-motion";
+import { Fragment } from 'react';
 
 const StyledBadge = withStyles((theme: Theme) =>
     createStyles({
@@ -40,51 +40,32 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-type getListProps = {
+type menuItem = {
     url: string;
     icon: JSX.Element;
     label: string;
 }
 
-const GetListItem = ({ url, icon, label }: getListProps) => {
-    const classes = useStyles();
-    return (
-        <Link to={url} className={classes.headerLink}>
-            <ListItem button>
-                <ListItemIcon>
-                    {icon}
-                </ListItemIcon>
-                <ListItemText primary={label} />
-            </ListItem>
-        </Link>
-    )
-}
 
 const ContextualMenu = () => {
+    const classes = useStyles();
     const selectedCargos = useSelector((state: RootState) => state.appStates.selectedCargos);
+    let menuItems: menuItem[] = [];
 
-    let menuItems: JSX.Element[] = [];
-
-    menuItems.push(
-        <GetListItem url="/nuevo_contacto" icon={<AddIcon />} label={"Nuevo"} />
-    );
+    menuItems.push({ url: "/nuevo_contacto", icon: <AddIcon />, label: "Nuevo" });
 
     if (selectedCargos.length === 1) {
         menuItems.push(
-            <GetListItem url="#" icon={<EditIcon />} label={"Modificar..."} />,
-            <GetListItem url="#" icon={<AddIcon />} label={"Añadir cargo"} />,
-            <Divider />,
+            { url: "#", icon: <EditIcon />, label: "Modificar..." },
+            { url: "#", icon: <AddIcon />, label: "Añadir cargo" }
         );
     }
     if (selectedCargos.length > 1) {
         menuItems.push(
-            <GetListItem url="#" icon={<PlaylistAddCheckIcon />} label={"Añadir a lista..."} />,
-            <Divider />,
-            <GetListItem url="#" icon={<MailIcon />} label={"Enviar correo..."} />,
-            <Divider />,
-            <GetListItem url="#" icon={<AlarmOnIcon />} label={"Finalizar cargo..."} />,
-            <Divider />,
-            <GetListItem url="#" icon={<DeleteForeverIcon />} label={"Eliminar..."} />,
+            { url: "#", icon: <PlaylistAddCheckIcon />, label: "Añadir a lista..." },
+            { url: "#", icon: <MailIcon />, label: "Enviar correo..." },
+            { url: "#", icon: <AlarmOnIcon />, label: "Finalizar cargo..." },
+            { url: "#", icon: <DeleteForeverIcon />, label: "Eliminar..." },
         )
     }
 
@@ -95,9 +76,16 @@ const ContextualMenu = () => {
             </StyledBadge>
             <List id="context-options-list" component="nav" aria-label="main mailbox fol  ders">
                 {menuItems.map((item, index) => (
-                    <Fragment key={index}>
-                        {item}
-                    </Fragment>
+                    <motion.div animate={{ x: [400, 0], opacity: [0, 1] }} transition={{ duration: 0.5 + index * 0.1 }} >
+                        <Link to={item.url} className={classes.headerLink}>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    {item.icon}
+                                </ListItemIcon>
+                                <ListItemText primary={item.label} />
+                            </ListItem>
+                        </Link>
+                    </motion.div>
                 ))}
             </List>
         </>
