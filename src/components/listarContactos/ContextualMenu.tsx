@@ -15,6 +15,8 @@ import MailIcon from '@material-ui/icons/Mail';
 import AddIcon from '@material-ui/icons/Add';
 import AlarmOnIcon from '@material-ui/icons/AlarmOn';
 import { Link } from 'react-router-dom';
+import anime from 'animejs';
+import { Fragment, useEffect, useRef } from 'react';
 
 const StyledBadge = withStyles((theme: Theme) =>
     createStyles({
@@ -38,81 +40,66 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const ContextualMenu = () => {
+type getListProps = {
+    url: string;
+    icon: JSX.Element;
+    label: string;
+}
+
+const GetListItem = ({ url, icon, label }: getListProps) => {
     const classes = useStyles();
+    return (
+        <Link to={url} className={classes.headerLink}>
+            <ListItem button>
+                <ListItemIcon>
+                    {icon}
+                </ListItemIcon>
+                <ListItemText primary={label} />
+            </ListItem>
+        </Link>
+    )
+}
+
+const ContextualMenu = () => {
     const selectedCargos = useSelector((state: RootState) => state.appStates.selectedCargos);
+
+    let menuItems: JSX.Element[] = [];
+
+    menuItems.push(
+        <GetListItem url="/nuevo_contacto" icon={<AddIcon />} label={"Nuevo"} />
+    );
+
+    if (selectedCargos.length === 1) {
+        menuItems.push(
+            <GetListItem url="#" icon={<EditIcon />} label={"Modificar..."} />,
+            <GetListItem url="#" icon={<AddIcon />} label={"Añadir cargo"} />,
+            <Divider />,
+        );
+    }
+    if (selectedCargos.length > 1) {
+        menuItems.push(
+            <GetListItem url="#" icon={<PlaylistAddCheckIcon />} label={"Añadir a lista..."} />,
+            <Divider />,
+            <GetListItem url="#" icon={<MailIcon />} label={"Enviar correo..."} />,
+            <Divider />,
+            <GetListItem url="#" icon={<AlarmOnIcon />} label={"Finalizar cargo..."} />,
+            <Divider />,
+            <GetListItem url="#" icon={<DeleteForeverIcon />} label={"Eliminar..."} />,
+        )
+    }
 
     return (
         <>
             <StyledBadge color="primary" badgeContent={selectedCargos.length} >
                 <PersonIcon style={{ fontSize: 40 }} />
             </StyledBadge>
-            <List component="nav" aria-label="main mailbox folders">
-                <Link to="/nuevo_contacto" className={classes.headerLink}>
-                    <ListItem button>
-                        <ListItemIcon>
-                            <AddIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Nuevo" />
-                    </ListItem>
-                </Link>
-                <Divider />
-                {selectedCargos.length === 1 &&
-
-                    <ListItem button>
-                        <ListItemIcon>
-                            <EditIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Modificar" />
-                    </ListItem>
-                }
-                {selectedCargos.length === 1 &&
-                    <ListItem button>
-                        <ListItemIcon>
-                            <AddIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Añadir cargo" />
-                    </ListItem>
-                }
-                <Divider />
-                {selectedCargos.length > 0 &&
-                    <ListItem button>
-                        <ListItemIcon>
-                            <PlaylistAddCheckIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Añadir a lista..." />
-                    </ListItem>
-                }
-                <Divider />
-                {selectedCargos.length > 0 &&
-                    <ListItem button>
-                        <ListItemIcon>
-                            <MailIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Enviar correo..." />
-                    </ListItem>
-                }
-                <Divider />
-                {selectedCargos.length > 0 &&
-                    <ListItem button>
-                        <ListItemIcon>
-                            <AlarmOnIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Finalizar cargo" />
-                    </ListItem>
-                }
-                <Divider />
-                {selectedCargos.length > 0 &&
-                    <ListItem button>
-                        <ListItemIcon>
-                            <DeleteForeverIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Eliminar..." />
-                    </ListItem>
-                }
+            <List id="context-options-list" component="nav" aria-label="main mailbox fol  ders">
+                {menuItems.map((item, index) => (
+                    <Fragment key={index}>
+                        {item}
+                    </Fragment>
+                ))}
             </List>
-
-
         </>
     )
 }
