@@ -105,16 +105,17 @@ const create = async (cargo: Cargo): Promise<Cargo> => {
     const state = store.getState();
 
     let requestConfig = {
-        headers: {
-            Authorization: "Bearer " + state.authentication.token
-        },
-        params: { cargo },
+        params: { ...cargo },
+
     }
 
-    const response = await axios.post(
-        url + 'cargos/',
-        requestConfig,
-    );
+    const response = await axios.post(url + 'cargos/', {
+        ...cargo
+    }, {
+        headers: {
+            Authorization: "Bearer " + state.authentication.token
+        }
+    });
 
     console.log(response);
 

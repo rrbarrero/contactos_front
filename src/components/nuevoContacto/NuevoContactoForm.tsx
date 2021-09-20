@@ -150,7 +150,7 @@ const NuevoContactoForm = () => {
                         } */
                         //values.finalizado = cargoTerminado;
                         console.log("SUBMITED FORM", values);
-                        alert(JSON.stringify(values, null, 2));
+                        //alert(JSON.stringify(values, null, 2));
                         // actions.setSubmitting(false);
                         cargoService.create(values).then(cargo => {
                             console.log(cargo);

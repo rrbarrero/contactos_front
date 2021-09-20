@@ -27,6 +27,7 @@ class TestCargos(unittest.TestCase):
         cls.driver.get(base_url)
         cls.driver.find_element_by_name("email").send_keys(username)
         cls.driver.find_element_by_name("password").send_keys(password)
+        time.sleep(2)
         cls.driver.find_element_by_id("loginSubmit").click()
         time.sleep(2)
 
@@ -56,7 +57,14 @@ class TestCargos(unittest.TestCase):
         self._handle_select("subcolectivo")
         time.sleep(2)
         self.driver.find_element_by_id("next-button").click()
-        time.sleep(4)
+        time.sleep(3)
+        self._handle_attach_email()
+        self._handle_attach_phone()
+        time.sleep(3)
+        self.driver.find_element_by_id("next-button").click()
+        time.sleep(2)
+        self.driver.find_element_by_id("new-contact-submit").click()
+        time.sleep(8)
 
     def _handle_select(self, htmlID):
         _el = self.driver.find_element_by_id(htmlID)
@@ -68,6 +76,22 @@ class TestCargos(unittest.TestCase):
         )
         options[random.randint(0, len(options) - 1)].click()
         time.sleep(1)
+
+    def _handle_attach_phone(self):
+        self.driver.find_element_by_id("nombreTelefono").send_keys(fake.name())
+        self.driver.find_element_by_id("telefono").send_keys(fake.phone_number())
+        self.driver.find_element_by_id("notaTelefono").send_keys(
+            fake.paragraph(nb_sentences=5)
+        )
+        self.driver.find_element_by_id("attach_phone_button").click()
+
+    def _handle_attach_email(self):
+        self.driver.find_element_by_id("nombreCorreo").send_keys(fake.name())
+        self.driver.find_element_by_id("email").send_keys(fake.email())
+        self.driver.find_element_by_id("notaCorreo").send_keys(
+            fake.paragraph(nb_sentences=5)
+        )
+        self.driver.find_element_by_id("attach_email_button").click()
 
     @classmethod
     def tearDownClass(cls):

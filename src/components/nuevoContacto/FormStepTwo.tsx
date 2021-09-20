@@ -129,7 +129,7 @@ const FormStepTwo = ({ formValues, formTouched, formErrors }: FormStepOneProps) 
                                 error={formTouched.telefonos && Boolean(formErrors.telefonos)}
                                 helperText={formTouched.telefonos && formErrors.telefonos}
                             />
-                            <Button variant="contained" className={classes.addButton} onClick={() => handleAddTelefono()}>Adjuntar</Button>
+                            <Button variant="contained" id="attach_phone_button" className={classes.addButton} onClick={() => handleAddTelefono()}>Adjuntar</Button>
                         </Grid>
                         <Grid item xs={6}>
                             <h3>Añadir Correo</h3>
@@ -164,7 +164,7 @@ const FormStepTwo = ({ formValues, formTouched, formErrors }: FormStepOneProps) 
                                 error={formTouched.correos && Boolean(formErrors.correos)}
                                 helperText={formTouched.correos && formErrors.correos}
                             />
-                            <Button variant="contained" className={classes.addButton} onClick={() => handleAddCorreo()}>Adjuntar</Button>
+                            <Button variant="contained" id="attach_email_button" className={classes.addButton} onClick={() => handleAddCorreo()}>Adjuntar</Button>
                         </Grid>
                     </Grid>
                 </Grid>

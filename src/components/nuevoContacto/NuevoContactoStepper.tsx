@@ -123,6 +123,7 @@ export default function NuevoContactoStepper() {
               Atrás
             </Button>
             <Button
+              id="new-contact-submit"
               className={classes.submitButton}
               color="primary"
               variant="contained"
