@@ -16,7 +16,6 @@ import AddIcon from '@material-ui/icons/Add';
 import AlarmOnIcon from '@material-ui/icons/AlarmOn';
 import { Link } from 'react-router-dom';
 import { motion } from "framer-motion";
-import { Fragment } from 'react';
 
 const StyledBadge = withStyles((theme: Theme) =>
     createStyles({
@@ -76,7 +75,10 @@ const ContextualMenu = () => {
             </StyledBadge>
             <List id="context-options-list" component="nav" aria-label="main mailbox fol  ders">
                 {menuItems.map((item, index) => (
-                    <motion.div animate={{ x: [400, 0], opacity: [0, 1] }} transition={{ duration: 0.5 + index * 0.1 }} >
+                    <motion.div
+                        animate={{ x: [400, 0], opacity: [0, 1] }}
+                        transition={{ duration: 0.5 + index * 0.1 }}
+                        exit={{ opacity: 0 }} >
                         <Link to={item.url} className={classes.headerLink}>
                             <ListItem button>
                                 <ListItemIcon>
