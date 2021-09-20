@@ -50,11 +50,10 @@ const SelectTratamiento = (selectArgs: SelectArgs) => {
 
     return (
 
-        <Grid item md={3} xs={12} className={classes.inputItem}>
+        <Grid item md={3} xs={12} className={classes.inputItem} id="tratamiento">
             <InputLabel id="tratamiento-select-label">Tratamiento</InputLabel>
             {selectedTratamiento.id && <Select
                 labelId="tratamiento-select-label"
-                id="tratamiento"
                 input={<Input />}
                 value={selectedTratamiento.id}
                 onChange={(e) => handleChangeTratamiento(e.target.value)}

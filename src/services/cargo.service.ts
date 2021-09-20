@@ -100,10 +100,33 @@ const search = async (needle: string): Promise<Cargos> => {
     return cargos;
 }
 
+const create = async (cargo: Cargo): Promise<Cargo> => {
+    const url = process.env.REACT_APP_BASE_URL || "not env defined";
+    const state = store.getState();
+
+    let requestConfig = {
+        headers: {
+            Authorization: "Bearer " + state.authentication.token
+        },
+        params: { cargo },
+    }
+
+    const response = await axios.post(
+        url + 'cargos/',
+        requestConfig,
+    );
+
+    console.log(response);
+
+    return response.data;
+
+}
+
 
 
 export const cargoService = {
     get_all,
     get_page,
     search,
+    create,
 }

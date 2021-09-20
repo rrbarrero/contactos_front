@@ -62,11 +62,10 @@ const SelectColectivo = (selectArgs: SelectArgs) => {
     }
 
     return (
-        <Grid item md={6} xs={12} className={classes.inputItem}>
+        <Grid item md={6} xs={12} className={classes.inputItem} id="colectivo">
             <InputLabel id="colectivo-select-label">Colectivo</InputLabel>
             {selectedColectivo.id && <Select
                 labelId="colectivo-select-label"
-                id="colectivo"
                 input={<Input />}
                 value={selectedColectivo.id ? selectedColectivo.id : 1}
                 onChange={(e) => handleChangeColectivo(e.target.value)}

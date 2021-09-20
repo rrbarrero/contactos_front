@@ -52,11 +52,10 @@ const SelectProvincia = (selectArgs: SelectArgs) => {
 
     return (
 
-        <Grid item md={4} xs={12} className={classes.inputItem}>
+        <Grid item md={4} xs={12} className={classes.inputItem} id="provincia">
             <InputLabel id="Provincia-select-label">Provincia</InputLabel>
             {selectedProvincia.id && <Select
                 labelId="Provincia-select-label"
-                id="Provincia"
                 input={<Input />}
                 value={selectedProvincia.id ? selectedProvincia.id : 1}
                 onChange={(e) => handleChangeProvincia(e.target.value as number)}

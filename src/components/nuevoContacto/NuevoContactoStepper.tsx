@@ -155,6 +155,7 @@ export default function NuevoContactoStepper() {
                 </Button>
               )}
               <Button
+                id="next-button"
                 variant="contained"
                 color="primary"
                 onClick={handleNext}

@@ -52,11 +52,10 @@ const SelectPais = (selectArgs: SelectArgs) => {
 
     return (
 
-        <Grid item md={4} xs={12} className={classes.inputItem}>
+        <Grid item md={4} xs={12} className={classes.inputItem} id="pais">
             <InputLabel id="pais-select-label">Pais</InputLabel>
             {selectedPais.id && <Select
                 labelId="pais-select-label"
-                id="pais"
                 input={<Input />}
                 value={selectedPais.id ? selectedPais.id : 1}
                 onChange={(e) => handleChangePais(e.target.value as number)}
