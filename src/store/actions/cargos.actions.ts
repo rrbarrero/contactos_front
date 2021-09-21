@@ -1,4 +1,4 @@
-import { cargoService } from "../../services";
+import { cargoService, personaService } from "../../services";
 import { cargosConstants } from "../constants";
 import { alertActions, spinnerActions } from '.';
 
@@ -21,7 +21,7 @@ export function get_all(colectivoSelected: number[]) {
         dispatch(request(colectivoSelected))
         dispatch(spinnerActions.toggleState(true));
         cargoService.get_all(colectivoSelected).then(
-            cargos => {
+            (cargos: Cargos) => {
                 dispatch(spinnerActions.toggleState(false));
                 dispatch(success(cargos));
             },

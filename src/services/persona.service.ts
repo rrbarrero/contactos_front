@@ -33,7 +33,29 @@ const get_persona = async (id: number): Promise<Persona> => {
     return persona;
 }
 
+const create = async (persona: Persona): Promise<Persona> => {
+    const url = process.env.REACT_APP_BASE_URL || "not env defined";
+    const state = store.getState();
+
+    const response = await axios.post(url + 'personas/', {
+        nombre: persona.nombre, 
+        apellidos: persona.apellidos, 
+        tratamiento: persona.tratamiento.id,
+    }, {
+        headers: {
+            Authorization: "Bearer " + state.authentication.token
+        }
+    });
+
+    console.log(response);
+
+    return response.data;
+
+}
+
+
 
 export const personaService = {
     get_persona,
+    create,
 }

@@ -1,6 +1,6 @@
 import { DataGrid, GridColDef, GridSelectionModel } from '@mui/x-data-grid';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { cargosActions } from "../../store/actions/cargos.actions";
 import { RootState } from "../../store/reducers";
@@ -8,6 +8,7 @@ import Dashboard from "../dashboard/Dashboard";
 import { appActions } from '../../store/actions';
 import { Box } from '@material-ui/core';
 import ContextualMenu from './ContextualMenu';
+import { personaService } from '../../services';
 
 const drawerWidth = 240;
 
@@ -94,6 +95,7 @@ const Contactos = () => {
     const cargosSelected: number[] = useSelector((state: RootState) => state.appStates.selectedCargos);
     const cargos = useSelector((state: RootState) => state.cargos);
     const searchText = useSelector((state: RootState) => state.searchContacto);
+    const [cargosFullData, setCargosFullData] = useState<Cargo[]>([]);
 
     const setCargoSelected = (event: GridSelectionModel) => {
         dispatch(appActions.setSelectedCargos(event as number[]));
@@ -103,11 +105,22 @@ const Contactos = () => {
         if (searchText) {
             dispatch(cargosActions.search(searchText));
         }
-    }, [searchText, dispatch])
+    }, [searchText, dispatch]);
 
     useEffect(() => {
         dispatch(cargosActions.get_all(colectivosSelected));
     }, [colectivosSelected, dispatch]);
+
+    useEffect(() => {
+        var data: Cargo[] = [];
+        cargos.rows.forEach(cargo => {
+            personaService.get_persona(cargo.persona).then(persona => {
+                const fullCargo = { ...cargo, persona: persona };
+                data = [...data, fullCargo];
+                setCargosFullData(data);
+            });
+        });
+    }, [cargos.rows]);
 
     const handlePage = (newPage: number) => {
 
@@ -125,7 +138,7 @@ const Contactos = () => {
             <div className={classes.wrapper}>
                 <div className={classes.dataGridContainer}>
                     <DataGrid
-                        rows={cargos.rows}
+                        rows={cargosFullData}
                         columns={columns}
                         pageSize={25}
                         pagination

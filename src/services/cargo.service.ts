@@ -104,13 +104,15 @@ const create = async (cargo: Cargo): Promise<Cargo> => {
     const url = process.env.REACT_APP_BASE_URL || "not env defined";
     const state = store.getState();
 
-    let requestConfig = {
-        params: { ...cargo },
-
-    }
+    const { telefonos, correos, ...data } = cargo;
 
     const response = await axios.post(url + 'cargos/', {
-        ...cargo
+        ...data,
+        persona: cargo.persona.id,
+        provincia: cargo.provincia.id,
+        pais: cargo.pais.id,
+        colectivo: cargo.colectivo.id,
+        subcolectivo: cargo.subcolectivo.id,
     }, {
         headers: {
             Authorization: "Bearer " + state.authentication.token

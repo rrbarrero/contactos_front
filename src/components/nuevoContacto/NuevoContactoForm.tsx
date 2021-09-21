@@ -13,7 +13,7 @@ import FormStepOne from './FormStepOne';
 import { appActions, cargoActions, colectivoActions, paisActions, provinciaActions, tratamientoActions } from '../../store/actions';
 import FormStepTwo from './FormStepTwo';
 import ValidationSchema from './ContactoFormValidation';
-import { cargoService } from '../../services';
+import { cargoService, personaService } from '../../services';
 
 
 //moment.locale("es");
@@ -152,8 +152,10 @@ const NuevoContactoForm = () => {
                         console.log("SUBMITED FORM", values);
                         //alert(JSON.stringify(values, null, 2));
                         // actions.setSubmitting(false);
-                        cargoService.create(values).then(cargo => {
-                            console.log(cargo);
+                        personaService.create(values.persona).then(persona => {
+                            cargoService.create({ ...values, persona: persona }).then(cargo => {
+                                console.log(cargo);
+                            })
                         })
                     }}
                 >{props => {
