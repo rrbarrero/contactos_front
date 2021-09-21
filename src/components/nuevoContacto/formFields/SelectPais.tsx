@@ -1,9 +1,8 @@
 import Grid from "@material-ui/core/Grid";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { cargoActions } from "../../../store/actions";
 import { RootState } from "../../../store/reducers";
 import Input from '@material-ui/core/Input';
 import MenuItem from "@material-ui/core/MenuItem";
@@ -22,7 +21,8 @@ const SelectPais = (selectArgs: SelectArgs) => {
 
     const dispatch = useDispatch();
     const paises = useSelector((state: RootState) => state.paises);
-    const selectedPais: Pais = useSelector((state: RootState) => state.cargo.pais);
+    const [selectedPais, setSelectedPais] = useState<Pais>({ nombre: '' });
+
 
     useEffect(() => {
         /*
@@ -30,7 +30,7 @@ const SelectPais = (selectArgs: SelectArgs) => {
         */
         const pais = paises.find((pais) => pais.nombre.toLowerCase() === DEFAULT_SELECTED);
         if (pais?.id) {
-            dispatch(cargoActions.setPais(pais));
+            setSelectedPais(pais);
             cargoValues.pais = pais;
         }
     }, [cargoValues, dispatch, paises]);
@@ -41,7 +41,7 @@ const SelectPais = (selectArgs: SelectArgs) => {
         */
         const pais = paises.find(pa => pa.id === paisId);
         if (pais?.id) {
-            dispatch(cargoActions.setPais(pais));
+            setSelectedPais(pais);
             cargoValues.pais = pais;
         }
     };

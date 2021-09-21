@@ -1,9 +1,8 @@
 import Grid from "@material-ui/core/Grid";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { cargoActions } from "../../../store/actions";
 import { RootState } from "../../../store/reducers";
 import Input from '@material-ui/core/Input';
 import MenuItem from "@material-ui/core/MenuItem";
@@ -25,8 +24,9 @@ const SelectSubColectivo = (selectArgs: SelectArgs) => {
     const { classes, cargoValues } = selectArgs;
 
     const selectedColectivo: Colectivo = useSelector((state: RootState) => state.cargo.colectivo);
-    const selectedSubColectivo: SubColectivo = useSelector((state: RootState) => state.cargo.subcolectivo);
+    const [selectedSubColectivo, setSelectedSubcolectivo] = useState<SubColectivo>({ colectivo: { nombre: '' }, nombre: '' })
     const subColectivos: SubColectivos = useSelector((state: RootState) => state.subColectivos);
+
 
     const handleChangeSubColectivo = (e: unknown) => {
         /* 
@@ -34,7 +34,7 @@ const SelectSubColectivo = (selectArgs: SelectArgs) => {
         */
         const subColectivo: SubColectivo | undefined = subColectivos.find(su => su.id === e as number);
         if (subColectivo?.id) {
-            dispatch(cargoActions.setColectivo(subColectivo));
+            setSelectedSubcolectivo(subColectivo);
             cargoValues.subcolectivo = subColectivo;
         }
     };
@@ -44,7 +44,7 @@ const SelectSubColectivo = (selectArgs: SelectArgs) => {
             Set first subColectivo when change Colectivo
         */
         if (subColectivos[0]?.id) {
-            dispatch(cargoActions.setSubColectivo(subColectivos[0]));
+            setSelectedSubcolectivo(subColectivos[0]);
             cargoValues.subcolectivo = subColectivos[0];
         }
     }, [cargoValues, dispatch, selectedColectivo, subColectivos]);

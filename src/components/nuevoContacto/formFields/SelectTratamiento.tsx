@@ -1,12 +1,11 @@
 import Grid from "@material-ui/core/Grid";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/reducers";
 import Input from '@material-ui/core/Input';
 import MenuItem from "@material-ui/core/MenuItem";
-import { cargoActions } from "../../../store/actions/";
 import { ClassNameMap } from '@material-ui/core/styles/withStyles';
 
 type SelectArgs = {
@@ -21,7 +20,7 @@ const SelectTratamiento = (selectArgs: SelectArgs) => {
     const { classes, cargoValues } = selectArgs;
     const dispatch = useDispatch();
     const tratamientos = useSelector((state: RootState) => state.tratamientos);
-    const selectedTratamiento = useSelector((state: RootState) => state.cargo.persona.tratamiento);
+    const [selectedTratamiento, setSelectedTratamiento] = useState<Tratamiento>({ nombre: '', id: 0 });
 
     useEffect(() => {
         /*
@@ -30,7 +29,7 @@ const SelectTratamiento = (selectArgs: SelectArgs) => {
         if (tratamientos.length > 0) {
             const tratamiento = tratamientos.find((tr) => tr.nombre.toLowerCase() === DEFAULT_SELECTED);
             if (tratamiento) {
-                dispatch(cargoActions.setTratamiento(tratamiento));
+                setSelectedTratamiento(tratamiento);
                 cargoValues.persona.tratamiento = tratamiento;
             }
         }
@@ -39,7 +38,7 @@ const SelectTratamiento = (selectArgs: SelectArgs) => {
     const handleChangeTratamiento = (e: unknown) => {
         const tratamiento: Tratamiento | undefined = tratamientos.find(tr => tr.id === e as number);
         if (tratamiento) {
-            dispatch(cargoActions.setTratamiento(tratamiento));
+            setSelectedTratamiento(tratamiento);
             cargoValues.persona.tratamiento = tratamiento;
         }
     };

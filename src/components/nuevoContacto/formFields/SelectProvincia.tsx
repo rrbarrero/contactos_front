@@ -1,9 +1,8 @@
 import Grid from "@material-ui/core/Grid";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { cargoActions } from "../../../store/actions";
 import { RootState } from "../../../store/reducers";
 import Input from '@material-ui/core/Input';
 import MenuItem from "@material-ui/core/MenuItem";
@@ -22,7 +21,7 @@ const SelectProvincia = (selectArgs: SelectArgs) => {
 
     const dispatch = useDispatch();
     const provincias = useSelector((state: RootState) => state.provincias);
-    const selectedProvincia: Provincia = useSelector((state: RootState) => state.cargo.provincia);
+    const [selectedProvincia, setSelectedProvincia] = useState<Provincia>({ nombre: '' });
 
     useEffect(() => {
         /*
@@ -30,7 +29,7 @@ const SelectProvincia = (selectArgs: SelectArgs) => {
         */
         const provincia = provincias.find((pr) => pr.nombre.toLowerCase() === DEFAULT_SELECTED);
         if (provincia?.id) {
-            dispatch(cargoActions.setProvincia(provincia));
+            setSelectedProvincia(provincia);
             cargoValues.provincia = provincia;
         }
     }, [cargoValues, dispatch, provincias]);
@@ -41,7 +40,7 @@ const SelectProvincia = (selectArgs: SelectArgs) => {
         */
         const provincia = provincias.find(pr => pr.id === ProvinciaId);
         if (provincia?.id) {
-            dispatch(cargoActions.setProvincia(provincia));
+            setSelectedProvincia(provincia)
             cargoValues.provincia = provincia;
         }
     };
