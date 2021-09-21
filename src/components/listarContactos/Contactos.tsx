@@ -95,7 +95,6 @@ const Contactos = () => {
     const cargosSelected: number[] = useSelector((state: RootState) => state.appStates.selectedCargos);
     const cargos = useSelector((state: RootState) => state.cargos);
     const searchText = useSelector((state: RootState) => state.searchContacto);
-    const [cargosFullData, setCargosFullData] = useState<Cargo[]>([]);
 
     const setCargoSelected = (event: GridSelectionModel) => {
         dispatch(appActions.setSelectedCargos(event as number[]));
@@ -110,17 +109,6 @@ const Contactos = () => {
     useEffect(() => {
         dispatch(cargosActions.get_all(colectivosSelected));
     }, [colectivosSelected, dispatch]);
-
-    useEffect(() => {
-        var data: Cargo[] = [];
-        cargos.rows.forEach(cargo => {
-            personaService.get_persona(cargo.persona).then(persona => {
-                const fullCargo = { ...cargo, persona: persona };
-                data = [...data, fullCargo];
-                setCargosFullData(data);
-            });
-        });
-    }, [cargos.rows]);
 
     const handlePage = (newPage: number) => {
 
@@ -138,7 +126,7 @@ const Contactos = () => {
             <div className={classes.wrapper}>
                 <div className={classes.dataGridContainer}>
                     <DataGrid
-                        rows={cargosFullData}
+                        rows={cargos.rows}
                         columns={columns}
                         pageSize={25}
                         pagination
