@@ -28,13 +28,6 @@ const FormStepOne = ({ classes, formValues, formTouched, formErrors, handleBlur 
 
     const dispatch = useDispatch();
 
-    // const nombre = useSelector((state: RootState) => state.cargo.persona.nombre);
-    // const apellidos = useSelector((state: RootState) => state.cargo.persona.apellidos);
-    // const cargo = useSelector((state: RootState) => state.cargo.cargo);
-    // const empresa = useSelector((state: RootState) => state.cargo.empresa);
-    // const finalizado = useSelector((state: RootState) => state.cargo.finalizado);
-    // const direccion = useSelector((state: RootState) => state.cargo.direccion);
-    // const ciudad = useSelector((state: RootState) => state.cargo.ciudad);
     const [nombre, setNombre] = useState('');
     const [apellidos, setApellidos] = useState('');
     const [cargo, setCargo] = useState('');
@@ -50,43 +43,36 @@ const FormStepOne = ({ classes, formValues, formTouched, formErrors, handleBlur 
     };
 
     const handleChangeNombre = (nombre: string, formValues: Cargo) => {
-        //dispatch(cargoActions.setPersonaNombre(nombre));
         setNombre(nombre);
         formValues.persona.nombre = nombre;
     }
 
     const handleChangeApellidos = (apellidos: string, formValues: Cargo) => {
-        //dispatch(cargoActions.setPersonaApellidos(apellidos));
         setApellidos(apellidos);
         formValues.persona.apellidos = apellidos;
     }
 
     const handleChangeCargo = (cargoCargo: string, formValues: Cargo) => {
-        //dispatch(cargoActions.setCargo(cargoCargo));
         setCargo(cargoCargo);
         formValues.cargo = cargoCargo;
     }
 
     const handleChangeEmpresa = (empresa: string, formValues: Cargo) => {
-        //dispatch(cargoActions.setEmpresa(empresa));
         setEmpresa(empresa);
         formValues.empresa = empresa;
     }
 
     const handleChangeCiudad = (ciudad: string, formValues: Cargo) => {
-        //dispatch(cargoActions.setCiudad(ciudad));
         setCiudad(ciudad);
         formValues.ciudad = ciudad;
     }
 
     const handleChangeDireccion = (direccion: string, formValues: Cargo) => {
-        //dispatch(cargoActions.setDireccion(direccion));
         setDireccion(direccion);
         formValues.direccion = direccion;
     }
 
     const handleChangeFechaCese = (fechaCese: string, formValues: Cargo) => {
-        //dispatch(cargoActions.setFechaCese(fechaCese));
         setFechaCese(fechaCese);
         formValues.fechaCese = fechaCese;
     }
