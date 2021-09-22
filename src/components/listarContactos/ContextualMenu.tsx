@@ -76,6 +76,7 @@ const ContextualMenu = () => {
             <List id="context-options-list" component="nav" aria-label="main mailbox fol  ders">
                 {menuItems.map((item, index) => (
                     <motion.div
+                        key={index}
                         animate={{ x: [400, 0], opacity: [0, 1] }}
                         transition={{ duration: 0.5 + index * 0.1 }}
                         exit={{ opacity: 0 }} >

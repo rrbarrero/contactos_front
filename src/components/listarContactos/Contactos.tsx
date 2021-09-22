@@ -1,6 +1,6 @@
 import { DataGrid, GridColDef, GridSelectionModel } from '@mui/x-data-grid';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { cargosActions } from "../../store/actions/cargos.actions";
 import { RootState } from "../../store/reducers";
@@ -8,7 +8,6 @@ import Dashboard from "../dashboard/Dashboard";
 import { appActions } from '../../store/actions';
 import { Box } from '@material-ui/core';
 import ContextualMenu from './ContextualMenu';
-import { personaService } from '../../services';
 
 const drawerWidth = 210;
 

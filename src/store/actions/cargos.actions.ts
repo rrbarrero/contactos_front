@@ -1,4 +1,4 @@
-import { cargoService, personaService } from "../../services";
+import { cargoService } from "../../services";
 import { cargosConstants } from "../constants";
 import { alertActions, spinnerActions } from '.';
 

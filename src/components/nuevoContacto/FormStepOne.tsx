@@ -1,8 +1,7 @@
 import 'react-app-polyfill/ie11';
 import { FormikErrors, FormikTouched } from 'formik';
 import TextField from '@material-ui/core/TextField';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from "../../store/reducers";
+import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Checkbox from '@material-ui/core/Checkbox';
