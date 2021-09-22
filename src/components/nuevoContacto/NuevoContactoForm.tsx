@@ -8,7 +8,6 @@ import { RootState } from "../../store/reducers";
 import { useEffect } from 'react';
 import Paper from '@material-ui/core/Paper';
 import NuevoContactoStepper from './NuevoContactoStepper';
-import { initialCargoState } from '../../store/reducers/cargo.reducers';
 import FormStepOne from './FormStepOne';
 import { appActions, colectivoActions, paisActions, provinciaActions, tratamientoActions } from '../../store/actions';
 import FormStepTwo from './FormStepTwo';
@@ -62,20 +61,24 @@ const NuevoContactoForm = () => {
     const dispatch = useDispatch();
 
     let formInitialValues = {
-        ...initialCargoState,
         persona: {
-            ...initialCargoState.persona,
-            tratamiento: { ...initialCargoState.persona.tratamiento },
+            tratamiento: { nombre: '' },
+            nombre: '',
+            apellidos: ''
         },
-        provincia: { ...initialCargoState.provincia },
-        pais: { ...initialCargoState.pais },
-        colectivo: { ...initialCargoState.colectivo },
-        subcolectivo: {
-            ...initialCargoState.subcolectivo,
-            colectivo: { ...initialCargoState.subcolectivo.colectivo }
-        },
-        telefonos: [...initialCargoState.telefonos],
-        correos: [...initialCargoState.correos],
+        cargo: '',
+        finalizado: false,
+        ciudad: '',
+        codPostal: '',
+        direccion: '',
+        provincia: { nombre: '' },
+        pais: { nombre: '' },
+        empresa: '',
+        fechaAlta: new Date(),
+        colectivo: { nombre: '' },
+        subcolectivo: { nombre: '', colectivo: { nombre: '' } },
+        telefonos: [],
+        correos: [],
     };
 
     const formStepPage = useSelector((state: RootState) => state.appStates.stepperCurrent);
