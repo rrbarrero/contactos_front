@@ -13,6 +13,7 @@ import { subColectivos } from './subcolectivos.reducers';
 import { appStates } from './app-states.reducer';
 import { telefonos } from './telefonos.reducer';
 import { correos } from './correos.reducer';
+import { customDialog } from './dialog.reducers';
 
 const rootReducer = combineReducers({
     authentication,
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
     appStates,
     telefonos,
     correos,
+    customDialog,
 });
 
 

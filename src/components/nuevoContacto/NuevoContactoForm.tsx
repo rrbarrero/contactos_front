@@ -5,7 +5,7 @@ import Dashboard from '../dashboard/Dashboard';
 import Box from '@material-ui/core/Box';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from "../../store/reducers";
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Paper from '@material-ui/core/Paper';
 import NuevoContactoStepper from './NuevoContactoStepper';
 import FormStepOne from './FormStepOne';
@@ -13,6 +13,9 @@ import { appActions, colectivoActions, paisActions, provinciaActions, tratamient
 import FormStepTwo from './FormStepTwo';
 import ValidationSchema from './ContactoFormValidation';
 import { cargoService, personaService } from '../../services';
+import { customDialogActions } from '../../store/actions/custom-dialog.actions';
+import ConfirmationDialog from '../commons/ConfirmationDialog';
+import { history } from '../../helpers';
 
 
 //moment.locale("es");
@@ -55,41 +58,90 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const NuevoContactoForm = () => {
+type TypeCurrentStepComp = {
+    values: Cargo,
+    touched: FormikTouched<Cargo>
+    errors: FormikErrors<Cargo>,
+    handleBlur: any,
+}
+
+let formInitialValues = {
+    persona: {
+        tratamiento: { nombre: '' },
+        nombre: '',
+        apellidos: ''
+    },
+    cargo: '',
+    finalizado: false,
+    ciudad: '',
+    codPostal: '',
+    direccion: '',
+    provincia: { nombre: '' },
+    pais: { nombre: '' },
+    empresa: '',
+    fechaAlta: new Date(),
+    colectivo: { nombre: '' },
+    subcolectivo: { nombre: '', colectivo: { nombre: '' } },
+    telefonos: [],
+    correos: [],
+};
+
+const CurrentStepComp = ({ values, errors, touched, handleBlur }: TypeCurrentStepComp) => {
 
     const classes = useStyles();
-    const dispatch = useDispatch();
-
-    let formInitialValues = {
-        persona: {
-            tratamiento: { nombre: '' },
-            nombre: '',
-            apellidos: ''
-        },
-        cargo: '',
-        finalizado: false,
-        ciudad: '',
-        codPostal: '',
-        direccion: '',
-        provincia: { nombre: '' },
-        pais: { nombre: '' },
-        empresa: '',
-        fechaAlta: new Date(),
-        colectivo: { nombre: '' },
-        subcolectivo: { nombre: '', colectivo: { nombre: '' } },
-        telefonos: [],
-        correos: [],
-    };
-
     const formStepPage = useSelector((state: RootState) => state.appStates.stepperCurrent);
+
+    let comp: JSX.Element = <></>;
+    switch (formStepPage) {
+        case 0: {
+            comp = <FormStepOne
+                formValues={values}
+                formErrors={errors}
+                formTouched={touched}
+                classes={classes}
+                handleBlur={handleBlur} />
+            break;
+        }
+        case 1: {
+            comp = <FormStepTwo
+                formValues={values}
+                formErrors={errors}
+                formTouched={touched} />
+            break;
+        }
+    }
+    return comp;
+}
+
+const NuevoContactoForm = () => {
+
+    const dispatch = useDispatch();
+    const classes = useStyles();
+    const [resetForNew, setResetForNew] = useState(false);
+
+    useEffect(() => {
+        dispatch(customDialogActions.setData({
+            title: "Nuevo contacto",
+            body: "Contacto guardado con éxito. ¿Quiere seguir añadiendo más?",
+            status: false,
+            onAccept: () => {
+                dispatch(customDialogActions.toggleState());
+                setResetForNew(true);
+            },
+            onCancel: () => {
+                dispatch(customDialogActions.toggleState());
+                history.push('/contactos');
+            }
+        }))
+    })
 
     useEffect(() => {
         dispatch(appActions.setAppTitle('Nuevo contacto'))
-    }, [dispatch])
+    }, [dispatch, resetForNew]);
 
     useEffect(() => {
         dispatch(appActions.stepperSet(0));
-    }, [dispatch]);
+    }, [dispatch, resetForNew]);
 
     useEffect(() => {
         dispatch(paisActions.get_all_paises());
@@ -107,40 +159,10 @@ const NuevoContactoForm = () => {
         dispatch(colectivoActions.get_all_colectivos());
     }, [dispatch]);
 
-    type TypeCurrentStepComp = {
-        values: Cargo,
-        touched: FormikTouched<Cargo>
-        errors: FormikErrors<Cargo>,
-        handleBlur: any,
-    }
-
-    const CurrentStepComp = ({ values, errors, touched, handleBlur }: TypeCurrentStepComp) => {
-        let comp: JSX.Element = <></>;
-        switch (formStepPage) {
-            case 0: {
-                comp = <FormStepOne
-                    formValues={values}
-                    formErrors={errors}
-                    formTouched={touched}
-                    classes={classes}
-                    handleBlur={handleBlur} />
-                break;
-            }
-            case 1: {
-                comp = <FormStepTwo
-                    formValues={values}
-                    formErrors={errors}
-                    formTouched={touched} />
-                break;
-            }
-        }
-        return comp;
-
-    }
-
     return (
         <>
             <Dashboard></Dashboard>
+            <ConfirmationDialog />
             <Box className={classes.box}>
                 <Formik
                     initialValues={formInitialValues}
@@ -158,6 +180,7 @@ const NuevoContactoForm = () => {
                         personaService.create(values.persona).then(persona => {
                             cargoService.create({ ...values, persona: persona }).then(cargo => {
                                 console.log(cargo);
+                                dispatch(customDialogActions.toggleState());
                             })
                         })
                     }}
@@ -178,9 +201,7 @@ const NuevoContactoForm = () => {
                             <Paper className={classes.control}>
                                 <CurrentStepComp values={values} errors={errors} touched={touched} handleBlur={handleBlur} />
                                 <NuevoContactoStepper />
-
                             </Paper>
-
                         </Form>
                     );
                 }}

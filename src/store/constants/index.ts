@@ -11,3 +11,4 @@ export * from './subcolectivo.constants';
 export * from './app-states.contstants';
 export * from './telefonos.constants';
 export * from './correos.constants';
+export * from './custom-dialog.constants'

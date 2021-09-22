@@ -100,3 +100,11 @@ type Cargos = {
     count: number;
     currentPage: number;
 }
+
+type CustomDialog = {
+    title: string,
+    body: string,
+    status: boolean,
+    onAccept: () => void,
+    onCancel: () => void,
+}
