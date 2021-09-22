@@ -1,5 +1,9 @@
 import { cargosConstants } from "../constants";
 
+type CargosAction = {
+    type: string;
+    payload: Cargos;
+}
 
 let initialState: Cargos = {
     rows: [],

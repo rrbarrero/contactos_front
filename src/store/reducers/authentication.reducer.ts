@@ -1,9 +1,14 @@
 import { userConstants } from "../constants";
 
-let user: User = {username: '', logedIn: false}
+let user: User = { username: '', logedIn: false }
 const userData = localStorage.getItem('user')
-if(userData){
+if (userData) {
     user = JSON.parse(userData);
+}
+
+type UserAction = {
+    type: string;
+    payload: User;
 }
 
 export function authentication(state = user, action: UserAction): User {

@@ -1,7 +1,11 @@
 import { provinciaConstants } from "../constants";
 
-
 let initialState: Provincias = [];
+
+type ProvinciaAction = {
+    type: string;
+    payload: Provincias;
+}
 
 export function provincias(state = initialState, action: ProvinciaAction): Provincias {
     switch (action.type) {

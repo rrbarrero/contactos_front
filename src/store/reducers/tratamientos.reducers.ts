@@ -1,7 +1,11 @@
 import { tratamientoConstants } from "../constants";
 
-
 let initialState: Tratamientos = [];
+
+type TratamientoAction = {
+    type: string;
+    payload: Tratamientos;
+}
 
 export function tratamientos(state = initialState, action: TratamientoAction): Tratamientos {
     switch (action.type) {

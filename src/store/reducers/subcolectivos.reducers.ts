@@ -3,6 +3,11 @@ import { subColectivoConstants } from "../constants";
 
 let initialState: SubColectivos = [];
 
+type SubColectivoAction = {
+    type: string;
+    payload: SubColectivos;
+}
+
 export function subColectivos(state = initialState, action: SubColectivoAction): SubColectivos {
     switch (action.type) {
         case subColectivoConstants.SUBCOLECTIVO_GET_FROM_COLECTIVO:

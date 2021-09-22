@@ -6,11 +6,6 @@ type User = {
     logedIn: boolean;
 }
 
-type UserAction = {
-    type: string;
-    payload: User;
-}
-
 type AuthenticationState = {
     loggingIn: boolean;
     user: User | null;
@@ -31,31 +26,6 @@ type SubColectivo = {
 }
 
 type SubColectivos = SubColectivo[];
-
-type ColectivoAction = {
-    type: string;
-    payload: Colectivos;
-}
-
-type SubColectivoAction = {
-    type: string;
-    payload: SubColectivos;
-}
-
-type SelectedColectivoAction = {
-    type: string;
-    payload: number[];
-}
-
-type searchContactoAction = {
-    type: string;
-    payload: string;
-}
-
-type AlertAction = {
-    type: string;
-    payload: string;
-}
 
 type Tratamiento = {
     id?: number;
@@ -94,19 +64,9 @@ type Provincia = {
 
 type Provincias = Provincia[];
 
-type ProvinciaAction = {
-    type: string;
-    payload: Provincias;
-}
-
 type Pais = {
     id?: number;
     nombre: string;
-}
-
-type PaisAction = {
-    type: string;
-    payload: Paises;
 }
 
 type Paises = Pais[];
@@ -139,29 +99,4 @@ type Cargos = {
     prevPage: string;
     count: number;
     currentPage: number;
-}
-
-type CargoAction = {
-    type: string;
-    payload: string | Persona | Tratamiento | Ciudad | Pais | Colectivo | SubColectivo;
-}
-
-type CargosAction = {
-    type: string;
-    payload: Cargos;
-}
-
-type SelectedCargoAction = {
-    type: string;
-    payload: number[];
-}
-
-type SpinnerAction = {
-    type: string;
-    payload: boolean;
-}
-
-type TratamientoAction = {
-    type: string;
-    payload: Tratamientos;
 }

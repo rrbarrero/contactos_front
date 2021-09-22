@@ -1,7 +1,11 @@
 import { paisConstants } from "../constants";
 
-
 let initialState: Paises = [];
+
+type PaisAction = {
+    type: string;
+    payload: Paises;
+}
 
 export function paises(state = initialState, action: PaisAction): Paises {
     switch (action.type) {
