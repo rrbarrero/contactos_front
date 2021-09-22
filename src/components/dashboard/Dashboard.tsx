@@ -39,13 +39,11 @@ const Dashboard = () => {
     const classes = useStyles();
     const user = useSelector((state: RootState) => state.authentication);
     const location = useLocation();
-    const nombre = useSelector((state: RootState) => state.cargo.persona.nombre);
-    const apellidos = useSelector((state: RootState) => state.cargo.persona.apellidos);
 
     const GetTitle = () => {
         switch (location.pathname) {
             case '/nuevo_contacto':
-                return `Nuevo contacto: ${nombre} ${apellidos}`
+                return `Nuevo contacto`
             default:
                 return "Contactos"
         }

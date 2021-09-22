@@ -3,7 +3,6 @@ import { FormikErrors, FormikTouched } from 'formik';
 import TextField from '@material-ui/core/TextField';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from "../../store/reducers";
-import { cargoActions } from '../../store/actions';
 import { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -39,7 +38,7 @@ const FormStepOne = ({ classes, formValues, formTouched, formErrors, handleBlur 
 
 
     const handleChangeFinalizado = (e: boolean) => {
-        dispatch(cargoActions.setFinalizado(e));
+        formValues.finalizado = e;
     };
 
     const handleChangeNombre = (nombre: string, formValues: Cargo) => {

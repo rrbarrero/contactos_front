@@ -10,3 +10,5 @@ export * from './subcolectivo.actions';
 export * from './app-actions';
 export * from './cargo.actions';
 export * from './cargos.actions';
+export * from './telefonos.actions';
+export * from './correos.actions';

@@ -23,7 +23,7 @@ const SelectSubColectivo = (selectArgs: SelectArgs) => {
     const dispatch = useDispatch();
     const { classes, cargoValues } = selectArgs;
 
-    const selectedColectivo: Colectivo = useSelector((state: RootState) => state.cargo.colectivo);
+    const selectedColectivo: Colectivo = useSelector((state: RootState) => state.appStates.selectedColectivo);
     const [selectedSubColectivo, setSelectedSubcolectivo] = useState<SubColectivo>({ colectivo: { nombre: '' }, nombre: '' })
     const subColectivos: SubColectivos = useSelector((state: RootState) => state.subColectivos);
 

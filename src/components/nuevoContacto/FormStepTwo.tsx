@@ -5,7 +5,8 @@ import Paper from "@material-ui/core/Paper";
 import { FormikErrors, FormikTouched } from 'formik';
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { cargoActions } from "../../store/actions";
+import { telefonosActions } from "../../store/actions";
+import { correosActions } from "../../store/actions/correos.actions";
 import { RootState } from "../../store/reducers";
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -49,8 +50,8 @@ const FormStepTwo = ({ formValues, formTouched, formErrors }: FormStepOneProps) 
     const dispatch = useDispatch();
     const classes = useStyles();
 
-    const telefonos = useSelector((state: RootState) => state.cargo.telefonos);
-    const correos = useSelector((state: RootState) => state.cargo.correos);
+    const telefonos = useSelector((state: RootState) => state.telefonos);
+    const correos = useSelector((state: RootState) => state.correos);
     const [telefono, setTelefono] = useState<Telefono>(_telf);
     const [correo, setCorreo] = useState<Correo>(_mail);
 
@@ -79,13 +80,13 @@ const FormStepTwo = ({ formValues, formTouched, formErrors }: FormStepOneProps) 
     }
 
     const handleAddTelefono = () => {
-        dispatch(cargoActions.addTelefono(telefono));
+        dispatch(telefonosActions.addTelefono(telefono));
         formValues.telefonos = [...formValues.telefonos, telefono];
         setTelefono(_telf);
     }
 
     const handleAddCorreo = () => {
-        dispatch(cargoActions.addCorreo(correo));
+        dispatch(correosActions.addCorreo(correo));
         formValues.correos = [...formValues.correos, correo];
         setCorreo(_mail);
     }

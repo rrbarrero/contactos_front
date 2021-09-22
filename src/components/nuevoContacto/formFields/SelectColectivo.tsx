@@ -3,7 +3,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { cargoActions, subColectivoActions } from "../../../store/actions";
+import { appActions, subColectivoActions } from "../../../store/actions";
 import { RootState } from "../../../store/reducers";
 import Input from '@material-ui/core/Input';
 import MenuItem from "@material-ui/core/MenuItem";
@@ -21,7 +21,7 @@ const SelectColectivo = (selectArgs: SelectArgs) => {
     const dispatch = useDispatch();
 
     const colectivos = useSelector((state: RootState) => state.colectivos);
-    const selectedColectivo: Colectivo = useSelector((state: RootState) => state.cargo.colectivo);
+    const selectedColectivo: Colectivo = useSelector((state: RootState) => state.appStates.selectedColectivo);
 
     useEffect(() => {
         /*
@@ -40,7 +40,7 @@ const SelectColectivo = (selectArgs: SelectArgs) => {
         if (colectivos.length > 0) {
             const colectivo = colectivos.find((colectivo) => colectivo.nombre.toLowerCase() === DEFAULT_SELECTED);
             if (colectivo?.id) {
-                dispatch(cargoActions.setColectivo(colectivo));
+                dispatch(appActions.setSelectedColectivo(colectivo));
                 cargoValues.colectivo = colectivo;
             }
         }
@@ -52,7 +52,7 @@ const SelectColectivo = (selectArgs: SelectArgs) => {
         */
         const colectivo: Colectivo | undefined = colectivos.find(co => co.id === e as number);
         if (colectivo?.id) {
-            dispatch(cargoActions.setColectivo(colectivo));
+            dispatch(appActions.setSelectedColectivo(colectivo));
             cargoValues.colectivo = colectivo;
         }
     };

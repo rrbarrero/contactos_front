@@ -10,7 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import NuevoContactoStepper from './NuevoContactoStepper';
 import { initialCargoState } from '../../store/reducers/cargo.reducers';
 import FormStepOne from './FormStepOne';
-import { appActions, cargoActions, colectivoActions, paisActions, provinciaActions, tratamientoActions } from '../../store/actions';
+import { appActions, colectivoActions, paisActions, provinciaActions, tratamientoActions } from '../../store/actions';
 import FormStepTwo from './FormStepTwo';
 import ValidationSchema from './ContactoFormValidation';
 import { cargoService, personaService } from '../../services';
@@ -79,10 +79,6 @@ const NuevoContactoForm = () => {
     };
 
     const formStepPage = useSelector((state: RootState) => state.appStates.stepperCurrent);
-
-    useEffect(() => {
-        dispatch(cargoActions.reset());
-    }, [dispatch]);
 
     useEffect(() => {
         dispatch(appActions.stepperSet(0));

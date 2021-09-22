@@ -2,7 +2,6 @@ import { combineReducers } from 'redux';
 
 import { alert } from './alert.reducer';
 import { authentication } from './authentication.reducer';
-import { cargo } from './cargo.reducers';
 import { cargos } from './cargos.reducers';
 import { colectivos } from './colectivos.reducer';
 import { searchContacto } from './search-contacto.reducers';
@@ -12,12 +11,13 @@ import { provincias } from './provincia.reducers';
 import { paises } from './pais.reducers';
 import { subColectivos } from './subcolectivos.reducers';
 import { appStates } from './app-states.reducer';
+import { telefonos } from './telefonos.reducer';
+import { correos } from './correos.reducer';
 
 const rootReducer = combineReducers({
     authentication,
     colectivos,
     searchContacto,
-    cargo,
     cargos,
     Spinner,
     alert,
@@ -26,7 +26,8 @@ const rootReducer = combineReducers({
     paises,
     subColectivos,
     appStates,
-
+    telefonos,
+    correos,
 });
 
 
