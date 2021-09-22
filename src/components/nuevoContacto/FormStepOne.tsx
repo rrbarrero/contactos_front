@@ -3,7 +3,7 @@ import { FormikErrors, FormikTouched } from 'formik';
 import TextField from '@material-ui/core/TextField';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from "../../store/reducers";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -14,6 +14,7 @@ import SelectSubColectivo from './formFields/SelectSubColectivo';
 import SelectTratamiento from './formFields/SelectTratamiento';
 import SelectProvincia from './formFields/SelectProvincia';
 import { ClassNameMap } from '@material-ui/core/styles/withStyles';
+import { appActions } from '../../store/actions';
 
 type FormStepOneProps = {
     classes: ClassNameMap,
@@ -36,6 +37,9 @@ const FormStepOne = ({ classes, formValues, formTouched, formErrors, handleBlur 
     const [ciudad, setCiudad] = useState('');
     const [fechaCese, setFechaCese] = useState(moment().format('yyyy-MM-DD'));
 
+    useEffect(() => {
+        dispatch(appActions.setAppTitle(`Nuevo contacto: ${nombre} ${apellidos}`));
+    }, [dispatch, nombre, apellidos])
 
     const handleChangeFinalizado = (e: boolean) => {
         formValues.finalizado = e;

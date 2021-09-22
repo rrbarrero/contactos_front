@@ -37,7 +37,7 @@ const _mail: Correo = {
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         boxStyle: {
-            height: 480,
+            height: "100%",
         },
         addButton: {
             marginTop: 30,

@@ -38,16 +38,8 @@ const Dashboard = () => {
     const dispatch = useDispatch();
     const classes = useStyles();
     const user = useSelector((state: RootState) => state.authentication);
+    const appTitle = useSelector((state: RootState) => state.appStates.appTitle);
     const location = useLocation();
-
-    const GetTitle = () => {
-        switch (location.pathname) {
-            case '/nuevo_contacto':
-                return `Nuevo contacto`
-            default:
-                return "Contactos"
-        }
-    }
 
     const handleLogout = () => {
         dispatch(userActions.logout(user));
@@ -58,7 +50,7 @@ const Dashboard = () => {
             <AppBar position="static">
                 <Toolbar>
                     <Typography variant="h4" noWrap className={classes.title}>
-                        <Link className={classes.headerLink} to="/contactos"> {GetTitle()} </Link>
+                        <Link className={classes.headerLink} to="/contactos"> {appTitle} </Link>
                     </Typography>
                     {location.pathname === '/contactos' && <SearchBox />}
                     {location.pathname === '/contactos' && <ColectivoDropdown />}

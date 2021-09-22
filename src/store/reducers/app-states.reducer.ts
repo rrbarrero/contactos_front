@@ -5,6 +5,7 @@ type SelectionReducerType = {
     selectedColectivos: number[];
     selectedColectivo: Colectivo;
     stepperCurrent: number;
+    appTitle: string;
 }
 
 const initialState: SelectionReducerType = {
@@ -12,12 +13,13 @@ const initialState: SelectionReducerType = {
     selectedColectivos: [],
     selectedColectivo: { nombre: '' },
     stepperCurrent: 0,
+    appTitle: 'Contactos',
 };
 
 
 type ActionType = {
     type: string;
-    payload: number | number[] | Colectivo;
+    payload: number | number[] | Colectivo | string;
 };
 
 export function appStates(state = initialState, action: ActionType): SelectionReducerType {
@@ -41,6 +43,11 @@ export function appStates(state = initialState, action: ActionType): SelectionRe
             return {
                 ...state,
                 stepperCurrent: action.payload as number,
+            }
+        case appStatesConstants.SET_APP_TITLE:
+            return {
+                ...state,
+                appTitle: action.payload as string,
             }
         default:
             return state

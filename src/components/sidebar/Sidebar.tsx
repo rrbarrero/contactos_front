@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 
 
 
-const drawerWidth = 240;
+const drawerWidth = 210;
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -55,10 +55,10 @@ const Sidebar = () => {
             <Divider />
             <List>
                 <Link to="/contactos" className={classes.Link}>
-                <ListItem button key={1} >
-                    <ListItemIcon><PeopleIcon /></ListItemIcon>
-                    <ListItemText primary="Contactos" />
-                </ListItem>
+                    <ListItem button key={1} >
+                        <ListItemIcon><PeopleIcon /></ListItemIcon>
+                        <ListItemText primary="Contactos" />
+                    </ListItem>
                 </Link>
                 <ListItem button key={2} >
                     <ListItemIcon><ListIcon /></ListItemIcon>

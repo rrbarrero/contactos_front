@@ -17,7 +17,7 @@ import { cargoService, personaService } from '../../services';
 
 //moment.locale("es");
 
-const drawerWidth = 240;
+const drawerWidth = 210;
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -82,6 +82,10 @@ const NuevoContactoForm = () => {
     };
 
     const formStepPage = useSelector((state: RootState) => state.appStates.stepperCurrent);
+
+    useEffect(() => {
+        dispatch(appActions.setAppTitle('Nuevo contacto'))
+    }, [dispatch])
 
     useEffect(() => {
         dispatch(appActions.stepperSet(0));

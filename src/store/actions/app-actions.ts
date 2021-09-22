@@ -5,6 +5,7 @@ export const appActions = {
     setSelectedColectivo,
     setSelectedCargos,
     stepperSet,
+    setAppTitle,
 }
 
 export function setSelectedColectivos(id: number) {
@@ -32,5 +33,12 @@ export function stepperSet(currentStep: number) {
     return {
         type: appStatesConstants.SET_STEPPER_CURRENT,
         payload: currentStep,
+    }
+}
+
+export function setAppTitle(title: string) {
+    return {
+        type: appStatesConstants.SET_APP_TITLE,
+        payload: title,
     }
 }

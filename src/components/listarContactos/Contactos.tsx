@@ -10,7 +10,7 @@ import { Box } from '@material-ui/core';
 import ContextualMenu from './ContextualMenu';
 import { personaService } from '../../services';
 
-const drawerWidth = 240;
+const drawerWidth = 210;
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -99,6 +99,10 @@ const Contactos = () => {
     const setCargoSelected = (event: GridSelectionModel) => {
         dispatch(appActions.setSelectedCargos(event as number[]));
     }
+
+    useEffect(() => {
+        dispatch(appActions.setAppTitle("Contactos"));
+    });
 
     useEffect(() => {
         if (searchText) {
