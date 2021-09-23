@@ -37,14 +37,14 @@ const SelectColectivo = (selectArgs: SelectArgs) => {
         /*
             Fix default selectedColectivo to "junta de extremadura"
         */
-        if (colectivos.length > 0) {
+        if (colectivos.length > 0 && selectedColectivo.nombre === '') {
             const colectivo = colectivos.find((colectivo) => colectivo.nombre.toLowerCase() === DEFAULT_SELECTED);
             if (colectivo?.id) {
                 dispatch(appActions.setSelectedColectivo(colectivo));
                 cargoValues.colectivo = colectivo;
             }
         }
-    }, [cargoValues, colectivos, dispatch]);
+    }, [cargoValues, colectivos, dispatch, selectedColectivo.nombre]);
 
     const handleChangeColectivo = (e: unknown) => {
         /*

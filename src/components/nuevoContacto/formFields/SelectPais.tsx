@@ -21,19 +21,21 @@ const SelectPais = (selectArgs: SelectArgs) => {
 
     const dispatch = useDispatch();
     const paises = useSelector((state: RootState) => state.paises);
-    const [selectedPais, setSelectedPais] = useState<Pais>({ nombre: '' });
+    const [selectedPais, setSelectedPais] = useState<Pais>(cargoValues.pais);
 
 
     useEffect(() => {
         /*
             Fix default país to "españa"
         */
-        const pais = paises.find((pais) => pais.nombre.toLowerCase() === DEFAULT_SELECTED);
-        if (pais?.id) {
-            setSelectedPais(pais);
-            cargoValues.pais = pais;
+        if (selectedPais.nombre === '') {
+            const pais = paises.find((pais) => pais.nombre.toLowerCase() === DEFAULT_SELECTED);
+            if (pais?.id) {
+                setSelectedPais(pais);
+                cargoValues.pais = pais;
+            }
         }
-    }, [cargoValues, dispatch, paises]);
+    }, [cargoValues, dispatch, paises, selectedPais.nombre]);
 
     const handleChangePais = (paisId: number) => {
         /*

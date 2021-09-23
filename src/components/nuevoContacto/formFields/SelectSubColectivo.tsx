@@ -24,7 +24,7 @@ const SelectSubColectivo = (selectArgs: SelectArgs) => {
     const { classes, cargoValues } = selectArgs;
 
     const selectedColectivo: Colectivo = useSelector((state: RootState) => state.appStates.selectedColectivo);
-    const [selectedSubColectivo, setSelectedSubcolectivo] = useState<SubColectivo>({ colectivo: { nombre: '' }, nombre: '' })
+    const [selectedSubColectivo, setSelectedSubcolectivo] = useState<SubColectivo>(cargoValues.subcolectivo)
     const subColectivos: SubColectivos = useSelector((state: RootState) => state.subColectivos);
 
 
@@ -43,11 +43,13 @@ const SelectSubColectivo = (selectArgs: SelectArgs) => {
         /*
             Set first subColectivo when change Colectivo
         */
-        if (subColectivos[0]?.id) {
-            setSelectedSubcolectivo(subColectivos[0]);
-            cargoValues.subcolectivo = subColectivos[0];
+        if (selectedSubColectivo.nombre === '') {
+            if (subColectivos[0]?.id) {
+                setSelectedSubcolectivo(subColectivos[0]);
+                cargoValues.subcolectivo = subColectivos[0];
+            }
         }
-    }, [cargoValues, dispatch, selectedColectivo, subColectivos]);
+    }, [cargoValues, dispatch, selectedColectivo, selectedSubColectivo.nombre, subColectivos]);
 
     const renderSelectedSubColectivo = () => {
         return selectedSubColectivo.nombre;

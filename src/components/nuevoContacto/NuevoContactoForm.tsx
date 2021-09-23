@@ -16,6 +16,7 @@ import { cargoService, personaService } from '../../services';
 import { customDialogActions } from '../../store/actions/custom-dialog.actions';
 import ConfirmationDialog from '../commons/ConfirmationDialog';
 import { history } from '../../helpers';
+import FormStepThree from './FormStepThree';
 
 
 //moment.locale("es");
@@ -109,6 +110,10 @@ const CurrentStepComp = ({ values, errors, touched, handleBlur }: TypeCurrentSte
                 formTouched={touched} />
             break;
         }
+        case 2: {
+            comp = <FormStepThree formValues={values} />
+            break;
+        }
     }
     return comp;
 }
@@ -158,6 +163,7 @@ const NuevoContactoForm = () => {
     useEffect(() => {
         dispatch(colectivoActions.get_all_colectivos());
     }, [dispatch]);
+
 
     return (
         <>

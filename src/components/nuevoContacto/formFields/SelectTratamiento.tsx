@@ -20,20 +20,23 @@ const SelectTratamiento = (selectArgs: SelectArgs) => {
     const { classes, cargoValues } = selectArgs;
     const dispatch = useDispatch();
     const tratamientos = useSelector((state: RootState) => state.tratamientos);
-    const [selectedTratamiento, setSelectedTratamiento] = useState<Tratamiento>({ nombre: '', id: 0 });
+    const [selectedTratamiento, setSelectedTratamiento] = useState<Tratamiento>(cargoValues.persona.tratamiento);
 
     useEffect(() => {
         /*
             Fix default selectedTratamiento to "Sr. D."
         */
-        if (tratamientos.length > 0) {
-            const tratamiento = tratamientos.find((tr) => tr.nombre.toLowerCase() === DEFAULT_SELECTED);
-            if (tratamiento) {
-                setSelectedTratamiento(tratamiento);
-                cargoValues.persona.tratamiento = tratamiento;
+        if (selectedTratamiento.nombre === '') {
+            if (tratamientos.length > 0) {
+                const tratamiento = tratamientos.find((tr) => tr.nombre.toLowerCase() === DEFAULT_SELECTED);
+                if (tratamiento) {
+                    setSelectedTratamiento(tratamiento);
+                    cargoValues.persona.tratamiento = tratamiento;
+                }
             }
         }
-    }, [cargoValues.persona, dispatch, tratamientos]);
+
+    }, [cargoValues.persona, dispatch, selectedTratamiento.nombre, tratamientos]);
 
     const handleChangeTratamiento = (e: unknown) => {
         const tratamiento: Tratamiento | undefined = tratamientos.find(tr => tr.id === e as number);

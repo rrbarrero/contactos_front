@@ -27,14 +27,14 @@ const FormStepOne = ({ classes, formValues, formTouched, formErrors, handleBlur 
 
     const dispatch = useDispatch();
 
-    const [nombre, setNombre] = useState('');
-    const [apellidos, setApellidos] = useState('');
-    const [cargo, setCargo] = useState('');
-    const [empresa, setEmpresa] = useState('');
-    const [finalizado, setFinalizado] = useState(false);
-    const [direccion, setDireccion] = useState('');
-    const [ciudad, setCiudad] = useState('');
-    const [fechaCese, setFechaCese] = useState(moment().format('yyyy-MM-DD'));
+    const [nombre, setNombre] = useState(formValues.persona.nombre);
+    const [apellidos, setApellidos] = useState(formValues.persona.apellidos);
+    const [cargo, setCargo] = useState(formValues.cargo);
+    const [empresa, setEmpresa] = useState(formValues.empresa);
+    const [finalizado, setFinalizado] = useState(formValues.finalizado);
+    const [direccion, setDireccion] = useState(formValues.direccion);
+    const [ciudad, setCiudad] = useState(formValues.ciudad);
+    const [fechaCese, setFechaCese] = useState(formValues.fechaCese);
 
     useEffect(() => {
         dispatch(appActions.setAppTitle(`Nuevo contacto: ${nombre} ${apellidos}`));

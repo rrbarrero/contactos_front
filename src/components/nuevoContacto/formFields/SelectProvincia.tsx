@@ -21,18 +21,20 @@ const SelectProvincia = (selectArgs: SelectArgs) => {
 
     const dispatch = useDispatch();
     const provincias = useSelector((state: RootState) => state.provincias);
-    const [selectedProvincia, setSelectedProvincia] = useState<Provincia>({ nombre: '' });
+    const [selectedProvincia, setSelectedProvincia] = useState<Provincia>(cargoValues.provincia);
 
     useEffect(() => {
         /*
             Fix default país to "españa"
         */
-        const provincia = provincias.find((pr) => pr.nombre.toLowerCase() === DEFAULT_SELECTED);
-        if (provincia?.id) {
-            setSelectedProvincia(provincia);
-            cargoValues.provincia = provincia;
+        if (selectedProvincia.nombre === '') {
+            const provincia = provincias.find((pr) => pr.nombre.toLowerCase() === DEFAULT_SELECTED);
+            if (provincia?.id) {
+                setSelectedProvincia(provincia);
+                cargoValues.provincia = provincia;
+            }
         }
-    }, [cargoValues, dispatch, provincias]);
+    }, [cargoValues, dispatch, provincias, selectedProvincia.nombre]);
 
     const handleChangeProvincia = (ProvinciaId: number) => {
         /*
