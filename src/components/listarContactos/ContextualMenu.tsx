@@ -55,7 +55,7 @@ const ContextualMenu = () => {
 
     if (selectedCargos.length === 1) {
         menuItems.push(
-            { url: "#", icon: <EditIcon />, label: "Modificar..." },
+            { url: `/editar_contacto/${selectedCargos[0]}`, icon: <EditIcon />, label: "Modificar..." },
             { url: "#", icon: <AddIcon />, label: "Añadir cargo" }
         );
     }

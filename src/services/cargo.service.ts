@@ -119,15 +119,26 @@ const create = async (cargo: Cargo): Promise<Cargo> => {
         }
     });
 
-    console.log(response);
-
     return response.data;
 
 }
 
+const get_one = async (cargoId: number): Promise<Cargo> => {
+const url = process.env.REACT_APP_BASE_URL || "not env defined";
+    const state = store.getState();
+
+    const response = await axios.get(url + `cargos/${cargoId}`, {
+        headers: {
+            Authorization: "Bearer " + state.authentication.token
+        }
+    });
+
+    return response.data;
+}
 
 
 export const cargoService = {
+    get_one,
     get_all,
     get_page,
     search,

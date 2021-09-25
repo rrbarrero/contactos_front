@@ -7,6 +7,7 @@ import UnProtectedRoute from "./UnProtectedRoute"
 import { history } from "../../helpers/";
 import Contactos from "../listarContactos/Contactos"
 import NuevoContactoForm from "../nuevoContacto/NuevoContactoForm";
+import EditarContactoForm from "../EditarContacto/EditarContactoForm";
 
 const Routes = () => {
 
@@ -16,6 +17,7 @@ const Routes = () => {
     return (
         <Router history={history}>
             <Switch>
+                <ProtectedRoute path="/editar_contacto/:cargoId" component={EditarContactoForm} />
                 <ProtectedRoute path="/nuevo_contacto" component={NuevoContactoForm} />
                 <ProtectedRoute path="/contactos" component={Contactos} />
                 <UnProtectedRoute path="/login" component={Landing} />
