@@ -1,15 +1,14 @@
 import { AxiosBr } from "../helpers";
-import {store} from "../store/store";
 
 
 const get_all = async (colectivoSelected: number[], currentPage = 0): Promise<Cargos> => {
-    
+
     let requestConfig = {
         params: { colectivos: colectivoSelected },
     }
 
-    const client = AxiosBr(store.getState().authentication.token);
-    const response = await client('cargos/', requestConfig);
+    const client = AxiosBr();
+    const response = await client.get('cargos/', requestConfig);
 
     const cargos: Cargos = {
         rows: response.data.results,
@@ -33,7 +32,7 @@ const get_page = async (url: string, currentPage = 0): Promise<Cargos> => {
         count: 0,
     }
 
-    const client = AxiosBr(store.getState().authentication.token);
+    const client = AxiosBr();
     const response = await client.get(url)
 
     cargos.count = response.data.count;
@@ -65,7 +64,7 @@ const search = async (needle: string): Promise<Cargos> => {
         params: { termino1, termino2 },
     }
 
-    const client = AxiosBr(store.getState().authentication.token);
+    const client = AxiosBr();
     const response = await client.get('buscar/', requestConfig);
 
     cargos.count = response.data.count;
@@ -80,8 +79,8 @@ const create = async (cargo: Cargo): Promise<Cargo> => {
 
     const { telefonos, correos, ...data } = cargo;
 
-    const client = AxiosBr(store.getState().authentication.token);
-    const response = await client.post('cargos/',{
+    const client = AxiosBr();
+    const response = await client.post('cargos/', {
         ...data,
         persona: cargo.persona.id,
         provincia: cargo.provincia.id,
@@ -95,7 +94,7 @@ const create = async (cargo: Cargo): Promise<Cargo> => {
 }
 
 const get_one = async (cargoId: number): Promise<Cargo> => {
-    const client = AxiosBr(store.getState().authentication.token);
+    const client = AxiosBr();
     const response = await client.get(`cargos/${cargoId}`);
     return response.data;
 }
