@@ -64,10 +64,22 @@ class TestCargos(unittest.TestCase):
         self.driver.find_element_by_id("next-button").click()
         time.sleep(2)
         self.driver.find_element_by_id("new-contact-submit").click()
-        time.sleep(4)
+        time.sleep(3)
         dialog = self.driver.find_element_by_id("alert-dialog-slide-description")
-        self.assertIn('Contacto guardado con éxito', dialog.get_attribute('innerHTML'))
+        self.assertIn("Contacto guardado con éxito", dialog.get_attribute("innerHTML"))
+        self.driver.find_element_by_id("dialog-btn-cancel").click()
+        time.sleep(2)
 
+    def test_usuario_deslogado_no_puede_listar_contactos(self):
+        self.driver.find_element_by_id("exit-button").click()
+        time.sleep(2)
+        needle = "Por favor, teclea tus credenciales para acceder."
+        page = self.driver.find_element_by_class_name("App")
+        self.assertIn(needle, page.get_attribute("innerHTML"))
+        self.driver.get(base_url + "contactos")
+        time.sleep(2)
+        page = self.driver.find_element_by_class_name("App")
+        self.assertIn(needle, page.get_attribute("innerHTML"))
 
     def _handle_select(self, htmlID):
         _el = self.driver.find_element_by_id(htmlID)

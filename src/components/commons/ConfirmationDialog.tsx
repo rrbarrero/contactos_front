@@ -49,8 +49,8 @@ const ConfirmationDialog = () => {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose}>Cancelar</Button>
-                    <Button onClick={handleClickOpen}>Aceptar</Button>
+                    <Button id="dialog-btn-cancel" onClick={handleClose}>Cancelar</Button>
+                    <Button id="dialog-btn-accept" onClick={handleClickOpen}>Aceptar</Button>
                 </DialogActions>
             </Dialog>
         </div>

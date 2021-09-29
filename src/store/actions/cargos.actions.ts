@@ -1,6 +1,8 @@
-import { cargoService } from "../../services";
+import { cargoService, userService } from "../../services";
 import { cargosConstants } from "../constants";
 import { alertActions, spinnerActions } from '.';
+import { history } from "../../helpers";
+import { userActions } from "./user.actions";
 
 export const cargosActions = {
     get_all,
@@ -26,8 +28,15 @@ export function get_all(colectivoSelected: number[]) {
                 dispatch(success(cargos));
             },
             error => {
-                dispatch(failure(error.toString()));
-                dispatch(alertActions.error(error.toString()));
+                const refreshNeeded = 'No such user or token expired. Login again please.';
+                if (error.response?.data?.detail === refreshNeeded) {
+                    dispatch(alertActions.error("Sesión caducada. Abra sesión de nuevo."));
+                    localStorage.removeItem('user');
+                    history.push("/login");
+                } else {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                }
             }
         );
     };

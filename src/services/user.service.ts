@@ -25,7 +25,7 @@ const login = async (username: string, password: string): Promise<User> => {
     return user;
 }
 
-const token_refresh = async (): Promise<string> => {
+const token_refresh = async (): Promise<boolean> => {
     const url = process.env.REACT_APP_BASE_URL || "not env defined";
 
     const state = store.getState();
@@ -34,22 +34,23 @@ const token_refresh = async (): Promise<string> => {
     }
 
     const user: User = state.authentication;
+    user.logedIn = false;
 
     let requestConfig = {
         headers: {
             Authorization: "Bearer " + user.token
         }
     }
-    const response = await axios.post(
-        url + `refresh_token`,
+    const response = await axios.get(
+        url + `refresh_token/`,
         requestConfig,
     );
 
-    const newToken = response.data.token;
-    user.token = newToken;
+    user.token = response.data.token;
+    user.logedIn = true;
     localStorage.setItem('user', JSON.stringify(user));
 
-    return newToken;
+    return user.logedIn;
 
 }
 
@@ -57,7 +58,7 @@ const token_refresh = async (): Promise<string> => {
 const isAuthenticated = (): boolean => {
     const state = store.getState();
     return state.authentication.logedIn || false;
-   
+
 }
 
 

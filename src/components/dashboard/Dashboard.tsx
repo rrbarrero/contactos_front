@@ -57,7 +57,7 @@ const Dashboard = () => {
                     <Typography variant="h4" noWrap>
                         {/* {user?.username} */}
                     </Typography>
-                    <Button color="inherit" onClick={handleLogout}><ExitIcon /> Salir</Button>
+                    <Button color="inherit" id="exit-button" onClick={handleLogout}><ExitIcon /> Salir</Button>
                 </Toolbar>
             </AppBar>
             <Sidebar />
