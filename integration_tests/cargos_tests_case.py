@@ -29,7 +29,7 @@ class TestCargos(unittest.TestCase):
         cls.driver.find_element_by_name("password").send_keys(password)
         time.sleep(2)
         cls.driver.find_element_by_id("loginSubmit").click()
-        time.sleep(2)
+        time.sleep(4)
 
     def test_cargos_are_listed(self):
         self.assertNotIn("No rows", self.driver.page_source)
@@ -64,7 +64,7 @@ class TestCargos(unittest.TestCase):
         self.driver.find_element_by_id("next-button").click()
         time.sleep(2)
         self.driver.find_element_by_id("new-contact-submit").click()
-        time.sleep(2)
+        time.sleep(4)
         dialog = self.driver.find_element_by_id("alert-dialog-slide-description")
         self.assertIn('Contacto guardado con éxito', dialog.get_attribute('innerHTML'))
 

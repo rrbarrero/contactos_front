@@ -1,23 +1,15 @@
-import axios from "axios";
-import { store } from "../store/store";
-
+import { AxiosBr } from "../helpers";
+import {store} from "../store/store";
 
 
 const get_all = async (colectivoSelected: number[], currentPage = 0): Promise<Cargos> => {
-    const url = process.env.REACT_APP_BASE_URL || "not env defined";
-    const state = store.getState();
-
+    
     let requestConfig = {
-        headers: {
-            Authorization: "Bearer " + state.authentication.token
-        },
         params: { colectivos: colectivoSelected },
     }
 
-    const response = await axios.get(
-        url + 'cargos/',
-        requestConfig,
-    );
+    const client = AxiosBr(store.getState().authentication.token);
+    const response = await client('cargos/', requestConfig);
 
     const cargos: Cargos = {
         rows: response.data.results,
@@ -32,7 +24,6 @@ const get_all = async (colectivoSelected: number[], currentPage = 0): Promise<Ca
 }
 
 const get_page = async (url: string, currentPage = 0): Promise<Cargos> => {
-    const state = store.getState();
 
     let cargos: Cargos = {
         rows: [],
@@ -42,16 +33,8 @@ const get_page = async (url: string, currentPage = 0): Promise<Cargos> => {
         count: 0,
     }
 
-    let requestConfig = {
-        headers: {
-            Authorization: "Bearer " + state.authentication.token
-        },
-    }
-
-    const response = await axios.get(
-        url,
-        requestConfig,
-    );
+    const client = AxiosBr(store.getState().authentication.token);
+    const response = await client.get(url)
 
     cargos.count = response.data.count;
     cargos.nextPage = response.data.next;
@@ -62,8 +45,6 @@ const get_page = async (url: string, currentPage = 0): Promise<Cargos> => {
 }
 
 const search = async (needle: string): Promise<Cargos> => {
-    const url = process.env.REACT_APP_BASE_URL || "not env defined";
-    const state = store.getState();
 
     let cargos: Cargos = {
         rows: [],
@@ -81,16 +62,11 @@ const search = async (needle: string): Promise<Cargos> => {
     }
 
     let requestConfig = {
-        headers: {
-            Authorization: "Bearer " + state.authentication.token
-        },
         params: { termino1, termino2 },
     }
 
-    const response = await axios.get(
-        url + "buscar/",
-        requestConfig,
-    );
+    const client = AxiosBr(store.getState().authentication.token);
+    const response = await client.get('buscar/', requestConfig);
 
     cargos.count = response.data.count;
     cargos.nextPage = response.data.next;
@@ -101,22 +77,17 @@ const search = async (needle: string): Promise<Cargos> => {
 }
 
 const create = async (cargo: Cargo): Promise<Cargo> => {
-    const url = process.env.REACT_APP_BASE_URL || "not env defined";
-    const state = store.getState();
 
     const { telefonos, correos, ...data } = cargo;
 
-    const response = await axios.post(url + 'cargos/', {
+    const client = AxiosBr(store.getState().authentication.token);
+    const response = await client.post('cargos/',{
         ...data,
         persona: cargo.persona.id,
         provincia: cargo.provincia.id,
         pais: cargo.pais.id,
         colectivo: cargo.colectivo.id,
         subcolectivo: cargo.subcolectivo.id,
-    }, {
-        headers: {
-            Authorization: "Bearer " + state.authentication.token
-        }
     });
 
     return response.data;
@@ -124,15 +95,8 @@ const create = async (cargo: Cargo): Promise<Cargo> => {
 }
 
 const get_one = async (cargoId: number): Promise<Cargo> => {
-const url = process.env.REACT_APP_BASE_URL || "not env defined";
-    const state = store.getState();
-
-    const response = await axios.get(url + `cargos/${cargoId}`, {
-        headers: {
-            Authorization: "Bearer " + state.authentication.token
-        }
-    });
-
+    const client = AxiosBr(store.getState().authentication.token);
+    const response = await client.get(`cargos/${cargoId}`);
     return response.data;
 }
 
